@@ -1,13 +1,13 @@
 class Aliment {
   String id;
   String name;
-  int calories;
-  int protein;
-  int carbs;
-  int fat;
-  int sugar;
+  double calories;
+  double protein;
+  double carbs;
+  double fat;
+  double sugar;
   String? image;
-  int servingSize;
+  double servingSize;
   String servingUnit;
 
   Aliment({
@@ -27,13 +27,13 @@ class Aliment {
     return Aliment(
       id: json['_id'],
       name: json['name'],
-      calories: json['calories'],
-      protein: json['protein'],
-      carbs: json['carbs'],
-      fat: json['fat'],
-      sugar: json['sugar'],
+      calories: json['calories'].toDouble(),
+      protein: json['protein'].toDouble(),
+      carbs: json['carbs'].toDouble(),
+      fat: json['fat'].toDouble(),
+      sugar: json['sugar'].toDouble(),
       image: json['image'],
-      servingSize: json['servingSize'],
+      servingSize: json['servingSize'].toDouble(),
       servingUnit: json['servingUnit'],
     );
   }
