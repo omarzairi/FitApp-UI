@@ -20,7 +20,7 @@ class _StepsState extends State<UserStepperForm> {
   final HashMap<String, String> _map = HashMap<String, String>();
 
 
-  Future<void> SendFormData() async{
+  Future<void> sendFormData() async{
     _map["actPhysique"] = _selectItem1;
     _map["poidsSemaine"] = _selectedItem;
     _map["sex"]=_sex;
@@ -43,7 +43,7 @@ class _StepsState extends State<UserStepperForm> {
       },
       onStepContinue: () async {
         if(index == 3){
-          await SendFormData();
+          await sendFormData();
         }
         else {
           setState(() {
