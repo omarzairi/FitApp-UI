@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fitapp/Pages/signUpSteps.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,20 +30,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('FitApp Home Page'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Welcome to FitApp',
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            SizedBox(height: 20),
-            SizedBox(height: 20),
-            Icon(Icons.favorite, color: Colors.pink),
-          ],
-        ),
-      ),
+      body: UserStepperForm(),
     );
   }
 }
