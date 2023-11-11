@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
@@ -10,10 +11,24 @@ class UserStepperForm extends StatefulWidget {
 }
 
 class _StepsState extends State<UserStepperForm> {
+
   int index = 0;
   String _selectedItem = '1/2';
   String _selectItem1 = 'Sedentary';
+  String _sex='Male';
+  String _age='18';
   final HashMap<String, String> _map = HashMap<String, String>();
+
+
+  Future<void> SendFormData() async{
+    _map["actPhysique"] = _selectItem1;
+    _map["poidsSemaine"] = _selectedItem;
+    _map["sex"]=_sex;
+
+
+    final body=jsonEncode(_map);
+    print(body);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +41,66 @@ class _StepsState extends State<UserStepperForm> {
           });
         }
       },
-      onStepContinue: () {
-        setState(() {
-          index++;
-        });
+      onStepContinue: () async {
+        if(index == 3){
+          await SendFormData();
+        }
+        else {
+          setState(() {
+            index++;
+          });
+        }
       },
       onStepTapped: (int indexStep) {
         setState(() {
           index = indexStep;
         });
       },
+
       steps: <Step>[
+
+        Step(
+          title: const Text("Sex and Age"),
+          isActive: index >0,
+          content: Column(
+            children: [
+              SizedBox(
+                width: double.maxFinite,
+                child: DropdownMenu(
+                  width: 300,
+                  initialSelection: _sex,
+                  onSelected: (String? value) {
+                    setState(() {
+                      _sex = value!;
+                      _map["sex"] = value;
+                    });
+                  },
+                  dropdownMenuEntries: const [
+                    DropdownMenuEntry(
+                        value: 'Male', label: 'Male'),
+                    DropdownMenuEntry(value: 'Female', label: 'Female'),
+
+
+                  ],
+                ),
+              ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Age'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your weight';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  _map["poids"] = value;
+                },
+              ),
+
+
+]
+        ),
+        ),
         Step(
           title: const Text("Weight and Height"),
           content: Column(
@@ -67,11 +131,11 @@ class _StepsState extends State<UserStepperForm> {
               )
             ],
           ),
-          isActive: index > 0,
+          isActive: index > 1,
         ),
         Step(
           title: const Text("Weight objectif and weight per week"),
-          isActive: index > 1,
+          isActive: index > 2,
           content: Column(children: [
             TextFormField(
               decoration: const InputDecoration(labelText: 'Ojectif (kg)'),
@@ -110,9 +174,11 @@ class _StepsState extends State<UserStepperForm> {
         ),
         Step(
           title: const Text("Physical activity"),
-          isActive: index > 2,
+          isActive: index > 3,
           content: DropdownMenu(
-            initialSelection: _selectItem1,
+             initialSelection: _selectItem1,
+
+
             width: 300,
             onSelected: (String? value) {
               setState(() {
@@ -133,3 +199,4 @@ class _StepsState extends State<UserStepperForm> {
     );
   }
 }
+
