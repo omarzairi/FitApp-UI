@@ -16,7 +16,7 @@ class _StepsState extends State<UserStepperForm> {
   String _selectedItem = '1/2';
   String _selectItem1 = 'Sedentary';
   String _sex='Male';
-  String _age='18';
+
   final HashMap<String, String> _map = HashMap<String, String>();
 
 
@@ -93,7 +93,7 @@ class _StepsState extends State<UserStepperForm> {
                   return null;
                 },
                 onChanged: (value) {
-                  _map["poids"] = value;
+                  _map["age"] = value;
                 },
               ),
 
