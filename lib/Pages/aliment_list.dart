@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fitapp/classes/Aliment.dart';
 import 'package:fitapp/common_widgets/meal_category_cell.dart';
+import 'package:fitapp/common_widgets/meal_row.dart';
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -220,6 +221,17 @@ class _AlimentListPageState extends State<AlimentListPage> {
             SizedBox(
               height: media.width * 0.05,
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                "Recommendations",
+                style: TextStyle(
+                    color: TColor.black,
+                    fontSize: 16,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
             Container(
                 // Wrap your Column with a Container
                 height: media.height - AppBar().preferredSize.height - 64,
@@ -239,62 +251,79 @@ class _AlimentListPageState extends State<AlimentListPage> {
                             }
                             if (snapshot.hasData) {
                               return ListView.builder(
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemCount: snapshot.data?.length,
                                 itemBuilder: (context, index) {
-                                  return Card(
-                                    child: Row(
-                                      children: <Widget>[
-                                        Checkbox(
-                                          value: selectedAliments[index],
-                                          onChanged: (bool? value) {
-                                            setState(() {
-                                              selectedAliments[index] = value!;
-                                            });
-                                          },
-                                        ),
-                                        ClipOval(
-                                          child: Image.network(
-                                            snapshot.data![index].image!,
-                                            width: 50,
-                                            height: 50,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                snapshot.data![index].name,
-                                                style: const TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              Row(
-                                                children: <Widget>[
-                                                  Text(
-                                                    '${formatNumber(snapshot.data![index].calories)} calories',
-                                                    style: const TextStyle(
-                                                      color: Colors.blueAccent,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    ' / ${formatNumber(snapshot.data![index].servingSize)} ${snapshot.data![index].servingUnit}',
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                                  // return Card(
+                                  //   child: Row(
+                                  //     children: <Widget>[
+                                  //       Checkbox(
+                                  //         value: selectedAliments[index],
+                                  //         onChanged: (bool? value) {
+                                  //           setState(() {
+                                  //             selectedAliments[index] = value!;
+                                  //           });
+                                  //         },
+                                  //       ),
+                                  //       ClipOval(
+                                  //         child: Image.network(
+                                  //           snapshot.data![index].image!,
+                                  //           width: 50,
+                                  //           height: 50,
+                                  //           fit: BoxFit.cover,
+                                  //         ),
+                                  //       ),
+                                  //       Expanded(
+                                  //         child: Column(
+                                  //           crossAxisAlignment:
+                                  //               CrossAxisAlignment.start,
+                                  //           children: <Widget>[
+                                  //             Text(
+                                  //               snapshot.data![index].name,
+                                  //               style: const TextStyle(
+                                  //                 fontSize: 20,
+                                  //                 fontWeight: FontWeight.bold,
+                                  //               ),
+                                  //             ),
+                                  //             Row(
+                                  //               children: <Widget>[
+                                  //                 Text(
+                                  //                   '${formatNumber(snapshot.data![index].calories)} calories',
+                                  //                   style: const TextStyle(
+                                  //                     color: Colors.blueAccent,
+                                  //                     fontSize: 16,
+                                  //                     fontWeight:
+                                  //                         FontWeight.bold,
+                                  //                   ),
+                                  //                 ),
+                                  //                 Text(
+                                  //                   ' / ${formatNumber(snapshot.data![index].servingSize)} ${snapshot.data![index].servingUnit}',
+                                  //                   style: const TextStyle(
+                                  //                     fontSize: 16,
+                                  //                   ),
+                                  //                 ),
+                                  //               ],
+                                  //             ),
+                                  //           ],
+                                  //         ),
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // );
+                                  return InkWell(
+                                    onTap: (){
+                                      //navigate to details page
+                                    },
+                                    child: MealRow(
+                                      aliment: snapshot.data![index],
+                                      selected: selectedAliments[index],
+                                      onTap: () {
+                                        setState(() {
+                                          selectedAliments[index] =
+                                              !selectedAliments[index];
+                                        });
+                                      },
                                     ),
                                   );
                                 },

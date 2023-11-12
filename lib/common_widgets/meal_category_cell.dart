@@ -12,7 +12,7 @@ class MealCategoryCell extends StatelessWidget {
     bool isEvent = index % 2 == 0;
     return Container(
       margin: const EdgeInsets.all(4),
-      width: 80,
+      width: 95,
       decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: isEvent
@@ -47,7 +47,7 @@ class MealCategoryCell extends StatelessWidget {
               ),),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 8),
+            padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 15),
             child: Text(
               cObj["name"],
               maxLines: 1,

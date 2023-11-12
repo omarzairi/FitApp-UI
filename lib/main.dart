@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: secondaryColor1Swatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: TextTheme(
-          bodyText2: TextStyle(fontFamily: 'Montserrat', fontSize: 18),
+          bodyText2: TextStyle(fontFamily: 'Poppins', fontSize: 18),
         ),
       ),
       home: MyHomePage(),
