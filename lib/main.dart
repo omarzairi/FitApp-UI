@@ -1,6 +1,6 @@
 //import 'package:fitapp/Pages/alimentDetails.dart';
 import 'package:fitapp/Pages/aliment_list.dart';
-import 'package:fitapp/utils/theme_colors.dart';
+import 'package:fitapp/utils/themecolors.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -61,7 +61,7 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: TColor.secondaryColor1,
 
         onPressed: () {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
+          WidgetsBinding.instance.addPostFrameCallback(() {
             Navigator.push(
               context,
               MaterialPageRoute(
