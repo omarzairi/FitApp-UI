@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  FirstPage();
+    return  SignUpScreen();
       // appBar: AppBar(
       //   title: Text('FitApp Home Page'),
       // ),

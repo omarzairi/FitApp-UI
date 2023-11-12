@@ -1,32 +1,48 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+   SignUpScreen({super.key});
 
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  late String _email;
+  late String _password;
+  late String _confirmPassword;
+
+  Future<void> sendFormData()async {
+    if(_password != _confirmPassword){
+      print("Password and confirm password are not the same");
+
+    }
+    else{
+      final body=jsonEncode({'email':_email,'password':_password});
+      print(body);
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black)
+        iconTheme: const IconThemeData(color: Colors.black)
       ),
       body: SingleChildScrollView(
+
         child: SizedBox(
           width: double.maxFinite,
 
           child: Column(
+
             children: <Widget>[
-              Container(
-                height: 100,
-                width: 100,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/logo.png'),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-             const SizedBox(height: 20),
+
+             const SizedBox(height: 50),
              const  Text(
                 'Welcome to FitApp',
                 style: TextStyle(
@@ -46,6 +62,12 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(
                 width: 300,
                 child: TextField(
+                  onChanged: (value){
+                    setState(() {
+                      _email =value;
+                    });
+
+                  },
                   decoration: InputDecoration(
                     hintText: 'Email',
                     prefixIcon: const Icon(Icons.email),
@@ -59,8 +81,15 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(
                 width: 300,
                 child: TextField(
+                  onChanged: (value){
+                    setState(() {
+                      _password =value;
+                    });
+
+                  },
                   obscureText: true,
                   decoration: InputDecoration(
+
                     hintText: 'Password',
                     prefixIcon:const Icon(Icons.lock),
                     border: OutlineInputBorder(
@@ -72,6 +101,12 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(
                 width: 300,
                 child: TextField(
+                  onChanged: (value){
+                    setState(() {
+                      _confirmPassword =value;
+                    });
+
+                  },
                   obscureText: true,
                   decoration: InputDecoration(
                     hintText: 'Confirm password',
@@ -87,7 +122,9 @@ class SignUpScreen extends StatelessWidget {
                 width: 300,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await sendFormData();
+                  },
 
                   child: const Text(
                     'Sign up',
