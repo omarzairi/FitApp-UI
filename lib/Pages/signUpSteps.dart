@@ -4,13 +4,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class UserStepperForm extends StatefulWidget {
-  const UserStepperForm({super.key});
+  final HashMap<String, String> usermap;
+   UserStepperForm({super.key, required this.usermap});
+
 
   @override
   State<UserStepperForm> createState() => _StepsState();
 }
 
 class _StepsState extends State<UserStepperForm> {
+  late final HashMap<String, String> _usermap;
+  @override
+  void initState() {
+    super.initState();
+    _usermap = widget.usermap;
+  }
 
   int index = 0;
   String _selectedItem = '1/2';
@@ -20,7 +28,13 @@ class _StepsState extends State<UserStepperForm> {
   final HashMap<String, String> _map = HashMap<String, String>();
 
 
+
+
+
   Future<void> sendFormData() async{
+
+    _map["email"] = _usermap["email"]!;
+    _map["password"] = _usermap["password"]!;
     _map["actPhysique"] = _selectItem1;
     _map["poidsSemaine"] = _selectedItem;
     _map["sex"]=_sex;

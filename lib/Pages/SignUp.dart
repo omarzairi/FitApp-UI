@@ -1,6 +1,8 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fitapp/Pages/signUpSteps.dart';
 
 class SignUpScreen extends StatefulWidget {
    SignUpScreen({super.key});
@@ -11,17 +13,15 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  late String _email;
-  late String _password;
-  late String _confirmPassword;
-
+  late HashMap<String,String> _map = HashMap<String,String>();
+  late String _confirmPass;
   Future<void> sendFormData()async {
-    if(_password != _confirmPassword){
+    if(_map["password"] != _confirmPass){
       print("Password and confirm password are not the same");
 
     }
     else{
-      final body=jsonEncode({'email':_email,'password':_password});
+      final body=jsonEncode({'email':_map["email"],'password':_map["password"]});
       print(body);
     }
 
@@ -64,7 +64,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: TextField(
                   onChanged: (value){
                     setState(() {
-                      _email =value;
+                      _map["email"] = value;
+
                     });
 
                   },
@@ -83,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: TextField(
                   onChanged: (value){
                     setState(() {
-                      _password =value;
+                      _map["password"] =value;
                     });
 
                   },
@@ -103,7 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: TextField(
                   onChanged: (value){
                     setState(() {
-                      _confirmPassword =value;
+                      _confirmPass =value;
                     });
 
                   },
@@ -122,8 +123,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: 300,
                 height: 50,
                 child: ElevatedButton(
+
                   onPressed: () async {
                     await sendFormData();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => UserStepperForm(usermap:_map)),
+                    );
+
                   },
 
                   child: const Text(
