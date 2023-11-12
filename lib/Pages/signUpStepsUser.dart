@@ -4,6 +4,11 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 
+import '../utils/theme_colors.dart';
+import'package:fitapp/Pages/aliment_list.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+
 class UserStepperForm extends StatefulWidget {
   final HashMap<String, String> usermap;
    UserStepperForm({super.key, required this.usermap});
@@ -22,7 +27,7 @@ class _StepsState extends State<UserStepperForm> {
   }
 
   int index = 0;
-  String _selectedItem = '1/2';
+  String _selectedItem = '0.5';
   String _selectItem1 = 'Sedentary';
   String _sex='Male';
 
@@ -32,31 +37,127 @@ class _StepsState extends State<UserStepperForm> {
 
 
 
-  Future<void> sendFormData() async{
+  Future<void> sendFormData() async {
+    try {
+      _map["email"] = _usermap["email"]!;
+      _map["password"] = _usermap["password"]!;
+      _map["actPhysique"] = _selectItem1;
+      _map["poidsSemaine"] = _selectedItem;
+      _map["sex"] = _sex;
 
-    _map["email"] = _usermap["email"]!;
-    _map["password"] = _usermap["password"]!;
-    _map["actPhysique"] = _selectItem1;
-    _map["poidsSemaine"] = _selectedItem;
-    _map["sex"]=_sex;
+      final urlUser = Uri.parse('http://10.0.2.2:5000/api/users/addUser');
+      final urlObj = Uri.parse('http://10.0.2.2:5000/api/objectifs/addObjectif');
+      final userBody = jsonEncode({
+        'nom': _map["nom"],
+        'prenom': _map["prenom"],
+        'email': _map["email"]!,
+        'password': _map["password"]!,
+        'age': int.parse(_map["age"]!),
+        'sex': _map["sex"],
+        'poids': int.parse(_map["poids"]!),
+        'taille': int.parse(_map["taille"]!),
+      });
 
+      final responseUser = await http.post(
+        urlUser,
+        headers: {'Content-Type': 'application/json'},
+        body: userBody,
+      );
 
+      if (responseUser.statusCode != 200) {
+        // Handle HTTP error
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${jsonDecode(responseUser.body)['message']}'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
 
-    final urlUser = Uri.parse('https://fit-app-api.azurewebsites.net/api/users/addUser');
-    final urlObj=Uri.parse('https://fit-app-api.azurewebsites.net/api/objectifs/addObjectif');
-    final responseUser= await http.post
-      (urlUser,
-        body:{_map["prenom"],_map["nom"],_map["email"]!,
-          _map["password"]!,_map["sex"],_map["age"],_map["poids"],_map["taille"]!});
+      final user = jsonDecode(responseUser.body);
+      final objBody = jsonEncode({
+        'user': user['_id'],
+        'poidsObj': int.parse(_map["poidsObj"]!),
+        'poidsParSemaine': double.parse(_map["poidsSemaine"]!),
+        'actPhysique': _map["actPhysique"],
+      });
 
-    final responseObj= await http.post(urlObj,body:{responseUser.body,_map["poidsObj"]!,_map["poidsSemaine"]!,_map["actPhysique"]!});
-    print(responseUser.body);
-    print(responseObj.body);
+      final responseObj = await http.post(
+        urlObj,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + user['token'],
+        },
+        body: objBody,
+      );
+
+      if (responseObj.statusCode != 200) {
+        // Handle HTTP error for the second request
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${jsonDecode(responseObj.body)['message']}'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+      else{
+        final storage = new FlutterSecureStorage();
+        await storage.write(key: 'userToken', value: user['token']);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Account created successfully'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AlimentListPage(mealType:"breakfast" ,)),
+
+        );
+      }
+
+      print(responseObj.body);
+    } catch (e) {
+      // Handle other types of errors
+      print('An error occurred: $e');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: TColor.white,
+        centerTitle: true,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            height: 40,
+            width: 40,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: TColor.lightGray,
+                borderRadius: BorderRadius.circular(10)),
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: TColor.black,
+              size: 20,
+            ),
+          ),
+        ),
+        title: Text("Informations",
+            style: TextStyle(
+              color: TColor.black,
+              fontSize: 20,
+              letterSpacing: 1,
+              fontWeight: FontWeight.w500,
+            )),
+
+      ),
       body: Stepper(
         currentStep: index,
         onStepCancel: () {
@@ -220,9 +321,9 @@ class _StepsState extends State<UserStepperForm> {
                   },
                   dropdownMenuEntries: const [
                     DropdownMenuEntry(value: '0', label: '0 Kg'),
-                    DropdownMenuEntry(value: '1/8', label: '1/8 Kg'),
-                    DropdownMenuEntry(value: '1/4', label: '1/4 Kg'),
-                    DropdownMenuEntry(value: '1/2', label: '1/2 Kg'),
+                    DropdownMenuEntry(value: '0,125', label: '1/8 Kg'),
+                    DropdownMenuEntry(value: '0.25', label: '1/4 Kg'),
+                    DropdownMenuEntry(value: '0.5', label: '1/2 Kg'),
                     DropdownMenuEntry(value: '1', label: '1 Kg'),
                   ],
                 ),

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../utils/theme_colors.dart';
+import 'package:fitapp/Pages/aliment_list.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -20,14 +22,36 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> sendFormData() async{
     final body=jsonEncode({'email':_email,'password':_password});
     print(body);
-    final url = Uri.parse('https://fit-app-api.azurewebsites.net/api/users/loginUser');
-    final response = await http.post(url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: body
-    );
-    print(response.body);
+
+    final url = Uri.parse('http://10.0.2.2:5000/api/users/loginUser');
+    try{
+      final response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: body
+      );
+      if(response.statusCode!=200){
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Wrong email or password')),
+        );
+
+      }
+      else{
+        final storage = new FlutterSecureStorage();
+        await storage.write(key: 'userToken', value: jsonDecode(response.body)['token']);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AlimentListPage(mealType:"breakfast" ,)),
+
+        );
+      }
+      print(response.body);
+    }
+    catch(e){
+      print(e);
+    }
+
   }
 
   @override
@@ -182,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
 
-                child: Image.network('https://www.drupal.org/files/issues/2020-01-26/google_logo.png'),
+                child: Image.asset('assets/img/google_logo.png'),
               ),
 
 

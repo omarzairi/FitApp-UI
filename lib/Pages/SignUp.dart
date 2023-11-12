@@ -196,7 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
 
 
-                child: Image.network('https://www.drupal.org/files/issues/2020-01-26/google_logo.png'),
+                child: Image.asset('assets/img/google_logo.png'),
               ),
 
 

@@ -6,7 +6,7 @@ import 'package:fitapp/common_widgets/meal_row.dart';
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'alimentDetails.dart';
 
 Future<List<Aliment>> fetchAliments() async {
@@ -34,7 +34,7 @@ class _AlimentListPageState extends State<AlimentListPage> {
   late Future<List<Aliment>> futureAliments;
   late List<bool> selectedAliments;
   TextEditingController txtSearch = TextEditingController();
-
+  final storage = FlutterSecureStorage();
   List categoryArr = [
     {
       "name": "Salad",
@@ -74,6 +74,7 @@ class _AlimentListPageState extends State<AlimentListPage> {
   @override
   void initState() {
     super.initState();
+    print(  storage.read(key: 'userToken'));
     futureAliments = fetchAliments();
     selectedAliments = [];
     //print the meals
