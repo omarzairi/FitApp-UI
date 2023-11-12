@@ -1,4 +1,5 @@
 import 'package:fitapp/Pages/aliment_list.dart';
+import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'FitApp',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: secondaryColor1Swatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: TextTheme(
           bodyText2: TextStyle(fontFamily: 'Montserrat', fontSize: 18),
@@ -27,10 +28,44 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('FitApp Home Page'),
+      backgroundColor: Color(0xFFf1f6f9),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'FitApp',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 50,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Track your meals and workouts',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 18,
+              ),
+            ),
+          ],
+        ),
       ),
-      body: AlimentListPage(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: TColor.secondaryColor1,
+
+        onPressed: () {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AlimentListPage(mealType: 'Breakfast')),
+            );
+          });
+        },
+        child: Icon(Icons.add, color: Colors.white),
+      ),
     );
   }
 }
