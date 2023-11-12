@@ -37,6 +37,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  food_icons: ^0.0.6
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +61,24 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - assets/img/
+  fonts:
+    - family: Food
+      fonts:
+        - asset: packages/food_icons/Food.ttf
+    - family: Poppins
+      fonts:
+        - asset: assets/font/Poppins-Regular.ttf
+        - asset: assets/font/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/font/Poppins-Bold.ttf
+          weight: 700
+    - family: ubuntu
+      fonts:
+        - asset: assets/fonts/Ubuntu-Medium.ttf
+
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -76,10 +95,8 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-   - family: ubuntu
-     fonts:
-      - asset: assets/fonts/Ubuntu-Medium.ttf
+
+
 
   #   - family: Trajan Pro
   #     fonts:

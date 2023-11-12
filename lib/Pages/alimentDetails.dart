@@ -130,8 +130,11 @@ class Indicator extends StatelessWidget {
 }
 
 class AlimentDetails extends StatefulWidget {
+  final Aliment aliment;
   @override
   _AlimentDetailsState createState() => _AlimentDetailsState();
+  const AlimentDetails({super.key, required this.aliment});
+
 }
 
 class _AlimentDetailsState extends State<AlimentDetails> {
