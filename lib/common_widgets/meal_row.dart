@@ -72,11 +72,19 @@ class MealRow extends StatelessWidget {
                 ],
               ),
             ),
-            CustomCheckbox(
-              value: selected,
-              onChanged: (value) {
+            GestureDetector(
+              onTap: () {
                 onTap();
               },
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: CustomCheckbox(
+                  value: selected,
+                  onChanged: (value) {
+                    onTap();
+                  },
+                ),
+              ),
             ),
           ],
         ),
@@ -100,8 +108,8 @@ class CustomCheckbox extends StatelessWidget {
     return InkWell(
       onTap: () => onChanged(!value),
       child: Container(
-        width: 24,
-        height: 24,
+        width: 30,
+        height: 30,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: value ? TColor.secondaryColor1 : Colors.white,

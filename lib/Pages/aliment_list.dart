@@ -368,7 +368,8 @@ class _AlimentListPageState extends State<AlimentListPage> {
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Poppins'
                   )),
               icon: const Icon(Icons.check,
                   color: Colors.white, size: 20), // Changed color here
