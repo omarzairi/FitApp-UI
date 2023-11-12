@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import '../utils/theme_colors.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -18,15 +20,51 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> sendFormData() async{
     final body=jsonEncode({'email':_email,'password':_password});
     print(body);
+    final url = Uri.parse('https://fit-app-api.azurewebsites.net/api/users/loginUser');
+    final response = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: body
+    );
+    print(response.body);
   }
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white, // Set the background color to white
+        backgroundColor: TColor.white,
+        centerTitle: true,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            height: 40,
+            width: 40,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: TColor.lightGray,
+                borderRadius: BorderRadius.circular(10)),
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: TColor.black,
+              size: 20,
+            ),
+          ),
+        ),
+        title: Text("Sign in",
+            style: TextStyle(
+              color: TColor.black,
+              fontSize: 20,
+              letterSpacing: 1,
+              fontWeight: FontWeight.w500,
+            )),
 
-        iconTheme: const IconThemeData(color: Colors.black),),
+      ),
       body: SingleChildScrollView(
         child: SizedBox(
           width: double.maxFinite,

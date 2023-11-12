@@ -1,5 +1,6 @@
 //import 'package:fitapp/Pages/alimentDetails.dart';
 import 'package:fitapp/Pages/aliment_list.dart';
+import 'package:fitapp/Pages/firstPage.dart';
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -28,49 +29,50 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-
-      //body: AlimentDetails()
-
-      backgroundColor: Color(0xFFf1f6f9),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'FitApp',
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Track your meals and workouts',
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 18,
-              ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: TColor.secondaryColor1,
-
-        onPressed: () {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AlimentListPage(mealType: 'Breakfast')),
-            );
-          });
-        },
-        child: Icon(Icons.add, color: Colors.white),
-      ),
-    );
+    return FirstPage();
+    // return Scaffold(
+    //
+    //
+    //   //body: AlimentDetails()
+    //
+    //   backgroundColor: Color(0xFFf1f6f9),
+    //   body: Center(
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: <Widget>[
+    //         Text(
+    //           'FitApp',
+    //           style: TextStyle(
+    //             fontFamily: 'Montserrat',
+    //             fontSize: 50,
+    //             fontWeight: FontWeight.bold,
+    //           ),
+    //         ),
+    //         SizedBox(height: 20),
+    //         Text(
+    //           'Track your meals and workouts',
+    //           style: TextStyle(
+    //             fontFamily: 'Montserrat',
+    //             fontSize: 18,
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    //   floatingActionButton: FloatingActionButton(
+    //     backgroundColor: TColor.secondaryColor1,
+    //
+    //     onPressed: () {
+    //       WidgetsBinding.instance.addPostFrameCallback((_) {
+    //         Navigator.push(
+    //           context,
+    //           MaterialPageRoute(
+    //               builder: (context) => AlimentListPage(mealType: 'Breakfast')),
+    //         );
+    //       });
+    //     },
+    //     child: Icon(Icons.add, color: Colors.white),
+    //   ),
+    // );
   }
 }
