@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:fitapp/classes/Aliment.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:fl_chart/fl_chart.dart';
 
 import '../utils/theme_colors.dart';
@@ -81,7 +80,6 @@ class PieChartSample2 extends StatelessWidget {
         color: Colors.green,
         titleStyle: const TextStyle( color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
         value: fat,
-        titlePositionPercentageOffset: 0.2,
         radius: 50.0,
       ),
       PieChartSectionData(
@@ -225,8 +223,9 @@ class _AlimentDetailsState extends State<AlimentDetails> {
                   style: const TextStyle(
 
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w400,
                     letterSpacing: 1,
+
                     color: Colors.black,
                     fontFamily: 'Poppins',
                     fontFamilyFallback: <String>[
