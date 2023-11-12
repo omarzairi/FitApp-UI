@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final body=jsonEncode({'email':_email,'password':_password});
     print(body);
 
-    final url = Uri.parse('http://10.0.2.2:5000/api/users/loginUser');
+    final url = Uri.parse('https://fit-app-api.azurewebsites.net/api/users/loginUser');
     try{
       final response = await http.post(url,
           headers: <String, String>{

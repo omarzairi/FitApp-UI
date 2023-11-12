@@ -71,10 +71,18 @@ class _AlimentListPageState extends State<AlimentListPage> {
   ];
 
 
+  Future<String?> readToken() async {
+    return await storage.read(key: 'userToken');
+  }
+
+
+
   @override
   void initState() {
     super.initState();
-    print(  storage.read(key: 'userToken'));
+    readToken().then((userToken) {
+      print('User Token: $userToken');
+    });
     futureAliments = fetchAliments();
     selectedAliments = [];
     //print the meals
