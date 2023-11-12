@@ -1,6 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import '../utils/theme_colors.dart';
+import 'package:fitapp/Pages/aliment_list.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -18,15 +22,73 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> sendFormData() async{
     final body=jsonEncode({'email':_email,'password':_password});
     print(body);
+
+    final url = Uri.parse('https://fit-app-api.azurewebsites.net/api/users/loginUser');
+    try{
+      final response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: body
+      );
+      if(response.statusCode!=200){
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Wrong email or password')),
+        );
+
+      }
+      else{
+        final storage = new FlutterSecureStorage();
+        await storage.write(key: 'userToken', value: jsonDecode(response.body)['token']);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AlimentListPage(mealType:"breakfast" ,)),
+
+        );
+      }
+      print(response.body);
+    }
+    catch(e){
+      print(e);
+    }
+
   }
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white, // Set the background color to white
+        backgroundColor: TColor.white,
+        centerTitle: true,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            height: 40,
+            width: 40,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: TColor.lightGray,
+                borderRadius: BorderRadius.circular(10)),
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: TColor.black,
+              size: 20,
+            ),
+          ),
+        ),
+        title: Text("Sign in",
+            style: TextStyle(
+              color: TColor.black,
+              fontSize: 20,
+              letterSpacing: 1,
+              fontWeight: FontWeight.w500,
+            )),
 
-        iconTheme: const IconThemeData(color: Colors.black),),
+      ),
       body: SingleChildScrollView(
         child: SizedBox(
           width: double.maxFinite,
@@ -144,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
 
-                child: Image.network('https://www.drupal.org/files/issues/2020-01-26/google_logo.png'),
+                child: Image.asset('assets/img/google_logo.png'),
               ),
 
 

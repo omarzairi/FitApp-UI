@@ -2,7 +2,9 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fitapp/Pages/signUpSteps.dart';
+import 'package:fitapp/Pages/signUpStepsUser.dart';
+
+import '../utils/theme_colors.dart';
 
 class SignUpScreen extends StatefulWidget {
    SignUpScreen({super.key});
@@ -30,8 +32,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.black)
+        backgroundColor: TColor.white,
+        centerTitle: true,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            height: 40,
+            width: 40,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: TColor.lightGray,
+                borderRadius: BorderRadius.circular(10)),
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: TColor.black,
+              size: 20,
+            ),
+          ),
+        ),
+        title: Text("Sign up",
+            style: TextStyle(
+              color: TColor.black,
+              fontSize: 20,
+              letterSpacing: 1,
+              fontWeight: FontWeight.w500,
+            )),
+
       ),
       body: SingleChildScrollView(
 
@@ -166,7 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
 
 
-                child: Image.network('https://www.drupal.org/files/issues/2020-01-26/google_logo.png'),
+                child: Image.asset('assets/img/google_logo.png'),
               ),
 
 
