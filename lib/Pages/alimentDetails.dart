@@ -33,7 +33,7 @@ class PieChartSample2 extends StatelessWidget {
               PieChartData(
                 sectionsSpace: 0,
                 centerSpaceRadius: 50,
-                startDegreeOffset: 5,
+                startDegreeOffset: 0,
                 sections: showingSections(),
               ),
             ),
@@ -59,35 +59,38 @@ class PieChartSample2 extends StatelessWidget {
     return [
       PieChartSectionData(
         color: Colors.blue,
-        titleStyle: const TextStyle( color: Colors.white, fontSize: 15),
+        titleStyle: const TextStyle( color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
         value: calories,
         radius: 50.0,
       ),
       PieChartSectionData(
         color: Colors.orange,
         value: protein,
-        titleStyle: const TextStyle( color: Colors.white, fontSize: 15),
+        titleStyle: const TextStyle( color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
 
         radius: 50.0,
       ),
       PieChartSectionData(
         color: Colors.purple,
         value: carbs,
-        titleStyle: const TextStyle( color: Colors.white, fontSize: 15),
+        titleStyle: const TextStyle( color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
 
         radius: 50.0,
       ),
       PieChartSectionData(
         color: Colors.green,
-        titleStyle: const TextStyle( color: Colors.white, fontSize: 15),
-
+        titleStyle: const TextStyle( color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
         value: fat,
+        titlePositionPercentageOffset: 0.2,
         radius: 50.0,
       ),
       PieChartSectionData(
         color: Colors.red,
         value: sugar,
-        titleStyle: const TextStyle( color: Colors.white, fontSize: 15),
+badgePositionPercentageOffset: 1,
+        titleStyle: const TextStyle( color: Colors.white, fontSize: 15,
+    fontWeight: FontWeight.bold
+        ),
 
         radius: 50.0,
       ),
