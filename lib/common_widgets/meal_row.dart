@@ -1,6 +1,7 @@
 import 'package:fitapp/classes/Aliment.dart';
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:food_icons/food_icons.dart';
 
 class MealRow extends StatelessWidget {
   final Aliment aliment;
@@ -14,6 +15,9 @@ class MealRow extends StatelessWidget {
     required this.onTap,
   }) : super(key: key);
 
+  String formatNumber(double num) {
+    return num % 1 == 0 ? num.toInt().toString() : num.toString();
+  }
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -36,8 +40,8 @@ class MealRow extends StatelessWidget {
                 // This makes the sides round
                 boxShadow: const [
                   BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 5, // This adds the shadow
+                    color: Colors.black12,
+                    blurRadius: 6, // This adds the shadow
                   ),
                 ],
                 image: DecorationImage(
@@ -62,7 +66,7 @@ class MealRow extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${aliment.calories} | ${aliment.servingSize} ${aliment.servingUnit}",
+                    "${formatNumber(aliment.calories)} calories | ${formatNumber(aliment.servingSize)} ${aliment.servingUnit}",
                     style: TextStyle(color: TColor.gray, fontSize: 12),
                   ),
                 ],
@@ -105,8 +109,8 @@ class CustomCheckbox extends StatelessWidget {
         ),
         child: Center(
           child: value
-              ? const Icon(
-                  Icons.check,
+              ?  Icon(
+                  FoodIcons.getIcon('wisk'),
                   size: 18,
                   color: Colors.white,
                 )

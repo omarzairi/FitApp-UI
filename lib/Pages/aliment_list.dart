@@ -74,6 +74,8 @@ class _AlimentListPageState extends State<AlimentListPage> {
     super.initState();
     futureAliments = fetchAliments();
     selectedAliments = [];
+    //print the meals
+    futureAliments.then((value) => print(value));
   }
 
   String formatNumber(double num) {
@@ -234,10 +236,15 @@ class _AlimentListPageState extends State<AlimentListPage> {
             ),
             Container(
                 // Wrap your Column with a Container
-                height: media.height - AppBar().preferredSize.height - 64,
+                constraints: BoxConstraints(
+                  minHeight: media.height * 0.5,
+                  maxHeight: double.infinity,
+                ),
+                height: media.height*1.5 ,
                 // Adjust the height as needed
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Expanded(
                         child: FutureBuilder<List<Aliment>>(
@@ -246,10 +253,11 @@ class _AlimentListPageState extends State<AlimentListPage> {
                             if (snapshot.connectionState ==
                                     ConnectionState.done &&
                                 selectedAliments.isEmpty) {
-                              selectedAliments = List<bool>.filled(
-                                  snapshot.data!.length, false);
+                              selectedAliments = List<bool>.filled(snapshot.data?.length ?? 0, false);
+
                             }
                             if (snapshot.hasData) {
+
                               return ListView.builder(
                                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                 physics: const NeverScrollableScrollPhysics(),

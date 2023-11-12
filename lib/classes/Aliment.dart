@@ -25,14 +25,14 @@ class Aliment {
 
   factory Aliment.fromJson(Map<String, dynamic> json) {
     return Aliment(
-      id: json['_id'],
-      name: json['name'],
+      id: json['_id']??'',
+      name: json['name']??'',
       calories: json['calories'].toDouble(),
       protein: json['protein'].toDouble(),
       carbs: json['carbs'].toDouble(),
       fat: json['fat'].toDouble(),
       sugar: json['sugar'].toDouble(),
-      image: json['image'],
+      image: json['image'] ?? '',
       servingSize: json['servingSize'].toDouble(),
       servingUnit: json['servingUnit'],
     );
