@@ -1,85 +1,96 @@
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white, // Set the background color to white
-
-        iconTheme: IconThemeData(color: Colors.black),),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black)
+      ),
       body: SingleChildScrollView(
         child: SizedBox(
           width: double.maxFinite,
+
           child: Column(
-
-
-
             children: <Widget>[
               Container(
                 height: 100,
                 width: 100,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/logo.png'),
                     fit: BoxFit.fill,
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
+             const SizedBox(height: 20),
+             const  Text(
                 'Welcome to FitApp',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
-                'Please login to your account',
+             const  SizedBox(height: 20),
+             const  Text(
+                'Create an account',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20),
-              Container(
+             const SizedBox(height: 20),
+              SizedBox(
                 width: 300,
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Email',
-                    prefixIcon: Icon(Icons.email),
+                    prefixIcon: const Icon(Icons.email),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              Container(
+             const SizedBox(height: 20),
+              SizedBox(
                 width: 300,
                 child: TextField(
                   obscureText: true,
                   decoration: InputDecoration(
                     hintText: 'Password',
-                    prefixIcon: Icon(Icons.lock),
+                    prefixIcon:const Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+              ),const SizedBox(height: 20),
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Confirm password',
+                    prefixIcon: const Icon(Icons.lock),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              Container(
+              const SizedBox(height: 20),
+              SizedBox(
                 width: 300,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {},
 
-                  child: Text(
-                    'Login',
+                  child: const Text(
+                    'Sign up',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.white,
@@ -87,26 +98,18 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
-                'Forgot Password?',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-
-                ),
-              ),
 
 
-              SizedBox(height: 20),
-              Text(
+
+              const SizedBox(height: 20),
+              const Text(
                 'Or',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
 
                 height: 50,

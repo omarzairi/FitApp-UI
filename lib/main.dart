@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fitapp/Pages/signUpSteps.dart';
 import 'package:fitapp/Pages/login.dart';
+import 'package:fitapp/Pages/SignUp.dart';
+import 'package:fitapp/Pages/firstPage.dart';
 void main() {
   runApp(MyApp());
 }
@@ -26,11 +28,11 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('FitApp Home Page'),
-      ),
-      body: UserStepperForm(),
-    );
+    return  FirstPage();
+      // appBar: AppBar(
+      //   title: Text('FitApp Home Page'),
+      // ),
+
+
   }
 }
