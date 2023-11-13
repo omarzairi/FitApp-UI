@@ -4,7 +4,7 @@ import 'package:fitapp/Pages/SignUp.dart';
 
 class FirstPage extends StatelessWidget {
   const FirstPage({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +27,7 @@ class FirstPage extends StatelessWidget {
                     'Welcome to FitApp',
                     style: TextStyle(color: Colors.white, fontSize: 40.0,
                     fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                   ),
 
 
@@ -73,7 +74,7 @@ class FirstPage extends StatelessWidget {
                     const SizedBox(height: 20),
                     const Text(
                       'Already Have an account?',
-                      style: TextStyle(color: Colors.white, fontSize: 20.0,
+                      style: TextStyle(color: Colors.white, fontSize: 15.0,
                       fontWeight: FontWeight.bold,
                       ),
                     ),

@@ -3,7 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fitapp/Pages/signUpStepsUser.dart';
-
+import 'package:fitapp/controllers/user_controller.dart';
+import 'package:get/get.dart';
 import '../utils/theme_colors.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final UserController userController = Get.put(UserController());
   late HashMap<String,String> _map = HashMap<String,String>();
   late String _confirmPass;
   Future<void> sendFormData()async {
@@ -91,7 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
              const SizedBox(height: 20),
               SizedBox(
                 width: 300,
-                child: TextField(
+                child: TextFormField(
                   onChanged: (value){
                     setState(() {
                       _map["email"] = value;
