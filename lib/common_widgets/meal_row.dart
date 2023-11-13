@@ -1,4 +1,4 @@
-import 'package:fitapp/classes/Aliment.dart';
+import 'package:fitapp/models/Aliment.dart';
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:food_icons/food_icons.dart';

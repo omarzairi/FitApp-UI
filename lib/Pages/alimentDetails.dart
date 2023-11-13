@@ -1,7 +1,9 @@
 import 'dart:convert';
-import 'package:fitapp/classes/Aliment.dart';
+import 'package:fitapp/controllers/aliment_controller.dart';
+import 'package:fitapp/models/Aliment.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:get/get.dart';
 
 import '../utils/theme_colors.dart';
 
@@ -123,9 +125,9 @@ class Indicator extends StatelessWidget {
 
 
 class AlimentDetails extends StatefulWidget {
-  final Aliment aliment;
+  final int index;
 
-  const AlimentDetails({Key? key, required this.aliment}) : super(key: key);
+  const AlimentDetails({Key? key, required this.index}) : super(key: key);
 
   @override
   _AlimentDetailsState createState() => _AlimentDetailsState();
@@ -133,11 +135,12 @@ class AlimentDetails extends StatefulWidget {
 
 class _AlimentDetailsState extends State<AlimentDetails> {
   late Aliment _aliment;
+  final AlimentController _alimentController = Get.find();
 
   @override
   void initState() {
     super.initState();
-    _aliment = widget.aliment;
+    _aliment = _alimentController.getAliment(widget.index);
   }
 
   @override
@@ -233,8 +236,6 @@ class _AlimentDetailsState extends State<AlimentDetails> {
                       'Noto Color Emoji',
                     ],
                   ),
-
-
             ),
             const SizedBox(height: 40),
             Container(

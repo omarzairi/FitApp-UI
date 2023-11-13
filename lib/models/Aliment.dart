@@ -25,8 +25,8 @@ class Aliment {
 
   factory Aliment.fromJson(Map<String, dynamic> json) {
     return Aliment(
-      id: json['_id']??'',
-      name: json['name']??'',
+      id: json['_id'] ?? '',
+      name: json['name'] ?? '',
       calories: json['calories'].toDouble(),
       protein: json['protein'].toDouble(),
       carbs: json['carbs'].toDouble(),
@@ -36,6 +36,14 @@ class Aliment {
       servingSize: json['servingSize'].toDouble(),
       servingUnit: json['servingUnit'],
     );
+  }
+
+  static List<Aliment> fromJsonList(List<dynamic> json) {
+    List<Aliment> aliments = [];
+    json.forEach((element) {
+      aliments.add(Aliment.fromJson(element));
+    });
+    return aliments;
   }
 
   Map<String, dynamic> toJson() {

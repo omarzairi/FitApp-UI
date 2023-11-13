@@ -10,7 +10,6 @@ class RoundButton extends StatelessWidget {
   final double fontSize;
   final double elevation;
   final FontWeight fontWeight;
-
   const RoundButton(
       {super.key,
         required this.title,

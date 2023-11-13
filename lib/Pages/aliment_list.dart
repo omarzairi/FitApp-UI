@@ -1,25 +1,16 @@
 import 'dart:convert';
 
-import 'package:fitapp/classes/Aliment.dart';
+import 'package:fitapp/controllers/aliment_controller.dart';
+import 'package:fitapp/models/Aliment.dart';
 import 'package:fitapp/common_widgets/meal_category_cell.dart';
 import 'package:fitapp/common_widgets/meal_row.dart';
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'alimentDetails.dart';
-
-Future<List<Aliment>> fetchAliments() async {
-  final response = await http
-      .get(Uri.parse('https://fit-app-api.azurewebsites.net/api/aliments'));
-
-  if (response.statusCode == 200) {
-    List<dynamic> body = jsonDecode(response.body);
-    return body.map((dynamic item) => Aliment.fromJson(item)).toList();
-  } else {
-    throw Exception('Failed to load aliments');
-  }
-}
 
 class AlimentListPage extends StatefulWidget {
   final String mealType;
@@ -31,8 +22,7 @@ class AlimentListPage extends StatefulWidget {
 }
 
 class _AlimentListPageState extends State<AlimentListPage> {
-  late Future<List<Aliment>> futureAliments;
-  late List<bool> selectedAliments;
+  AlimentController alimentController = AlimentController();
   TextEditingController txtSearch = TextEditingController();
   final storage = FlutterSecureStorage();
   List categoryArr = [
@@ -70,23 +60,28 @@ class _AlimentListPageState extends State<AlimentListPage> {
     },
   ];
 
-
   Future<String?> readToken() async {
     return await storage.read(key: 'userToken');
   }
+  void _onAlimentAdded(int index) {
+    var aliment = alimentController.getAliment(index);
+    alimentController.addAlimentToConsumption(
+        '6551066650ca084d25a703fa', aliment.id, 1);
+  }
 
+  Future<void> initData() async {
+    await readToken().then((userToken) {
+      print('User Token: $userToken');
+    });
 
+    // Fetch data using controller
+    alimentController.fetchAliments();
+  }
 
   @override
   void initState() {
     super.initState();
-    readToken().then((userToken) {
-      print('User Token: $userToken');
-    });
-    futureAliments = fetchAliments();
-    selectedAliments = [];
-    //print the meals
-    futureAliments.then((value) => print(value));
+    initData();
   }
 
   String formatNumber(double num) {
@@ -95,6 +90,7 @@ class _AlimentListPageState extends State<AlimentListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final AlimentController alimentController = Get.put(AlimentController());
     var media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -203,7 +199,8 @@ class _AlimentListPageState extends State<AlimentListPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 10),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -251,111 +248,49 @@ class _AlimentListPageState extends State<AlimentListPage> {
                   minHeight: media.height * 0.5,
                   maxHeight: double.infinity,
                 ),
-                height: media.height*1.5 ,
+                height: media.height * 1.5,
                 // Adjust the height as needed
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Expanded(
-                        child: FutureBuilder<List<Aliment>>(
-                          future: futureAliments,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                    ConnectionState.done &&
-                                selectedAliments.isEmpty) {
-                              selectedAliments = List<bool>.filled(snapshot.data?.length ?? 0, false);
-
-                            }
-                            if (snapshot.hasData) {
-
+                        child: Obx(
+                          () {
+                            if (alimentController.isLoading.value) {
+                              return Center(child: CircularProgressIndicator());
+                            } else {
                               return ListView.builder(
-                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount: snapshot.data?.length,
+                                itemCount: alimentController.alimentList.length,
                                 itemBuilder: (context, index) {
-                                  // return Card(
-                                  //   child: Row(
-                                  //     children: <Widget>[
-                                  //       Checkbox(
-                                  //         value: selectedAliments[index],
-                                  //         onChanged: (bool? value) {
-                                  //           setState(() {
-                                  //             selectedAliments[index] = value!;
-                                  //           });
-                                  //         },
-                                  //       ),
-                                  //       ClipOval(
-                                  //         child: Image.network(
-                                  //           snapshot.data![index].image!,
-                                  //           width: 50,
-                                  //           height: 50,
-                                  //           fit: BoxFit.cover,
-                                  //         ),
-                                  //       ),
-                                  //       Expanded(
-                                  //         child: Column(
-                                  //           crossAxisAlignment:
-                                  //               CrossAxisAlignment.start,
-                                  //           children: <Widget>[
-                                  //             Text(
-                                  //               snapshot.data![index].name,
-                                  //               style: const TextStyle(
-                                  //                 fontSize: 20,
-                                  //                 fontWeight: FontWeight.bold,
-                                  //               ),
-                                  //             ),
-                                  //             Row(
-                                  //               children: <Widget>[
-                                  //                 Text(
-                                  //                   '${formatNumber(snapshot.data![index].calories)} calories',
-                                  //                   style: const TextStyle(
-                                  //                     color: Colors.blueAccent,
-                                  //                     fontSize: 16,
-                                  //                     fontWeight:
-                                  //                         FontWeight.bold,
-                                  //                   ),
-                                  //                 ),
-                                  //                 Text(
-                                  //                   ' / ${formatNumber(snapshot.data![index].servingSize)} ${snapshot.data![index].servingUnit}',
-                                  //                   style: const TextStyle(
-                                  //                     fontSize: 16,
-                                  //                   ),
-                                  //                 ),
-                                  //               ],
-                                  //             ),
-                                  //           ],
-                                  //         ),
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // );
                                   return InkWell(
-                                    onTap: (){
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => AlimentDetails(aliment: snapshot.data![index])),
-                                      );                                    },
-                                    child: MealRow(
-                                      aliment: snapshot.data![index],
-                                      selected: selectedAliments[index],
                                       onTap: () {
-                                        setState(() {
-                                          selectedAliments[index] =
-                                              !selectedAliments[index];
-                                        });
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                AlimentDetails(index: index),
+                                          ),
+                                        );
                                       },
-                                    ),
-                                  );
+                                      child: Obx(
+                                        () => MealRow(
+                                          aliment: alimentController
+                                              .getAliment(index),
+                                          selected: alimentController
+                                              .selectedAliments[index],
+                                          onTap: () {
+                                            alimentController
+                                                .toggleSelection(index);
+                                          },
+                                        ),
+                                      ));
                                 },
                               );
-                            } else if (snapshot.hasError) {
-                              return Text("${snapshot.error}");
                             }
-
-                            // By default, show a loading spinner.
-                            return const CircularProgressIndicator();
                           },
                         ),
                       )
@@ -363,29 +298,35 @@ class _AlimentListPageState extends State<AlimentListPage> {
           ],
         ),
       ),
-      floatingActionButton: selectedAliments.contains(true)
-          ? FloatingActionButton.extended(
+      floatingActionButton: Obx(
+        () => alimentController.selectedAliments.contains(true)
+            ? FloatingActionButton.extended(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                backgroundColor: TColor.secondaryColor1,
+                onPressed: () {
+                  for (int i = 0;
+                      i < alimentController.selectedAliments.length;
+                      i++) {
+                    if (alimentController.selectedAliments[i]) {
+                      _onAlimentAdded(i);
+                    }
+                  }
+                  alimentController.clearSelection();
 
-              shape: RoundedRectangleBorder(
-
-                  borderRadius: BorderRadius.circular(10)),
-              backgroundColor: TColor.secondaryColor1,
-              onPressed: () {
-                // Add your action here
-              },
-              label: Text('Add (${selectedAliments.where((b) => b).length})',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Poppins'
-                  )),
-              icon: const Icon(Icons.check,
-                  color: Colors.white, size: 20), // Changed color here
-            )
-          : null,
+                },
+                label: Text(
+                    'Add (${alimentController.selectedAliments.where((b) => b).length})',
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Poppins')),
+                icon: const Icon(Icons.check,
+                    color: Colors.white, size: 20), // Changed color here
+              )
+            : Container(), // Return an empty Container when FloatingActionButton is null
+      ),
     );
   }
 }
-
-
