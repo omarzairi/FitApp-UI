@@ -16,8 +16,7 @@ class ObjectifController extends GetxController{
       if (response.statusCode == 200) {
         if (response.data != null && response.data is Map<String, dynamic>) {
           objectif = Objectif.fromJson(response.data!);
-          Get.snackbar("Done", "Objectif created");
-          Get.offAll(const AlimentListPage(mealType: "breakfast"));
+
         } else {
           Get.snackbar("Error", "Invalid response structure");
           throw Exception("Invalid response structure");

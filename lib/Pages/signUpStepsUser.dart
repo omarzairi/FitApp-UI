@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 
 
 
+
 class UserStepperForm extends StatefulWidget {
   final String email;
   final String password;
@@ -69,6 +70,14 @@ class _StepsState extends State<UserStepperForm> {
           "actPhysique": _selectItem1,
           "user": responseUser.id,
         });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Account created successfully'),
+        backgroundColor: Colors.lightGreen,
+        duration: Duration(seconds: 3),),
+      );
+
+      Get.offAllNamed('/alimentlist');
 
 
 

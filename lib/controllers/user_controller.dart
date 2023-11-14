@@ -1,5 +1,3 @@
-import 'dart:collection';
-import 'dart:convert';
 
 import 'package:fitapp/services/user_service.dart' ;
 import 'package:get/get.dart';
@@ -7,7 +5,7 @@ import 'package:fitapp/models/User.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../Pages/aliment_list.dart';
-import '../Pages/signUpStepsUser.dart';
+
 
 class UserController extends GetxController{
   late User user;
@@ -21,10 +19,9 @@ class UserController extends GetxController{
         // Check if 'data' field is present in the response
         if (response.data != null && response.data is Map<String, dynamic>) {
           user = User.fromJson(response.data!);
-          print(response.data['token']  );
+
           storage.write(key: "userToken", value: response.data['token'] );
-          print(user);
-print(storage.read(key: "userToken"));
+
           return user;
         } else {
           Get.snackbar("Error", "Invalid response structure");

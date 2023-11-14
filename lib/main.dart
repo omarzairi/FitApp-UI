@@ -1,17 +1,24 @@
 //import 'package:fitapp/Pages/alimentDetails.dart';
 import 'package:fitapp/Pages/aliment_list.dart';
 import 'package:fitapp/Pages/firstPage.dart';
+import 'package:fitapp/routes/route.dart';
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 void main() {
   runApp(MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
+  final storage=const FlutterSecureStorage() ;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      initialRoute: storage.read(key: 'userToken')!=null?'/alimentlist':'/',
+      getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
       title: 'FitApp',
       theme: ThemeData(
