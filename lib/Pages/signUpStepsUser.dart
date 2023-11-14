@@ -4,14 +4,20 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 
+import '../models/User.dart';
 import '../utils/theme_colors.dart';
 import'package:fitapp/Pages/aliment_list.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fitapp/controllers/user_controller.dart';
+import 'package:fitapp/controllers/objectif_controller.dart';
+import 'package:get/get.dart';
+
 
 
 class UserStepperForm extends StatefulWidget {
-  final HashMap<String, String> usermap;
-   UserStepperForm({super.key, required this.usermap});
+  final String email;
+  final String password;
+   UserStepperForm({super.key, required String this.email, required String this.password});
 
 
   @override
@@ -19,109 +25,62 @@ class UserStepperForm extends StatefulWidget {
 }
 
 class _StepsState extends State<UserStepperForm> {
-  late final HashMap<String, String> _usermap;
+  late  String _email;
+  late  String _password;
   @override
   void initState() {
     super.initState();
-    _usermap = widget.usermap;
+    _email = widget.email;
+    _password = widget.password;
   }
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController weightController = TextEditingController();
+  final TextEditingController heightController = TextEditingController();
+  final TextEditingController weightObjController = TextEditingController();
+  final TextEditingController weightPerWeekController = TextEditingController();
+
 
   int index = 0;
   String _selectedItem = '0.5';
   String _selectItem1 = 'Sedentary';
   String _sex='Male';
 
-  final HashMap<String, String> _map = HashMap<String, String>();
-
-
-
-
-
   Future<void> sendFormData() async {
     try {
-      _map["email"] = _usermap["email"]!;
-      _map["password"] = _usermap["password"]!;
-      _map["actPhysique"] = _selectItem1;
-      _map["poidsSemaine"] = _selectedItem;
-      _map["sex"] = _sex;
-
-      final urlUser = Uri.parse('http://10.0.2.2:5000/api/users/addUser');
-      final urlObj = Uri.parse('http://10.0.2.2:5000/api/objectifs/addObjectif');
-      final userBody = jsonEncode({
-        'nom': _map["nom"],
-        'prenom': _map["prenom"],
-        'email': _map["email"]!,
-        'password': _map["password"]!,
-        'age': int.parse(_map["age"]!),
-        'sex': _map["sex"],
-        'poids': int.parse(_map["poids"]!),
-        'taille': int.parse(_map["taille"]!),
+      final responseUser = await UserController().addUser({
+        "nom": lastNameController.text,
+        "prenom": nameController.text,
+        "email": _email,
+        "password": _password,
+        "age": int.parse(ageController.text),
+        "taille": double.parse(heightController.text),
+        "poids": double.parse(weightController.text),
+        "sex": _sex,
       });
 
-      final responseUser = await http.post(
-        urlUser,
-        headers: {'Content-Type': 'application/json'},
-        body: userBody,
-      );
 
-      if (responseUser.statusCode != 200) {
-        // Handle HTTP error
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${jsonDecode(responseUser.body)['message']}'),
-            duration: Duration(seconds: 3),
-          ),
-        );
-      }
 
-      final user = jsonDecode(responseUser.body);
-      final objBody = jsonEncode({
-        'user': user['_id'],
-        'poidsObj': int.parse(_map["poidsObj"]!),
-        'poidsParSemaine': double.parse(_map["poidsSemaine"]!),
-        'actPhysique': _map["actPhysique"],
-      });
+        final responseObj = await ObjectifController().addObjectif({
+          "poidsObj": double.parse(weightObjController.text),
+          "poidsParSemaine": double.parse(_selectedItem),
+          "actPhysique": _selectItem1,
+          "user": responseUser.id,
+        });
 
-      final responseObj = await http.post(
-        urlObj,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + user['token'],
-        },
-        body: objBody,
-      );
 
-      if (responseObj.statusCode != 200) {
-        // Handle HTTP error for the second request
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${jsonDecode(responseObj.body)['message']}'),
-            duration: Duration(seconds: 3),
-          ),
-        );
-      }
-      else{
-        final storage = new FlutterSecureStorage();
-        await storage.write(key: 'userToken', value: user['token']);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Account created successfully'),
-            duration: Duration(seconds: 3),
-          ),
-        );
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AlimentListPage(mealType:"breakfast" ,)),
 
-        );
-      }
 
-      print(responseObj.body);
     } catch (e) {
-      // Handle other types of errors
-      print('An error occurred: $e');
+      print('Error in sendFormData: $e');
+      // Handle the error as needed.
     }
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -189,6 +148,8 @@ class _StepsState extends State<UserStepperForm> {
             content: Column(
               children: [
                 TextFormField(
+                  controller: nameController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: const InputDecoration(labelText: 'Name'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -196,21 +157,19 @@ class _StepsState extends State<UserStepperForm> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _map["prenom"] = value;
-                  },
+
                 ),
                 TextFormField(
+                  controller: lastNameController,
                   decoration: const InputDecoration(labelText: 'Last name'),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your last name';
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _map["nom"] = value;
-                  },
+
                 )
               ],
             ),
@@ -230,7 +189,7 @@ class _StepsState extends State<UserStepperForm> {
                     onSelected: (String? value) {
                       setState(() {
                         _sex = value!;
-                        _map["sex"] = value;
+
                       });
                     },
                     dropdownMenuEntries: const [
@@ -243,6 +202,8 @@ class _StepsState extends State<UserStepperForm> {
                   ),
                 ),
                 TextFormField(
+                  controller: ageController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: const InputDecoration(labelText: 'Age'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -250,9 +211,7 @@ class _StepsState extends State<UserStepperForm> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _map["age"] = value;
-                  },
+
                 ),
 
 
@@ -264,18 +223,21 @@ class _StepsState extends State<UserStepperForm> {
             content: Column(
               children: [
                 TextFormField(
+
                   decoration: const InputDecoration(labelText: 'Weight (kg)'),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller:weightController ,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your weight';
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _map["poids"] = value;
-                  },
+
                 ),
                 TextFormField(
+                  controller: heightController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: const InputDecoration(labelText: 'Height (cm)'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -283,9 +245,7 @@ class _StepsState extends State<UserStepperForm> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _map["taille"] = value;
-                  },
+
                 )
               ],
             ),
@@ -296,6 +256,8 @@ class _StepsState extends State<UserStepperForm> {
             isActive: index > 3,
             content: Column(children: [
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: weightObjController,
                 decoration: const InputDecoration(labelText: 'Ojectif (kg)'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -303,9 +265,7 @@ class _StepsState extends State<UserStepperForm> {
                   }
                   return null;
                 },
-                onChanged: (value) {
-                  _map["poidsObj"] = value;
-                },
+
               ),
               const SizedBox(height: 16),
               SizedBox(
@@ -316,7 +276,7 @@ class _StepsState extends State<UserStepperForm> {
                   onSelected: (String? value) {
                     setState(() {
                       _selectedItem = value!;
-                      _map["poidsSemaine"] = value;
+
                     });
                   },
                   dropdownMenuEntries: const [
@@ -341,7 +301,7 @@ class _StepsState extends State<UserStepperForm> {
               onSelected: (String? value) {
                 setState(() {
                   _selectItem1 = value!;
-                  _map["actPhysique"] = value;
+
                 });
               },
               dropdownMenuEntries: const [

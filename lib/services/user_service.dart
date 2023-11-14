@@ -7,11 +7,11 @@ class UserService {
     dio = Dio(
       BaseOptions(
         baseUrl: 'https://fit-app-api.azurewebsites.net/api/users',
-        connectTimeout: 5000,
-        receiveTimeout: 3000,
+
       ),
     );
   }
+
 
   Future<Response> getUserById(String id) async {
 
@@ -22,12 +22,11 @@ class UserService {
 
   }
 
-  Future<Response> createUser(userData) async {
-
-      Response response = await dio.post('/addUser', data: userData);
-      return response;
-
+  Future<Response> createUser(Map<String, dynamic> userData) async {
+    Response response = await dio.post('/addUser', data: userData);
+    return response;
   }
+
 
   Future<Response> updateUser(String id, userData) async {
 

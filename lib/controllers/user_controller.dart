@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:fitapp/services/user_service.dart' ;
 import 'package:get/get.dart';
@@ -12,26 +13,33 @@ class UserController extends GetxController{
   late User user;
   final storage=const FlutterSecureStorage() ;
 
-  Future<void> addUser(userData) async {
-    try{
-      var response= await UserService().createUser(userData);
-      if(response.statusCode==200)
-        {
-          user=response.data;
-          // Get.offAll( UserStepperForm(usermap: HashMap,));
 
+  Future<User> addUser(Map<String, dynamic> userData) async {
+    try {
+      var response = await UserService().createUser(userData);
+      if (response.statusCode == 200) {
+        // Check if 'data' field is present in the response
+        if (response.data != null && response.data is Map<String, dynamic>) {
+          user = User.fromJson(response.data!);
+          print(response.data['token']  );
+          storage.write(key: "userToken", value: response.data['token'] );
+          print(user);
+print(storage.read(key: "userToken"));
+          return user;
+        } else {
+          Get.snackbar("Error", "Invalid response structure");
+          throw Exception("Invalid response structure");
         }
-      else{
-        Get.snackbar("Error", response.data['message'] );
+      } else {
+        Get.snackbar("Error", response.data['message']);
+        print(response.data['message']);
+        throw Exception(response.data['message']);
       }
-
-    }
-    catch(e){
+    } catch (e) {
       throw Exception(e.toString());
     }
-
   }
-  Future<void> updateUser(String id,userData) async {
+  Future<void> updateUser(String id,Map<String,dynamic>userData) async {
     try{
       var response= await UserService().updateUser(id,userData);
       if(response.statusCode==200)
@@ -51,12 +59,14 @@ class UserController extends GetxController{
     }
 
   }
-  Future<void> loginUser(userData) async {
+  Future<void> loginUser(Map<String,dynamic>userData) async {
     try{
       var response= await UserService().loginUser(userData);
       if(response.statusCode==200)
         {
-          user=response.data;
+          user=(User.fromJson(response.data));
+
+          storage.write(key: "userToken", value: response.data['token'] );
           Get.offAll(const AlimentListPage(mealType:"breakfast" ,));
 
         }

@@ -1,5 +1,5 @@
 class User{
-  String id;
+  String? id;
   String nom;
   String prenom;
   String email;
@@ -11,7 +11,7 @@ class User{
   DateTime? date;
 
 
-  User({required this.id,required this.nom, required this.prenom,required this.email,required this.password,
+  User({this.id,required this.nom, required this.prenom,required this.email,required this.password,
   required this.sex,required this.age,required this.taille,required this.poids, this.date});
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -25,7 +25,7 @@ class User{
       age: json['age'].toInt(),
       taille: json['taille'].toDouble(),
       poids: json['poids'].toDouble(),
-      date: json['date'].toDate(),
+      date: json['date'] != null ? DateTime.parse(json['date']) : null,
 
 
 

@@ -3,8 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fitapp/Pages/signUpStepsUser.dart';
-import 'package:fitapp/controllers/user_controller.dart';
-import 'package:get/get.dart';
+
 import '../utils/theme_colors.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -16,19 +15,26 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final UserController userController = Get.put(UserController());
-  late HashMap<String,String> _map = HashMap<String,String>();
-  late String _confirmPass;
+
+
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmpasswordController = TextEditingController();
+
+
   Future<void> sendFormData()async {
-    if(_map["password"] != _confirmPass){
-      print("Password and confirm password are not the same");
-
+    if(passwordController.text!=confirmpasswordController.text){
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Passwords do not match')),
+      );
+      return;
+    }else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => UserStepperForm(email:emailController.text,password:passwordController.text,)),
+      );
     }
-    else{
-      final body=jsonEncode({'email':_map["email"],'password':_map["password"]});
-      print(body);
-    }
-
   }
   @override
   Widget build(BuildContext context) {
@@ -94,12 +100,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(
                 width: 300,
                 child: TextFormField(
-                  onChanged: (value){
-                    setState(() {
-                      _map["email"] = value;
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: emailController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email address';
+                    }
 
-                    });
+                    // Email validation using a regular expression
+                    final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+                    if (!emailRegex.hasMatch(value)) {
+                      return 'Please enter a valid email address';
+                    }
 
+                    return null; // Return null if the email is valid
                   },
                   decoration: InputDecoration(
                     hintText: 'Email',
@@ -113,13 +127,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
              const SizedBox(height: 20),
               SizedBox(
                 width: 300,
-                child: TextField(
-                  onChanged: (value){
-                    setState(() {
-                      _map["password"] =value;
-                    });
-
+                child: TextFormField(
+                  autovalidateMode:AutovalidateMode.onUserInteraction,
+                  controller: passwordController,
+                  validator: (value){
+                    if(value==null || value.isEmpty){
+                      return 'Please enter your password';
+                    }
+                    if(value.length<8){
+                      return 'Password must be at least 8 characters long';
+                    }
+                    return null;
                   },
+
+
+
                   obscureText: true,
                   decoration: InputDecoration(
 
@@ -133,12 +155,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),const SizedBox(height: 20),
               SizedBox(
                 width: 300,
-                child: TextField(
-                  onChanged: (value){
-                    setState(() {
-                      _confirmPass =value;
-                    });
-
+                child: TextFormField(
+                  autovalidateMode:AutovalidateMode.onUserInteraction,
+                  controller: confirmpasswordController,
+                  validator: (value){
+                    if(value==null || value.isEmpty){
+                      return 'Please enter your password';
+                    }
+                    if(value.length<8){
+                      return 'Password must be at least 8 characters long';
+                    }
+                    return null;
                   },
                   obscureText: true,
                   decoration: InputDecoration(
@@ -158,10 +185,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                   onPressed: () async {
                     await sendFormData();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => UserStepperForm(usermap:_map)),
-                    );
+
 
                   },
 
