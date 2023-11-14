@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: storage.read(key: 'userToken')!=null?'/alimentlist':'/',
+      initialRoute: storage.read(key: 'userToken')!=null?'/chat':'/',
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
       title: 'FitApp',

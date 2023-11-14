@@ -1,4 +1,5 @@
 //routes file
+import 'package:fitapp/Pages/conversation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +15,7 @@ class AppRoutes {
     GetPage(name: '/', page: () => FirstPage()),
     GetPage(name: '/login', page: () => LoginScreen()),
     GetPage(name: '/signup', page: () => SignUpScreen()),
-
+    GetPage(name: '/chat', page: ()=>ConversationList()),
     GetPage(name: '/alimentlist', page: () => AlimentListPage(mealType:"breakfast" ,)),
   ];
 

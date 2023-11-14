@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 
 
 class ConversationList extends StatefulWidget {
+
+  const ConversationList({Key? key}) : super(key: key);
   @override
   State<ConversationList> createState() => _ConversationListState();
 }
