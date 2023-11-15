@@ -2,6 +2,8 @@
 import 'package:fitapp/Pages/homepage/meals.dart';
 import 'package:fitapp/controllers/objectif_controller.dart';
 import 'package:fitapp/controllers/user_controller.dart';
+import 'package:fitapp/models/Objectif.dart';
+import 'package:fitapp/models/User.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,10 +44,14 @@ class _HomeViewState extends State<HomeView> {
 
   UserController userController = UserController();
   ObjectifController objectifController = ObjectifController();
-  
+  late User user;
+  late Objectif objective;
+
   Future<void> initData() async {
     userController.getUserById("654cb0b849c097a62f47e84a");
     objectifController.getObjectiveByUserId("654cb0b849c097a62f47e84a");
+    user=userController.user;
+    objective = objectifController.objectif;
   }
 
   @override
@@ -58,20 +64,21 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
-    
+    final UserController userController = Get.put(UserController());
+
     return Scaffold(
       drawer: const Drawer(),
       backgroundColor: TColor.white,
         appBar: AppBar(
           backgroundColor: TColor.white,
-          title:                 Row(
+          title:
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FutureBuilder(
                 future: initData(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    var user = userController.user;
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,8 +145,6 @@ class _HomeViewState extends State<HomeView> {
         future:initData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            var user = userController.user;
-            var objective = objectifController.objectif;
             double calculatedValue = user.poids / ((user.taille / 100)*(user.taille/100));
             return SingleChildScrollView(
               child: SafeArea(
@@ -148,7 +153,6 @@ class _HomeViewState extends State<HomeView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       SizedBox(
                         height: media.width * 0.05,
                       ),

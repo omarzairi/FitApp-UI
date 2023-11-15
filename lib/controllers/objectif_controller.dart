@@ -34,7 +34,6 @@ class ObjectifController extends GetxController{
   Future<Objectif> getObjectiveByUserId(String id) async {
     try {
       var response = await ObjectifService().getObjectiveByUserId(id);
-      print(response);
       objectif = Objectif.fromJson(response.data!);
       return objectif;
     } catch (e) {
