@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fitapp/Pages/homepage/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../utils/theme_colors.dart';
@@ -42,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await storage.write(key: 'userToken', value: jsonDecode(response.body)['token']);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AlimentListPage(mealType:"breakfast" ,)),
+          MaterialPageRoute(builder: (context) => HomeView()),
 
         );
       }

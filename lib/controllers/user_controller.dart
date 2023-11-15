@@ -64,7 +64,7 @@ class UserController extends GetxController{
           user=(User.fromJson(response.data));
 
           storage.write(key: "userToken", value: response.data['token'] );
-          Get.offAll(const AlimentListPage(mealType:"breakfast" ,));
+          Get.offAll( AlimentListPage());
 
         }
       else{
@@ -79,10 +79,12 @@ class UserController extends GetxController{
     }
 
   }
-  Future<void> getUserById(String id) async {
+
+  Future<User> getUserById(String id) async {
     try{
       var response= await UserService().getUserById(id);
-      user=response.data;
+      user = User.fromJson(response.data);
+      return user;
 
     }
     catch(e){
