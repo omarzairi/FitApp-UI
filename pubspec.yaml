@@ -66,6 +66,12 @@ flutter:
 
   assets:
     - assets/img/
+    - assets/img/burned.png
+    - assets/img/eaten.png
+    - assets/img/breakfast.png
+    - assets/img/lunch.png
+    - assets/img/snack.png
+    - assets/img/dinner.png
   fonts:
     - family: Food
       fonts:
