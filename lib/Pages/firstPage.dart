@@ -30,7 +30,7 @@ class _FirstPageState extends State<FirstPage> {
         decoration:
         BoxDecoration(
           image:DecorationImage(
-            image: AssetImage("assets/img/baccc.png")
+            image: AssetImage("assets/img/background.png")
                 ,
 
             fit: BoxFit.contain,
@@ -45,7 +45,7 @@ class _FirstPageState extends State<FirstPage> {
 
             // Top Column
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Column(
                 children: [
                   SizedBox(height: 70),
@@ -67,6 +67,7 @@ class _FirstPageState extends State<FirstPage> {
 
 
             // Bottom Column
+            SizedBox(height: 30),
             Expanded(
               child: Center(
                 child: Column(
