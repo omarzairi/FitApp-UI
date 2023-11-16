@@ -22,9 +22,9 @@ class User{
       email: json['email'] ?? '',
       password: json['password']?? '',
       sex:json['sex']?? '',
-      age: json['age'].toInt(),
-      taille: json['taille'].toDouble(),
-      poids: json['poids'].toDouble(),
+      age: json['age']?.toInt() ?? 0,
+      taille: json['taille']?.toDouble() ?? 0.0,
+      poids: json['poids']?.toDouble() ?? 0.0,
       date: json['date'] != null ? DateTime.parse(json['date']) : null,
 
 

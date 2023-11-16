@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
 
+import '../common_widgets/round_button.dart';
 import '../utils/theme_colors.dart';
 
 class PieChartSample2 extends StatelessWidget {
@@ -43,11 +44,11 @@ class PieChartSample2 extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Indicator(color: Colors.blue, text: 'Calories'),
-              Indicator(color: Colors.orange, text: 'Protein'),
-              Indicator(color: Colors.purple, text: 'Carbs'),
-              Indicator(color: Colors.green, text: 'Fat'),
-              Indicator(color: Colors.red, text: 'Sugar'),
+              Indicator(color: Color(0xffEEA4CE), text: 'Calories'),
+              Indicator(color: Color(0xffC58BF2), text: 'Protein'),
+              Indicator(color: Color(0xff9DCEFF), text: 'Carbs'),
+              Indicator(color: Color(0xff92A3FD), text: 'Fat'),
+              Indicator(color: Color(0x9BDABFFF), text: 'Sugar'),
             ],
           ),
         ],
@@ -59,33 +60,33 @@ class PieChartSample2 extends StatelessWidget {
 
     return [
       PieChartSectionData(
-        color: Colors.blue,
+        color:  const Color(0xffEEA4CE),
         titleStyle: const TextStyle( color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
         value: calories,
         radius: 50.0,
       ),
       PieChartSectionData(
-        color: Colors.orange,
+        color: const Color(0xffC58BF2),
         value: protein,
         titleStyle: const TextStyle( color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
 
         radius: 50.0,
       ),
       PieChartSectionData(
-        color: Colors.purple,
+        color: const Color(0xff9DCEFF),
         value: carbs,
         titleStyle: const TextStyle( color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
 
         radius: 50.0,
       ),
       PieChartSectionData(
-        color: Colors.green,
+        color: const Color(0xff92A3FD),
         titleStyle: const TextStyle( color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
         value: fat,
         radius: 50.0,
       ),
       PieChartSectionData(
-        color: Colors.red,
+        color: const Color(0x9BDABFFF),
         value: sugar,
 badgePositionPercentageOffset: 1,
         titleStyle: const TextStyle( color: Colors.white, fontSize: 15,
@@ -145,6 +146,14 @@ class _AlimentDetailsState extends State<AlimentDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var media = MediaQuery.of(context).size;
+    List nutritionArr= [
+      {"Calories": _aliment.calories},
+      {"Protein": _aliment.protein},
+      {"Carbs": _aliment.carbs},
+      {"Fat": _aliment.fat},
+
+    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: TColor.white,
@@ -196,82 +205,189 @@ class _AlimentDetailsState extends State<AlimentDetails> {
           )
         ],
       ),
-        body: SingleChildScrollView(
+        body:
+       SingleChildScrollView(
         child: Padding(
         padding: const EdgeInsets.all(16.0),
     child: Column(
-
-
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+
               width: double.infinity,
-              child: Image(
-                image: NetworkImage(_aliment.image ?? ''),
-                fit: BoxFit.contain,
-              ),
               decoration: BoxDecoration(
+                color: TColor.lightGray,
                 image: DecorationImage(
                   image: NetworkImage(_aliment.image ?? ''),
                   fit: BoxFit.cover,
                 ),
-                borderRadius: BorderRadius.circular(12.0),
+                borderRadius: BorderRadius.circular(12.0), // Add rounded corners
+              ),
+              child: Image(
+                image: NetworkImage(_aliment.image ?? ''),
+
+                fit: BoxFit.contain,
+
               ),
             ),
             const SizedBox(height: 16),
-
-
-                Text(
-                  _aliment.name,
-                  style: const TextStyle(
-
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 1,
-
-                    color: Colors.black,
-                    fontFamily: 'Poppins',
-                    fontFamilyFallback: <String>[
-                      'Noto Sans CJK SC',
-                      'Noto Color Emoji',
-                    ],
-                  ),
-            ),
-            const SizedBox(height: 40),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
+            Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildDetailItem('Calories', _aliment.calories.toString()),
-                      _buildDetailItem('Protein', _aliment.protein.toString()),
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    ' Aliment name',
+                                    style: TextStyle(
+                                        color: TColor.black,
+                                        fontSize: 16,
+                                        fontFamily: 'Poppins',
+                                        letterSpacing: 1,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  SizedBox(
+                                    height: media.width * 0.05,
+                                  ),
+                                  Text(
+                                   ' Aliment ${_aliment.name}',
+                                    style: TextStyle(
+                                        color: TColor.black,
+
+                                        fontSize: 16,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w300),
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: media.width * 0.05,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Text(
+                          "Nutrition facts",
+                          style: TextStyle(
+                              color: TColor.black,
+                              fontSize: 16,
+                              fontFamily: 'Poppins',
+                              letterSpacing: 1,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 60,
+                        child: ListView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: nutritionArr.length,
+                            itemBuilder: (context, index) {
+                              Map<String, dynamic> nObj = nutritionArr[index];
+                              String key = nObj.keys.first;
+                              dynamic value = nObj.values.first;
+                              return Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 4),
+                                  padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          TColor.primaryColor2.withOpacity(0.4),
+                                          TColor.primaryColor1.withOpacity(0.4)
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                    children: [
+
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          '$key: $value',
+                                          style: TextStyle(
+                                            color: TColor.black,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      )
+
+                                    ],
+                                  ));
+                            }),
+                      ),
+                      SizedBox(
+                        height: media.width * 0.05,
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Analysis of the nutrition facts",
+                              style: TextStyle(
+                                  color: TColor.black,
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins',
+                                  letterSpacing: 0.9,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(
+                        height: media.width * 0.05,
+                      ),
+                      PieChartSample2(
+                        calories: _aliment.calories,
+                        protein: _aliment.protein,
+                        carbs: _aliment.carbs,
+                        fat: _aliment.fat,
+                        sugar: _aliment.sugar,
+                      ),
+
+
+
+                      SizedBox(
+                        height: media.width * 0.25,
+                      ),
                     ],
                   ),
-                  const SizedBox(width: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildDetailItem('Carbs', _aliment.carbs.toString()),
-                      _buildDetailItem('Fat', _aliment.fat.toString()),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 40),
-            PieChartSample2(
-              calories: _aliment.calories,
-              protein: _aliment.protein,
-              carbs: _aliment.carbs,
-              fat: _aliment.fat,
-              sugar: _aliment.sugar,
-            ),
+                ),
+              ],
+            )
+
+
           ],
         ),)
       ),
