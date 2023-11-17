@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           bodyText2: TextStyle(fontFamily: 'Poppins', fontSize: 18),
         ),
+
       ),
       home: FutureBuilder<String?>(
         future: storage.read(key: 'userToken'),
