@@ -250,7 +250,7 @@ class _HomeViewState extends State<HomeView> {
                                       fontWeight: FontWeight.w700),
                                 ),
                                 SizedBox(
-                                  width: 100,
+                                  width: 120,
                                   height: 35,
                                   child: RoundButton(
                                     title: objective.calories!.toStringAsFixed(0)+ " kcal",
@@ -278,391 +278,328 @@ class _HomeViewState extends State<HomeView> {
                           SizedBox(
                             height: media.width * 0.02,
                           ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(25),
-                            child: Container(
-                                height: media.width * 0.8,
-                                width: double.maxFinite,
-                                decoration: BoxDecoration(
-                                  color: TColor.primaryColor2.withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                                child:Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 24, right: 24, top: 16, bottom: 18),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(8.0),
-                                          bottomLeft: Radius.circular(8.0),
-                                          bottomRight: Radius.circular(8.0),
-                                          topRight: Radius.circular(68.0)),
-                                      boxShadow: <BoxShadow>[
-                                        BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            offset: Offset(1.1, 1.1),
-                                            blurRadius: 10.0),
-                                      ],
-                                    ),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 8, right: 8, top: 4),
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      Row(
+                          SingleChildScrollView(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Container(
+                                  height: media.width * 0.8,
+                                  width: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                    color: TColor.primaryColor2.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  child:Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 24, right: 24, top: 16, bottom: 18),
+                                    child: SingleChildScrollView(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(8.0),
+                                              bottomLeft: Radius.circular(8.0),
+                                              bottomRight: Radius.circular(8.0),
+                                              topRight: Radius.circular(68.0)),
+                                          boxShadow: <BoxShadow>[
+                                            BoxShadow(
+                                                color: Colors.grey.withOpacity(0.2),
+                                                offset: Offset(1.1, 1.1),
+                                                blurRadius: 10.0),
+                                          ],
+                                        ),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Padding(
+                                              padding:
+                                              const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(
+                                                          left: 8, right: 8, top: 4),
+                                                      child: Column(
                                                         children: <Widget>[
-                                                          Container(
-                                                            height: 48,
-                                                            width: 2,
-                                                            decoration: BoxDecoration(
-                                                              color: Color(0xff87A0E5).withOpacity(0.5),
-                                                              borderRadius: BorderRadius.all(
-                                                                  Radius.circular(4.0)),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding: const EdgeInsets.all(8.0),
-                                                            child: Column(
-                                                              mainAxisAlignment:
-                                                              MainAxisAlignment.center,
-                                                              crossAxisAlignment:
-                                                              CrossAxisAlignment.start,
-                                                              children: <Widget>[
-                                                                Padding(
-                                                                  padding: const EdgeInsets.only(
-                                                                      left: 4, bottom: 2),
-                                                                  child: Text(
-                                                                    'Eaten',
-                                                                    textAlign: TextAlign.center,
-                                                                    style: TextStyle(
-
-                                                                      fontWeight: FontWeight.w500,
-                                                                      fontSize: 16,
-                                                                      letterSpacing: -0.1,
-                                                                      color: Colors.grey
-                                                                          .withOpacity(0.5),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                  MainAxisAlignment.center,
-                                                                  crossAxisAlignment:
-                                                                  CrossAxisAlignment.end,
-                                                                  children: <Widget>[
-                                                                    SizedBox(
-                                                                      width: 28,
-                                                                      height: 28,
-                                                                      child: Image.asset(
-                                                                          "assets/img/eaten.png"),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding:
-                                                                      const EdgeInsets.only(
-                                                                          left: 4, bottom: 3),
-                                                                      child: Text(
-                                                                        '222',
-                                                                        textAlign: TextAlign.center,
-                                                                        style: TextStyle(
-
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                          fontSize: 16,
-                                                                          color: Colors
-                                                                              .black,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding:
-                                                                      const EdgeInsets.only(
-                                                                          left: 4, bottom: 3),
-                                                                      child: Text(
-                                                                        'Kcal',
-                                                                        textAlign: TextAlign.center,
-                                                                        style: TextStyle(
-
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                          fontSize: 12,
-                                                                          letterSpacing: -0.2,
-                                                                          color: Colors
-                                                                              .grey
-                                                                              .withOpacity(0.5),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                )
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 8,
-                                                      ),
-                                                      Row(
-                                                        children: <Widget>[
-                                                          Container(
-                                                            height: 48,
-                                                            width: 2,
-                                                            decoration: BoxDecoration(
-                                                              color: Color(0xffF56E98)
-                                                                  .withOpacity(0.5),
-                                                              borderRadius: BorderRadius.all(
-                                                                  Radius.circular(4.0)),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding: const EdgeInsets.all(8.0),
-                                                            child: Column(
-                                                              mainAxisAlignment:
-                                                              MainAxisAlignment.center,
-                                                              crossAxisAlignment:
-                                                              CrossAxisAlignment.start,
-                                                              children: <Widget>[
-                                                                Padding(
-                                                                  padding: const EdgeInsets.only(
-                                                                      left: 4, bottom: 2),
-                                                                  child: Text(
-                                                                    'Burned',
-                                                                    textAlign: TextAlign.center,
-                                                                    style: TextStyle(
-
-                                                                      fontWeight: FontWeight.w500,
-                                                                      fontSize: 16,
-                                                                      letterSpacing: -0.1,
-                                                                      color: Colors.grey
-                                                                          .withOpacity(0.5),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                  MainAxisAlignment.center,
-                                                                  crossAxisAlignment:
-                                                                  CrossAxisAlignment.end,
-                                                                  children: <Widget>[
-                                                                    SizedBox(
-                                                                      width: 28,
-                                                                      height: 28,
-                                                                      child: Image.asset(
-                                                                          "assets/img/burned.png"),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding:
-                                                                      const EdgeInsets.only(
-                                                                          left: 4, bottom: 3),
-                                                                      child: Text(
-                                                                        '102',
-                                                                        textAlign: TextAlign.center,
-                                                                        style: TextStyle(
-
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                          fontSize: 16,
-                                                                          color: Colors
-                                                                              .black,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding:
-                                                                      const EdgeInsets.only(
-                                                                          left: 8, bottom: 3),
-                                                                      child: Text(
-                                                                        'Kcal',
-                                                                        textAlign: TextAlign.center,
-                                                                        style: TextStyle(
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                          fontSize: 12,
-                                                                          letterSpacing: -0.2,
-                                                                          color: Colors
-                                                                              .grey
-                                                                              .withOpacity(0.5),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                )
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(right: 16),
-                                                child: Center(
-                                                  child: Stack(
-                                                    clipBehavior: Clip.none,
-                                                    children: <Widget>[
-                                                      Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: Container(
-                                                          width: 100,
-                                                          height: 100,
-                                                          decoration: BoxDecoration(
-                                                            color: Colors.white,
-                                                            borderRadius: BorderRadius.all(
-                                                              Radius.circular(100.0),
-                                                            ),
-                                                            border: new Border.all(
-                                                                width: 4,
-                                                                color: Colors
-                                                                    .blueAccent
-                                                                    .withOpacity(0.2)),
-                                                          ),
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment.center,
-                                                            crossAxisAlignment:
-                                                            CrossAxisAlignment.center,
+                                                          Row(
                                                             children: <Widget>[
-                                                              Text(
-                                                                '1503',
-                                                                textAlign: TextAlign.center,
-                                                                style: TextStyle(
-
-                                                                  fontWeight: FontWeight.normal,
-                                                                  fontSize: 24,
-                                                                  letterSpacing: 0.0,
-                                                                  color: Colors
-                                                                      .lightBlue,
+                                                              Container(
+                                                                height: 48,
+                                                                width: 2,
+                                                                decoration: BoxDecoration(
+                                                                  color: Color(0xff87A0E5).withOpacity(0.5),
+                                                                  borderRadius: BorderRadius.all(
+                                                                      Radius.circular(4.0)),
                                                                 ),
                                                               ),
-                                                              Text(
-                                                                'Kcal left',
-                                                                textAlign: TextAlign.center,
-                                                                style: TextStyle(
+                                                              Padding(
+                                                                padding: const EdgeInsets.all(8.0),
+                                                                child: Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment.center,
+                                                                  crossAxisAlignment:
+                                                                  CrossAxisAlignment.start,
+                                                                  children: <Widget>[
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.only(
+                                                                          left: 4, bottom: 2),
+                                                                      child: Text(
+                                                                        'Eaten',
+                                                                        textAlign: TextAlign.center,
+                                                                        style: TextStyle(
 
-                                                                  fontWeight: FontWeight.bold,
-                                                                  fontSize: 12,
-                                                                  letterSpacing: 0.0,
-                                                                  color: Colors.grey
-                                                                      .withOpacity(0.5),
+                                                                          fontWeight: FontWeight.w500,
+                                                                          fontSize: 16,
+                                                                          letterSpacing: -0.1,
+                                                                          color: Colors.grey
+                                                                              .withOpacity(0.5),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                      MainAxisAlignment.center,
+                                                                      crossAxisAlignment:
+                                                                      CrossAxisAlignment.end,
+                                                                      children: <Widget>[
+                                                                        SizedBox(
+                                                                          width: 28,
+                                                                          height: 28,
+                                                                          child: Image.asset(
+                                                                              "assets/img/eaten.png"),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding:
+                                                                          const EdgeInsets.only(
+                                                                              left: 4, bottom: 3),
+                                                                          child: Text(
+                                                                            '222',
+                                                                            textAlign: TextAlign.center,
+                                                                            style: TextStyle(
+
+                                                                              fontWeight:
+                                                                              FontWeight.w600,
+                                                                              fontSize: 16,
+                                                                              color: Colors
+                                                                                  .black,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding:
+                                                                          const EdgeInsets.only(
+                                                                              left: 4, bottom: 3),
+                                                                          child: Text(
+                                                                            'Kcal',
+                                                                            textAlign: TextAlign.center,
+                                                                            style: TextStyle(
+
+                                                                              fontWeight:
+                                                                              FontWeight.w600,
+                                                                              fontSize: 12,
+                                                                              letterSpacing: -0.2,
+                                                                              color: Colors
+                                                                                  .grey
+                                                                                  .withOpacity(0.5),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    )
+                                                                  ],
                                                                 ),
-                                                              ),
+                                                              )
                                                             ],
                                                           ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding: const EdgeInsets.all(4.0),
-
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 24, right: 24, top: 8, bottom: 8),
-                                          child: Container(
-                                            height: 2,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 24, right: 24, top: 8, bottom: 16),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Expanded(
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Text(
-                                                      'Carbs',
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-
-                                                        fontWeight: FontWeight.w500,
-                                                        fontSize: 16,
-                                                        letterSpacing: -0.2,
-                                                        color: Colors.black,
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(top: 4),
-                                                      child: Container(
-                                                        height: 4,
-                                                        width: 70,
-                                                        decoration: BoxDecoration(
-                                                          color:
-                                                          Color(0xff87A0E5).withOpacity(0.2),
-                                                          borderRadius: BorderRadius.all(
-                                                              Radius.circular(4.0)),
-                                                        ),
-                                                        child: Row(
-                                                          children: <Widget>[
-                                                            Container(
-                                                              width: ((70 / 1.2)),
-                                                              height: 4,
-                                                              decoration: BoxDecoration(
-                                                                gradient: LinearGradient(colors: [
-                                                                  Color(0xff87A0E5),
-                                                                  Color(0xff87A0E5)
+                                                          SizedBox(
+                                                            height: 8,
+                                                          ),
+                                                          Row(
+                                                            children: <Widget>[
+                                                              Container(
+                                                                height: 48,
+                                                                width: 2,
+                                                                decoration: BoxDecoration(
+                                                                  color: Color(0xffF56E98)
                                                                       .withOpacity(0.5),
-                                                                ]),
-                                                                borderRadius: BorderRadius.all(
-                                                                    Radius.circular(4.0)),
+                                                                  borderRadius: BorderRadius.all(
+                                                                      Radius.circular(4.0)),
+                                                                ),
                                                               ),
-                                                            )
-                                                          ],
-                                                        ),
+                                                              Padding(
+                                                                padding: const EdgeInsets.all(8.0),
+                                                                child: Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment.center,
+                                                                  crossAxisAlignment:
+                                                                  CrossAxisAlignment.start,
+                                                                  children: <Widget>[
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.only(
+                                                                          left: 4, bottom: 2),
+                                                                      child: Text(
+                                                                        'Burned',
+                                                                        textAlign: TextAlign.center,
+                                                                        style: TextStyle(
+
+                                                                          fontWeight: FontWeight.w500,
+                                                                          fontSize: 16,
+                                                                          letterSpacing: -0.1,
+                                                                          color: Colors.grey
+                                                                              .withOpacity(0.5),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                      MainAxisAlignment.center,
+                                                                      crossAxisAlignment:
+                                                                      CrossAxisAlignment.end,
+                                                                      children: <Widget>[
+                                                                        SizedBox(
+                                                                          width: 28,
+                                                                          height: 28,
+                                                                          child: Image.asset(
+                                                                              "assets/img/burned.png"),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding:
+                                                                          const EdgeInsets.only(
+                                                                              left: 4, bottom: 3),
+                                                                          child: Text(
+                                                                            '102',
+                                                                            textAlign: TextAlign.center,
+                                                                            style: TextStyle(
+
+                                                                              fontWeight:
+                                                                              FontWeight.w600,
+                                                                              fontSize: 16,
+                                                                              color: Colors
+                                                                                  .black,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding:
+                                                                          const EdgeInsets.only(
+                                                                              left: 8, bottom: 3),
+                                                                          child: Text(
+                                                                            'Kcal',
+                                                                            textAlign: TextAlign.center,
+                                                                            style: TextStyle(
+                                                                              fontWeight:
+                                                                              FontWeight.w600,
+                                                                              fontSize: 12,
+                                                                              letterSpacing: -0.2,
+                                                                              color: Colors
+                                                                                  .grey
+                                                                                  .withOpacity(0.5),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ],
+                                                          )
+                                                        ],
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(top: 6),
-                                                      child: Text(
-                                                        '12g left',
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                          fontWeight: FontWeight.w600,
-                                                          fontSize: 12,
-                                                          color:
-                                                          Colors.grey.withOpacity(0.5),
-                                                        ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(right: 16),
+                                                    child: Center(
+                                                      child: Stack(
+                                                        clipBehavior: Clip.none,
+                                                        children: <Widget>[
+                                                          Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: Container(
+                                                              width: 100,
+                                                              height: 100,
+                                                              decoration: BoxDecoration(
+                                                                color: Colors.white,
+                                                                borderRadius: BorderRadius.all(
+                                                                  Radius.circular(100.0),
+                                                                ),
+                                                                border: new Border.all(
+                                                                    width: 4,
+                                                                    color: Colors
+                                                                        .blueAccent
+                                                                        .withOpacity(0.2)),
+                                                              ),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment.center,
+                                                                crossAxisAlignment:
+                                                                CrossAxisAlignment.center,
+                                                                children: <Widget>[
+                                                                  Text(
+                                                                    '1503',
+                                                                    textAlign: TextAlign.center,
+                                                                    style: TextStyle(
+
+                                                                      fontWeight: FontWeight.normal,
+                                                                      fontSize: 24,
+                                                                      letterSpacing: 0.0,
+                                                                      color: Colors
+                                                                          .lightBlue,
+                                                                    ),
+                                                                  ),
+                                                                  Text(
+                                                                    'Kcal left',
+                                                                    textAlign: TextAlign.center,
+                                                                    style: TextStyle(
+
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 12,
+                                                                      letterSpacing: 0.0,
+                                                                      color: Colors.grey
+                                                                          .withOpacity(0.5),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.all(4.0),
+
+                                                          )
+                                                        ],
                                                       ),
                                                     ),
-                                                  ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 24, right: 24, top: 8, bottom: 8),
+                                              child: Container(
+                                                height: 2,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
                                                 ),
                                               ),
-                                              Expanded(
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    Column(
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 24, right: 24, top: 8, bottom: 16),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Expanded(
+                                                    child: Column(
                                                       mainAxisAlignment: MainAxisAlignment.center,
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: <Widget>[
                                                         Text(
-                                                          'Protein',
+                                                          'Carbs',
                                                           textAlign: TextAlign.center,
                                                           style: TextStyle(
+
                                                             fontWeight: FontWeight.w500,
                                                             fontSize: 16,
                                                             letterSpacing: -0.2,
@@ -675,27 +612,26 @@ class _HomeViewState extends State<HomeView> {
                                                             height: 4,
                                                             width: 70,
                                                             decoration: BoxDecoration(
-                                                              color: Color(0xffF56E98)
-                                                                  .withOpacity(0.2),
+                                                              color:
+                                                              Color(0xff87A0E5).withOpacity(0.2),
                                                               borderRadius: BorderRadius.all(
                                                                   Radius.circular(4.0)),
                                                             ),
                                                             child: Row(
                                                               children: <Widget>[
                                                                 Container(
-                                                                  width: (70 / 2),
+                                                                  width: ((70 / 1.2)),
                                                                   height: 4,
                                                                   decoration: BoxDecoration(
-                                                                    gradient:
-                                                                    LinearGradient(colors: [
-                                                                      Color(0xffF56E98)
-                                                                          .withOpacity(0.1),
-                                                                      Color(0xffF56E98),
+                                                                    gradient: LinearGradient(colors: [
+                                                                      Color(0xff87A0E5),
+                                                                      Color(0xff87A0E5)
+                                                                          .withOpacity(0.5),
                                                                     ]),
                                                                     borderRadius: BorderRadius.all(
                                                                         Radius.circular(4.0)),
                                                                   ),
-                                                                ),
+                                                                )
                                                               ],
                                                             ),
                                                           ),
@@ -703,98 +639,166 @@ class _HomeViewState extends State<HomeView> {
                                                         Padding(
                                                           padding: const EdgeInsets.only(top: 6),
                                                           child: Text(
-                                                            '30g left',
+                                                            '12g left',
                                                             textAlign: TextAlign.center,
                                                             style: TextStyle(
                                                               fontWeight: FontWeight.w600,
                                                               fontSize: 12,
-                                                              color: Colors.grey
-                                                                  .withOpacity(0.5),
+                                                              color:
+                                                              Colors.grey.withOpacity(0.5),
                                                             ),
                                                           ),
                                                         ),
                                                       ],
                                                     ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    Column(
+                                                  ),
+                                                  Expanded(
+                                                    child: Row(
                                                       mainAxisAlignment: MainAxisAlignment.center,
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
                                                       children: <Widget>[
-                                                        Text(
-                                                          'Fat',
-                                                          style: TextStyle(
-
-                                                            fontWeight: FontWeight.w500,
-                                                            fontSize: 16,
-                                                            letterSpacing: -0.2,
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding: const EdgeInsets.only(
-                                                              right: 0, top: 4),
-                                                          child: Container(
-                                                            height: 4,
-                                                            width: 70,
-                                                            decoration: BoxDecoration(
-                                                              color: Color(0xffF1B440)
-                                                                  .withOpacity(0.2),
-                                                              borderRadius: BorderRadius.all(
-                                                                  Radius.circular(4.0)),
+                                                        Column(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            Text(
+                                                              'Protein',
+                                                              textAlign: TextAlign.center,
+                                                              style: TextStyle(
+                                                                fontWeight: FontWeight.w500,
+                                                                fontSize: 16,
+                                                                letterSpacing: -0.2,
+                                                                color: Colors.black,
+                                                              ),
                                                             ),
-                                                            child: Row(
-                                                              children: <Widget>[
-                                                                Container(
-                                                                  width: (70 / 2.5)
-                                                                  ,
-                                                                  height: 4,
-                                                                  decoration: BoxDecoration(
-                                                                    gradient:
-                                                                    LinearGradient(colors: [
-                                                                      Color(0xffF1B440)
-                                                                          .withOpacity(0.1),
-                                                                      Color(0xffF1B440),
-                                                                    ]),
-                                                                    borderRadius: const BorderRadius.all(
-                                                                        Radius.circular(4.0)),
-                                                                  ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(top: 4),
+                                                              child: Container(
+                                                                height: 4,
+                                                                width: 70,
+                                                                decoration: BoxDecoration(
+                                                                  color: Color(0xffF56E98)
+                                                                      .withOpacity(0.2),
+                                                                  borderRadius: BorderRadius.all(
+                                                                      Radius.circular(4.0)),
                                                                 ),
-                                                              ],
+                                                                child: Row(
+                                                                  children: <Widget>[
+                                                                    Container(
+                                                                      width: (70 / 2),
+                                                                      height: 4,
+                                                                      decoration: BoxDecoration(
+                                                                        gradient:
+                                                                        LinearGradient(colors: [
+                                                                          Color(0xffF56E98)
+                                                                              .withOpacity(0.1),
+                                                                          Color(0xffF56E98),
+                                                                        ]),
+                                                                        borderRadius: BorderRadius.all(
+                                                                            Radius.circular(4.0)),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding: const EdgeInsets.only(top: 6),
-                                                          child: Text(
-                                                            '10g left',
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(
-                                                              fontWeight: FontWeight.w600,
-                                                              fontSize: 12,
-                                                              color: Colors.grey
-                                                                  .withOpacity(0.5),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(top: 6),
+                                                              child: Text(
+                                                                '30g left',
+                                                                textAlign: TextAlign.center,
+                                                                style: TextStyle(
+                                                                  fontWeight: FontWeight.w600,
+                                                                  fontSize: 12,
+                                                                  color: Colors.grey
+                                                                      .withOpacity(0.5),
+                                                                ),
+                                                              ),
                                                             ),
-                                                          ),
+                                                          ],
                                                         ),
                                                       ],
                                                     ),
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      ],
+                                                  ),
+                                                  Expanded(
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.end,
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      children: <Widget>[
+                                                        Column(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            Text(
+                                                              'Fat',
+                                                              style: TextStyle(
+
+                                                                fontWeight: FontWeight.w500,
+                                                                fontSize: 16,
+                                                                letterSpacing: -0.2,
+                                                                color: Colors.black,
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(
+                                                                  right: 0, top: 4),
+                                                              child: Container(
+                                                                height: 4,
+                                                                width: 70,
+                                                                decoration: BoxDecoration(
+                                                                  color: Color(0xffF1B440)
+                                                                      .withOpacity(0.2),
+                                                                  borderRadius: BorderRadius.all(
+                                                                      Radius.circular(4.0)),
+                                                                ),
+                                                                child: Row(
+                                                                  children: <Widget>[
+                                                                    Container(
+                                                                      width: (70 / 2.5)
+                                                                      ,
+                                                                      height: 4,
+                                                                      decoration: BoxDecoration(
+                                                                        gradient:
+                                                                        LinearGradient(colors: [
+                                                                          Color(0xffF1B440)
+                                                                              .withOpacity(0.1),
+                                                                          Color(0xffF1B440),
+                                                                        ]),
+                                                                        borderRadius: const BorderRadius.all(
+                                                                            Radius.circular(4.0)),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(top: 6),
+                                                              child: Text(
+                                                                '10g left',
+                                                                textAlign: TextAlign.center,
+                                                                style: TextStyle(
+                                                                  fontWeight: FontWeight.w600,
+                                                                  fontSize: 12,
+                                                                  color: Colors.grey
+                                                                      .withOpacity(0.5),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                )
+                                  )
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -808,7 +812,7 @@ class _HomeViewState extends State<HomeView> {
                             children: [
                               Expanded(
                                 child: Container(
-                                  height: media.width * 0.95,
+                                  height: media.width * 1.07,
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 25, horizontal: 20),
                                   decoration: BoxDecoration(
@@ -886,6 +890,9 @@ class _HomeViewState extends State<HomeView> {
                                                               fontSize: 10,
                                                             ),
                                                           ),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
                                                           ShaderMask(
                                                             blendMode: BlendMode.srcIn,
                                                             shaderCallback: (bounds) {
@@ -909,7 +916,11 @@ class _HomeViewState extends State<HomeView> {
                                                                       .withOpacity(0.7),
                                                                   fontSize: 12),
                                                             ),
+
                                                           ),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          )
                                                         ],
                                                       )
                                                     ],
@@ -930,57 +941,59 @@ class _HomeViewState extends State<HomeView> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Container(
-                                        width: double.maxFinite,
-                                        height: media.width * 0.45,
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 25, horizontal: 20),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(25),
-                                            boxShadow: const [
-                                              BoxShadow(color: Colors.black12, blurRadius: 2)
-                                            ]),
-                                        child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Sleep",
-                                                style: TextStyle(
-                                                    color: TColor.black,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w700),
-                                              ),
-                                              ShaderMask(
-                                                blendMode: BlendMode.srcIn,
-                                                shaderCallback: (bounds) {
-                                                  return LinearGradient(
-                                                      colors: TColor.primaryG,
-                                                      begin: Alignment.centerLeft,
-                                                      end: Alignment.centerRight)
-                                                      .createShader(Rect.fromLTRB(
-                                                      0, 0, bounds.width, bounds.height));
-                                                },
-                                                child: Text(
-                                                  "8h 20m",
+                                      SingleChildScrollView(
+                                        child: Container(
+                                          width: double.maxFinite,
+                                          height: media.width * 0.50,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 25, horizontal: 20),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(25),
+                                              boxShadow: const [
+                                                BoxShadow(color: Colors.black12, blurRadius: 2)
+                                              ]),
+                                          child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Sleep",
                                                   style: TextStyle(
-                                                      color: TColor.white.withOpacity(0.7),
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 14),
+                                                      color: TColor.black,
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w700),
                                                 ),
-                                              ),
-                                              const Spacer(),
-                                              Image.asset("assets/img/sleep_grap.png",
-                                                  width: double.maxFinite,
-                                                  fit: BoxFit.fitWidth)
-                                            ]),
+                                                ShaderMask(
+                                                  blendMode: BlendMode.srcIn,
+                                                  shaderCallback: (bounds) {
+                                                    return LinearGradient(
+                                                        colors: TColor.primaryG,
+                                                        begin: Alignment.centerLeft,
+                                                        end: Alignment.centerRight)
+                                                        .createShader(Rect.fromLTRB(
+                                                        0, 0, bounds.width, bounds.height));
+                                                  },
+                                                  child: Text(
+                                                    "8h 20m",
+                                                    style: TextStyle(
+                                                        color: TColor.white.withOpacity(0.7),
+                                                        fontWeight: FontWeight.w700,
+                                                        fontSize: 14),
+                                                  ),
+                                                ),
+                                                const Spacer(),
+                                                Image.asset("assets/img/sleep_grap.png",
+                                                    width: double.maxFinite,
+                                                    fit: BoxFit.fitWidth)
+                                              ]),
+                                        ),
                                       ),
                                       SizedBox(
                                         height: media.width * 0.05,
                                       ),
                                       Container(
                                         width: double.maxFinite,
-                                        height: media.width * 0.45,
+                                        height: media.width * 0.50,
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 25, horizontal: 20),
                                         decoration: BoxDecoration(

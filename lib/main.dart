@@ -1,4 +1,5 @@
 
+import 'package:fitapp/Pages/login.dart';
 import 'package:fitapp/routes/route.dart';
 
 import 'package:fitapp/Pages/homepage/homepage.dart';
@@ -9,19 +10,17 @@ import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
-  final storage=const FlutterSecureStorage() ;
-
+  final storage = const FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      popGesture: false,
-      initialRoute: storage.read(key: 'userToken')!=null?'/home':'/login',
+      initialRoute: '/',
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
       title: 'FitApp',
@@ -32,7 +31,20 @@ class MyApp extends StatelessWidget {
           bodyText2: TextStyle(fontFamily: 'Poppins', fontSize: 18),
         ),
       ),
-
+      home: FutureBuilder<String?>(
+        future: storage.read(key: 'userToken'),
+        builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator(); // Show a loading spinner while waiting
+          } else {
+            if (snapshot.data != null) {
+              return HomeView();
+            } else {
+              return LoginScreen(); // Replace with your login view
+            }
+          }
+        },
+      ),
     );
   }
 }
