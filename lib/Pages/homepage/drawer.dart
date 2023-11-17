@@ -18,7 +18,7 @@ class HomeDrawer extends StatelessWidget{
                 "assets/img/bg_dots.png"),
           ),
           ListTile(
-            title: const Text('Dashboard'),
+            title:  Text('Dashboard'),
             onTap: () {},
           ),
           ListTile(
