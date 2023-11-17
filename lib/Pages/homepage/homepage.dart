@@ -250,7 +250,7 @@ class _HomeViewState extends State<HomeView> {
                                     fontWeight: FontWeight.w700),
                               ),
                               SizedBox(
-                                width: 100,
+                                width: 120,
                                 height: 35,
                                 child: RoundButton(
                                   title: objective.calories!.toStringAsFixed(0)+ " kcal",
@@ -812,7 +812,7 @@ class _HomeViewState extends State<HomeView> {
                           children: [
                             Expanded(
                               child: Container(
-                                height: media.width * 0.95,
+                                height: media.width * 1.07,
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 25, horizontal: 20),
                                 decoration: BoxDecoration(
@@ -890,6 +890,9 @@ class _HomeViewState extends State<HomeView> {
                                                             fontSize: 10,
                                                           ),
                                                         ),
+                                                        SizedBox(
+                                                          height: 5,
+                                                        ),
                                                         ShaderMask(
                                                           blendMode: BlendMode.srcIn,
                                                           shaderCallback: (bounds) {
@@ -913,7 +916,11 @@ class _HomeViewState extends State<HomeView> {
                                                                     .withOpacity(0.7),
                                                                 fontSize: 12),
                                                           ),
+
                                                         ),
+                                                        SizedBox(
+                                                          height: 5,
+                                                        )
                                                       ],
                                                     )
                                                   ],
@@ -934,57 +941,59 @@ class _HomeViewState extends State<HomeView> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Container(
-                                      width: double.maxFinite,
-                                      height: media.width * 0.45,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 25, horizontal: 20),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(25),
-                                          boxShadow: const [
-                                            BoxShadow(color: Colors.black12, blurRadius: 2)
-                                          ]),
-                                      child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Sleep",
-                                              style: TextStyle(
-                                                  color: TColor.black,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                            ShaderMask(
-                                              blendMode: BlendMode.srcIn,
-                                              shaderCallback: (bounds) {
-                                                return LinearGradient(
-                                                    colors: TColor.primaryG,
-                                                    begin: Alignment.centerLeft,
-                                                    end: Alignment.centerRight)
-                                                    .createShader(Rect.fromLTRB(
-                                                    0, 0, bounds.width, bounds.height));
-                                              },
-                                              child: Text(
-                                                "8h 20m",
+                                    SingleChildScrollView(
+                                      child: Container(
+                                        width: double.maxFinite,
+                                        height: media.width * 0.50,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 25, horizontal: 20),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(25),
+                                            boxShadow: const [
+                                              BoxShadow(color: Colors.black12, blurRadius: 2)
+                                            ]),
+                                        child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Sleep",
                                                 style: TextStyle(
-                                                    color: TColor.white.withOpacity(0.7),
-                                                    fontWeight: FontWeight.w700,
-                                                    fontSize: 14),
+                                                    color: TColor.black,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w700),
                                               ),
-                                            ),
-                                            const Spacer(),
-                                            Image.asset("assets/img/sleep_grap.png",
-                                                width: double.maxFinite,
-                                                fit: BoxFit.fitWidth)
-                                          ]),
+                                              ShaderMask(
+                                                blendMode: BlendMode.srcIn,
+                                                shaderCallback: (bounds) {
+                                                  return LinearGradient(
+                                                      colors: TColor.primaryG,
+                                                      begin: Alignment.centerLeft,
+                                                      end: Alignment.centerRight)
+                                                      .createShader(Rect.fromLTRB(
+                                                      0, 0, bounds.width, bounds.height));
+                                                },
+                                                child: Text(
+                                                  "8h 20m",
+                                                  style: TextStyle(
+                                                      color: TColor.white.withOpacity(0.7),
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 14),
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              Image.asset("assets/img/sleep_grap.png",
+                                                  width: double.maxFinite,
+                                                  fit: BoxFit.fitWidth)
+                                            ]),
+                                      ),
                                     ),
                                     SizedBox(
                                       height: media.width * 0.05,
                                     ),
                                     Container(
                                       width: double.maxFinite,
-                                      height: media.width * 0.45,
+                                      height: media.width * 0.50,
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 25, horizontal: 20),
                                       decoration: BoxDecoration(
