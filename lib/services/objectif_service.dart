@@ -7,7 +7,7 @@ class ObjectifService {
     dio = Dio(
       BaseOptions(
         baseUrl: 'https://fit-app-api.azurewebsites.net/api/objectifs',
-
+        receiveTimeout: 3000,
       ),
     );
   }
@@ -37,4 +37,20 @@ class ObjectifService {
       throw Exception(e.toString());
     }
   }
+  
+  Future<Response> getObjectiveByUserId(String id) async{
+    try
+        {
+          Response response = await dio.get("/getObjectifByUserId/$id",options: Options(
+            headers: {
+              'Content-Type': 'application/json', // Add any headers you need
+              'Authorization': 'Bearer ${await storage.read(key: 'userToken')}', // Example of an Authorization header
+            },));
+          return response;
+        }
+        catch(e)
+    {
+      throw Exception(e.toString());
+    }
+}
 }

@@ -1,4 +1,9 @@
+
+import 'dart:convert';
+
+import 'package:fitapp/Pages/homepage/homepage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import '../controllers/user_controller.dart';
 import '../utils/theme_colors.dart';
@@ -25,7 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
       });
 
-
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Login successfully'),
           backgroundColor: Colors.lightGreen,
@@ -36,8 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
-
-    } catch (e) {
+      }
+       catch (e) {
       print('Error in sendFormData: $e');
       // Handle the error as needed.
     }

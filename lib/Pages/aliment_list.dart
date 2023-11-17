@@ -13,9 +13,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'alimentDetails.dart';
 
 class AlimentListPage extends StatefulWidget {
-  final String mealType;
-
-  const AlimentListPage({super.key, required this.mealType});
+  String? mealType = Get.arguments;
+  AlimentListPage({super.key});
 
   @override
   _AlimentListPageState createState() => _AlimentListPageState();
@@ -116,7 +115,7 @@ class _AlimentListPageState extends State<AlimentListPage> {
             ),
           ),
         ),
-        title: Text(widget.mealType,
+        title: Text(widget.mealType??"",
             style: TextStyle(
               color: TColor.black,
               fontSize: 20,

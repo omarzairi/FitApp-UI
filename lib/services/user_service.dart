@@ -1,13 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 
 class UserService {
   late Dio dio;
-
+  final storage=const FlutterSecureStorage() ;
   UserService() {
     dio = Dio(
       BaseOptions(
         baseUrl: 'https://fit-app-api.azurewebsites.net/api/users',
-
+        receiveTimeout: 3000,
       ),
     );
   }
@@ -15,7 +17,11 @@ class UserService {
 
   Future<Response> getUserById(String id) async {
 
-      Response response = await dio.get('/getUserById/$id');
+      Response response = await dio.get('/getUserById/$id',options: Options(
+      headers: {
+      'Content-Type': 'application/json', // Add any headers you need
+      'Authorization': 'Bearer ${await storage.read(key: 'userToken')}', // Example of an Authorization header
+      },));
       return response;
 
 

@@ -1,7 +1,8 @@
-//import 'package:fitapp/Pages/alimentDetails.dart';
-import 'package:fitapp/Pages/aliment_list.dart';
-import 'package:fitapp/Pages/firstPage.dart';
+
 import 'package:fitapp/routes/route.dart';
+
+import 'package:fitapp/Pages/homepage/homepage.dart';
+
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: storage.read(key: 'userToken')!=null?'/alimentlist':'/',
+      initialRoute: storage.read(key: 'userToken')!=null?'/home':'/',
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
       title: 'FitApp',
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           bodyText2: TextStyle(fontFamily: 'Poppins', fontSize: 18),
         ),
       ),
-      home: MyHomePage(),
+      home:  HomeView(),
     );
   }
 }
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FirstPage();
+    return MyHomePage();
     // return Scaffold(
     //
     //
