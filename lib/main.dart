@@ -15,11 +15,13 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final storage=const FlutterSecureStorage() ;
+
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       popGesture: false,
-      initialRoute: storage.read(key: 'userToken')!=null?'/home':'/',
+      initialRoute: storage.read(key: 'userToken')!=null?'/home':'/login',
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
       title: 'FitApp',
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
           bodyText2: TextStyle(fontFamily: 'Poppins', fontSize: 18),
         ),
       ),
-      home:  HomeView(),
+
     );
   }
 }

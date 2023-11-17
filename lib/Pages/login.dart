@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
           duration: Duration(seconds: 3),),
       );
 
-      Get.offAllNamed('/alimentlist');
+      Get.offAllNamed('/home');
 
 
 
