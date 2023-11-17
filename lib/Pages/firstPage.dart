@@ -109,7 +109,7 @@ class _FirstPageState extends State<FirstPage> {
                       style: TextStyle(
                         color:  Color.fromRGBO(208, 162, 247,1),
                         fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
+
                       ),
                     ),
                     const SizedBox(height: 20),
