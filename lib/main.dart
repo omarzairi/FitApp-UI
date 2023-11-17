@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      popGesture: false,
       initialRoute: storage.read(key: 'userToken')!=null?'/home':'/',
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
