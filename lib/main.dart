@@ -1,4 +1,5 @@
 
+import 'package:fitapp/Pages/firstPage.dart';
 import 'package:fitapp/Pages/login.dart';
 import 'package:fitapp/routes/route.dart';
 
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.data != null) {
               return HomeView();
             } else {
-              return LoginScreen(); // Replace with your login view
+              return FirstPage(); // Replace with your login view
             }
           }
         },
