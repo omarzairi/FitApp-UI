@@ -5,13 +5,16 @@ import 'package:flutter/material.dart';
 import '../../utils/theme_colors.dart';
 
 class Footer extends StatefulWidget{
+  int selectTab;
+
+  Footer({required this.selectTab});
 
   @override
   State<Footer> createState() => _MainTabViewState();
 }
 
 class _MainTabViewState extends State<Footer> {
-  int selectTab = 0;
+
   final PageStorageBucket pageBucket = PageStorageBucket();
 
   @override
@@ -28,17 +31,21 @@ class _MainTabViewState extends State<Footer> {
                 TabButton(
                     icon: "assets/img/home_tab.png",
                     selectIcon: "assets/img/home_tab_select.png",
-                    isActive: selectTab == 0,
+                    isActive: widget.selectTab == 0,
                     onTap: () {
-                      selectTab = 0;
+                      setState(() {
+                        widget.selectTab = 0;
+                      });
                       Navigator.pushNamed(context, '/home');
                     }),
                 TabButton(
                     icon: "assets/img/activity_tab.png",
                     selectIcon: "assets/img/activity_tab_select.png",
-                    isActive: selectTab == 1,
+                    isActive: widget.selectTab == 1,
                     onTap: () {
-                      selectTab = 1;
+                      setState(() {
+                        widget.selectTab = 1;
+                      });
                       Navigator.pushNamed(context, '/chat');
                     }),
 
@@ -46,16 +53,20 @@ class _MainTabViewState extends State<Footer> {
                 TabButton(
                     icon: "assets/img/camera_tab.png",
                     selectIcon: "assets/img/camera_tab_select.png",
-                    isActive: selectTab == 2,
+                    isActive: widget.selectTab == 2,
                     onTap: () {
-                      selectTab = 2;
+                      setState(() {
+                        widget.selectTab = 2;
+                      });
                     }),
                 TabButton(
                     icon: "assets/img/profile_tab.png",
                     selectIcon: "assets/img/profile_tab_select.png",
-                    isActive: selectTab == 3,
+                    isActive: widget.selectTab == 3,
                     onTap: () {
-                      selectTab = 3;
+                      setState(() {
+                        widget.selectTab = 3;
+                      });
                       Navigator.pushNamed(context, '/login');
                     })
               ],
@@ -63,9 +74,4 @@ class _MainTabViewState extends State<Footer> {
           ),
     );
   }
-
-
-
-
-
 }

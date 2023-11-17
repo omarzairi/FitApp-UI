@@ -1082,7 +1082,7 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
 
-      bottomNavigationBar: Footer()
+      bottomNavigationBar: Footer( selectTab: 0,)
     );
   }
 

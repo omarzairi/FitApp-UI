@@ -1,6 +1,8 @@
 import 'dart:core';
 
 
+
+import 'package:fitapp/Pages/homepage/footer.dart';
 import 'package:fitapp/common_widgets/conversation_user.dart';
 import 'package:fitapp/models/ConversationUser.dart';
 import 'package:fitapp/utils/theme_colors.dart';
@@ -148,6 +150,34 @@ class _ConversationListState extends State<ConversationList> {
             },
           ),
         ],
+      ),
+      bottomNavigationBar: Footer(
+        selectTab: 1,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: SizedBox(
+        width: 70,
+        height: 70,
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, '/alimentlist');
+          },
+          child: Container(
+            width: 65,
+            height: 65,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: TColor.primaryG,
+                ),
+                borderRadius: BorderRadius.circular(35),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 2,)
+                ]),
+            child: Icon(Icons.add,color: TColor.white, size: 35, ),
+          ),
+        ),
       ),
     );
   }
