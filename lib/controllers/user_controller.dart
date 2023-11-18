@@ -9,7 +9,7 @@ import '../Pages/aliment_list.dart';
 class UserController extends GetxController {
   User? user;
   final storage = const FlutterSecureStorage();
-  
+
 
   @override
   Future<void> onInit() async {
@@ -59,21 +59,21 @@ class UserController extends GetxController {
   }
 
   Future<void> loginUser(Map<String, dynamic> userData) async {
-  try {
-    UserController userController = Get.find<UserController>();
-    var response = await UserService().loginUser(userData);
-    if (response.statusCode == 200) {
-      userController.user = (User.fromJson(response.data['user']));
-      storage.write(key: "userToken", value: response.data['token']);
-      print("new logged user"+ userController.user!.nom);
-      Get.offAll(HomeView());
-    } else {
-      Get.snackbar("Error", "Wrong email or password");
+    try {
+      UserController userController = Get.find<UserController>();
+      var response = await UserService().loginUser(userData);
+      if (response.statusCode == 200) {
+        userController.user = (User.fromJson(response.data['user']));
+        storage.write(key: "userToken", value: response.data['token']);
+        print("new logged user"+ userController.user!.nom);
+        Get.offAll(HomeView());
+      } else {
+        Get.snackbar("Error", "Wrong email or password");
+      }
+    } catch (e) {
+      throw Exception(e.toString());
     }
-  } catch (e) {
-    throw Exception(e.toString());
   }
-}
 
   Future<User?> getUserById(String id) async {
     try {

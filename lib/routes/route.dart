@@ -9,6 +9,7 @@ import '../Pages/firstPage.dart';
 import '../Pages/login.dart';
 import '../Pages/SignUp.dart';
 import '../Pages/signUpStepsUser.dart';
+import '../Pages/user_profile.dart';
 
 
 class AppRoutes {
@@ -17,8 +18,9 @@ class AppRoutes {
     GetPage(name: '/login', page: () => LoginScreen()),
     GetPage(name: '/signup', page: () => SignUpScreen()),
     GetPage(name: '/chat', page: ()=>ConversationList()),
-    GetPage(name: '/home', page: ()=>HomeView()),
+    // GetPage(name: '/home', page: ()=>HomeView()),
     GetPage(name: '/alimentlist', page: () => AlimentListPage()),
+    GetPage(name: '/profile', page: () => ProfileUser()),
   ];
 
 

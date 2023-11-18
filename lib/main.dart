@@ -10,6 +10,8 @@ import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fitapp/Pages/user_profile.dart';
+import 'package:fitapp/controllers/user_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +21,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final storage = const FlutterSecureStorage();
+  final userController = Get.put(UserController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +47,9 @@ class MyApp extends StatelessWidget {
             return CircularProgressIndicator(); // Show a loading spinner while waiting
           } else {
             if (snapshot.data != null) {
-              return HomeView();
+              return LoginScreen();
             } else {
-              return FirstPage(); // Replace with your login view
+              return ProfileUser(); // Replace with your login view
             }
           }
         },
