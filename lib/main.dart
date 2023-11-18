@@ -27,7 +27,7 @@ void main() {
 class MyApp extends StatelessWidget {
   final storage = const FlutterSecureStorage();
   final userController = Get.put(UserController());
-
+  final objectifController = Get.put(ObjectifController());
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
             return CircularProgressIndicator(); // Show a loading spinner while waiting
           } else {
             if (snapshot.data != null) {
-              return SignUpScreen();
+              return HomeView();
             } else {
               return ProfileUser(); // Replace with your login view
             }

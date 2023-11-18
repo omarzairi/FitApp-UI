@@ -41,21 +41,18 @@ class _HomeViewState extends State<HomeView> {
     {"title": "2pm - 4pm", "subtitle": "700ml"},
     {"title": "4pm - now", "subtitle": "900ml"},
   ];
-
-  // UserController userController = UserController();
-  ObjectifController objectifController = ObjectifController();
-  // late User user;
-  late Objectif objective;
-  //
   Future<void> initData() async {
     UserController userController = Get.find<UserController>();
+    ObjectifController objectifController = Get.find<ObjectifController>();
     if(userController.user == null){
       await userController.getLoggedUser();
     }
+    if(objectifController.objectif == null)
+      {
+        await userController.getLoggedUser();
+      }
     print("in the init data ${userController.user!.id!}");
     await objectifController.getObjectiveByUserId(userController.user!.id!);
-    //   user=userController.user;
-    objective = objectifController.objectif;
   }
 
   @override
@@ -67,6 +64,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find<UserController>();
+    ObjectifController objectifController = Get.find<ObjectifController>();
     var media = MediaQuery.of(context).size;
     //final UserController userController = Get.put(UserController());
 
@@ -262,7 +260,7 @@ class _HomeViewState extends State<HomeView> {
                                           width: 120,
                                           height: 35,
                                           child: RoundButton(
-                                            title: objective.calories!.toStringAsFixed(0)+ " kcal",
+                                            title: "${objectifController.objectif?.calories}  +  kcal",
                                             type: RoundButtonType.bgGradient,
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
@@ -291,8 +289,8 @@ class _HomeViewState extends State<HomeView> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(25),
                                       child: Container(
-                                          height: media.width * 0.8,
-                                          width: double.maxFinite,
+                                          height: media.height * 0.35,
+                                          width: media.width * 1,
                                           decoration: BoxDecoration(
                                             color: TColor.primaryColor2.withOpacity(0.3),
                                             borderRadius: BorderRadius.circular(25),
@@ -376,9 +374,9 @@ class _HomeViewState extends State<HomeView> {
                                                                                   child: Image.asset(
                                                                                       "assets/img/eaten.png"),
                                                                                 ),
-                                                                                Padding(
+                                                                                const Padding(
                                                                                   padding:
-                                                                                  const EdgeInsets.only(
+                                                                                  EdgeInsets.only(
                                                                                       left: 4, bottom: 3),
                                                                                   child: Text(
                                                                                     '222',
