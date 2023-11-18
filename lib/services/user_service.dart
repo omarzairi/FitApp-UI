@@ -36,7 +36,12 @@ class UserService {
 
   Future<Response> updateUser(String id, userData) async {
 
-      Response response = await dio.put('/updateUser/$id', data: userData);
+      Response response = await dio.put('/updateUser/$id', data: userData,options:
+      Options(
+        headers: {
+          'Content-Type': 'application/json', // Add any headers you need
+          'Authorization': 'Bearer ${await storage.read(key: 'userToken')}', // Example of an Authorization header
+        },));
       return response;
 
   }
@@ -57,6 +62,28 @@ class UserService {
     },));
     return response;
 
+  }
+
+  Future<Response> deleteUser(String id) async {
+    Response response = await dio.delete('/deleteUser/$id',options:
+    Options(
+      headers: {
+    'Content-Type': 'application/json', // Add any headers you need
+    'Authorization': 'Bearer ${await storage.read(key: 'userToken')}', // Example of an Authorization header
+    },));
+
+    return response;
+  }
+
+
+  Future<Response> changePassword(String id, Map<String, dynamic> userData) async {
+    Response response = await dio.put('/changePassword/$id', data: userData,options:
+    Options(
+      headers: {
+        'Content-Type': 'application/json', // Add any headers you need
+        'Authorization': 'Bearer ${await storage.read(key: 'userToken')}', // Example of an Authorization header
+      },));
+    return response;
   }
 
 }

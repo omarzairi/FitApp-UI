@@ -9,7 +9,10 @@ import '../Pages/firstPage.dart';
 import '../Pages/login.dart';
 import '../Pages/SignUp.dart';
 import '../Pages/signUpStepsUser.dart';
-import '../Pages/user_profile.dart';
+import '../Pages/user_Profile/user_profile.dart';
+import '../Pages/user_Profile/change_name.dart';
+import '../Pages/user_Profile/change_mail.dart';
+import '../Pages/user_Profile/change_password.dart';
 
 
 class AppRoutes {
@@ -21,6 +24,10 @@ class AppRoutes {
     // GetPage(name: '/home', page: ()=>HomeView()),
     GetPage(name: '/alimentlist', page: () => AlimentListPage()),
     GetPage(name: '/profile', page: () => ProfileUser()),
+    GetPage(name:'/changeusername', page: ()=>ChangeName()),
+    GetPage(name:'/changemail', page: ()=>ChangeMail()),
+    GetPage(name:'/changepassword', page: ()=>ChangePassword()),
+
   ];
 
 

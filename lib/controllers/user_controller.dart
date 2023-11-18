@@ -47,9 +47,13 @@ class UserController extends GetxController {
 
   Future<void> updateUser(String id, Map<String, dynamic> userData) async {
     try {
+      UserController userController = Get.find<UserController>();
       var response = await UserService().updateUser(id, userData);
       if (response.statusCode == 200) {
-        user = response.data;
+        userController.user = (User.fromJson(response.data));
+        print(response.data);
+        print("new logged user"+ userController.user!.nom);
+
       } else {
         Get.snackbar("Error", response.data['message']);
       }
@@ -94,6 +98,27 @@ class UserController extends GetxController {
       user = User.fromJson(response.data);
       print(user);
       return user;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<void> deleteUser(String id) async {
+    try {
+      var response = await UserService().deleteUser(id);
+      if (response.statusCode == 200) {
+        user = null;
+      } else {
+        Get.snackbar("Error", response.data['message']);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<void> changePassword(String id, Map<String, dynamic> userData) async {
+    try {
+      var response = await UserService().changePassword(id, userData);
     } catch (e) {
       throw Exception(e.toString());
     }

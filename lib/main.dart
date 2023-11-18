@@ -10,8 +10,10 @@ import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:fitapp/Pages/user_profile.dart';
+import 'package:fitapp/Pages/user_Profile/user_profile.dart';
 import 'package:fitapp/controllers/user_controller.dart';
+import 'package:fitapp/Pages/user_Profile/change_name.dart';
+import 'package:fitapp/Pages/user_Profile/change_password.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
