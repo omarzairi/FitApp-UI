@@ -63,122 +63,128 @@ class _ProfileUserState extends State<ProfileUser> {
         ),
       ),
       body:
-      SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 10,),
-            Container(
-              width: double.maxFinite,
-              child: Text("Account informations",style: TextStyle(
-                fontSize: 20,
+      WillPopScope(
+        onWillPop: () async {
+          // Return false to prevent the page from being popped.
+          return false;
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 10,),
+              Container(
+                width: double.maxFinite,
+                child: Text("Account informations",style: TextStyle(
+                  fontSize: 20,
 
 
-              ),
-              textAlign: TextAlign.center,),
-            )
-            ,
-            SizedBox(height: 30,),
-
-        GetBuilder<UserController>(
-          builder: (controller) {
-            User? user = controller.user;
-
-            return ElevatedButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              ),
-              onPressed: () {
-                Get.toNamed('/changeusername');
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Name",
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  Text(
-                    '${user?.prenom} ${user?.nom}',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  Icon(Icons.arrow_forward_ios),
-                ],
-              ),
-            );
-          },
-        ),
-            SizedBox(height: 30,),
-            ElevatedButton(
-
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-
-              ),
-              onPressed: () {  Get.toNamed('/changemail');},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                children: [
-                  Text("Email",style: TextStyle(
-                      fontSize: 15
-                  )),
-                  Text('${user?.email}',style: TextStyle(
-                      fontSize: 15
-                  ),
-                  ),
-                  Icon(Icons.arrow_forward_ios)
-                ],
+                ),
+                textAlign: TextAlign.center,),
               )
               ,
-            ),
-            SizedBox(height: 30,),
-            ElevatedButton(
+              SizedBox(height: 30,),
 
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          GetBuilder<UserController>(
+            builder: (controller) {
+              User? user = controller.user;
 
+              return ElevatedButton(
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                ),
+                onPressed: () {
+                  Get.toNamed('/changeusername');
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Name",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Text(
+                      '${user?.prenom} ${user?.nom}',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.arrow_forward_ios),
+                  ],
+                ),
+              );
+            },
+          ),
+              SizedBox(height: 30,),
+              ElevatedButton(
+
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+
+                ),
+                onPressed: () {  Get.toNamed('/changemail');},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                  children: [
+                    Text("Email",style: TextStyle(
+                        fontSize: 15
+                    )),
+                    Text('${user?.email}',style: TextStyle(
+                        fontSize: 15
+                    ),
+                    ),
+                    Icon(Icons.arrow_forward_ios)
+                  ],
+                )
+                ,
               ),
-              onPressed: () { Get.toNamed('/changepassword'); },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              SizedBox(height: 30,),
+              ElevatedButton(
 
-                children: [
-                  Text("Password",style: TextStyle(
-                      fontSize: 15
-                  )),
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
 
-                  Icon(Icons.arrow_forward_ios)
-                ],
-              )
-              ,
-            ),
-            SizedBox(height: 100,),
-            ElevatedButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    side: BorderSide(color: Colors.red),
+                ),
+                onPressed: () { Get.toNamed('/changepassword'); },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
+                  children: [
+                    Text("Password",style: TextStyle(
+                        fontSize: 15
+                    )),
+
+                    Icon(Icons.arrow_forward_ios)
+                  ],
+                )
+                ,
+              ),
+              SizedBox(height: 100,),
+              ElevatedButton(
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      side: BorderSide(color: Colors.red),
+
+                    ),
                   ),
                 ),
+                onPressed: () async {
+
+
+                },
+                child:Text("Delete account",textAlign: TextAlign.center,style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.red
+                ),)
               ),
-              onPressed: () async {
 
-
-              },
-              child:Text("Delete account",textAlign: TextAlign.center,style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.red
-              ),)
-            ),
-
-          ],
+            ],
+          ),
         ),
       )
 

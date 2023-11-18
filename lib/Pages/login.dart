@@ -41,6 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 
+      Get.until((route) => route.isFirst);
       Get.offAllNamed('/profile');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
