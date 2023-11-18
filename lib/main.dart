@@ -1,5 +1,6 @@
 
 import 'package:fitapp/Pages/login.dart';
+import 'package:fitapp/controllers/user_controller.dart';
 import 'package:fitapp/routes/route.dart';
 
 import 'package:fitapp/Pages/homepage/homepage.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(UserController());
   runApp(MyApp());
 }
 
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: secondaryColor1Swatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        scaffoldBackgroundColor: Colors.white,
         textTheme: TextTheme(
           bodyText2: TextStyle(fontFamily: 'Poppins', fontSize: 18),
         ),

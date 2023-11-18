@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:fitapp/Pages/homepage/homepage.dart';
@@ -9,7 +8,6 @@ import '../controllers/user_controller.dart';
 import '../utils/theme_colors.dart';
 
 class LoginScreen extends StatefulWidget {
-
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -20,34 +18,28 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _email2 = TextEditingController();
   final TextEditingController _password2 = TextEditingController();
 
-
   Future<void> sendFormData() async {
     try {
-       await UserController().loginUser({
-
+      await UserController().loginUser({
         "email": _email2.text,
         "password": _password2.text,
-
       });
-
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Login successfully'),
+        const SnackBar(
+          content: Text('Login successfully'),
           backgroundColor: Colors.lightGreen,
-          duration: Duration(seconds: 3),),
+          duration: Duration(seconds: 3),
+        ),
       );
 
       Get.offAllNamed('/home');
-
-
-
-      }
-       catch (e) {
+    } catch (e) {
       print('Error in sendFormData: $e');
       // Handle the error as needed.
     }
   }
 
-      @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -111,19 +103,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: _email2,
-        validator: (value) {
-        if (value == null || value.isEmpty) {
-        return 'Please enter your email address';
-        }
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email address';
+                    }
 
-        final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
-        if (!emailRegex.hasMatch(value)) {
-        return 'Please enter a valid email address';
-        }
+                    final emailRegex =
+                        RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+                    if (!emailRegex.hasMatch(value)) {
+                      return 'Please enter a valid email address';
+                    }
 
-        return null;
-        },
-
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText: 'Email',
                     prefixIcon: const Icon(Icons.email),

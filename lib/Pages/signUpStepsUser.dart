@@ -68,7 +68,7 @@ class _StepsState extends State<UserStepperForm> {
           "poidsObj": double.parse(weightObjController.text),
           "poidsParSemaine": double.parse(_selectedItem),
           "actPhysique": _selectItem1,
-          "user": responseUser.id,
+          "user": responseUser?.id,
         });
 
       ScaffoldMessenger.of(context).showSnackBar(

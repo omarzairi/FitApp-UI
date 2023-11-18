@@ -49,4 +49,14 @@ class UserService {
 
   }
 
+  Future<Response> getLoggedUser() async {
+    Response response = await dio.get('/loggedUser',options: Options(
+      headers: {
+    'Content-Type': 'application/json', // Add any headers you need
+    'Authorization': 'Bearer ${await storage.read(key: 'userToken')}', // Example of an Authorization header
+    },));
+    return response;
+
+  }
+
 }
