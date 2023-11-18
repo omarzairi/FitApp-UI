@@ -21,6 +21,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmpasswordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 
   Future<void> sendFormData()async {
@@ -30,14 +31,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
       return;
     }else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => UserStepperForm(email:emailController.text,password:passwordController.text,)),
-      );
+      if(_formKey.currentState!.validate()) {
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              UserStepperForm(email: emailController.text,
+                password: passwordController.text,)),
+        );
+      }
+      else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please enter a valid email or password'),
+            backgroundColor: Colors.redAccent,
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
     }
   }
+
   @override
   Widget build(BuildContext context) {
+
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: TColor.white,
@@ -76,157 +93,160 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SizedBox(
           width: double.maxFinite,
 
-          child: Column(
+          child: Form(
+            key: _formKey,
+            child: Column(
 
-            children: <Widget>[
+              children: <Widget>[
 
-             const SizedBox(height: 50),
-             const  Text(
-                'Welcome to FitApp',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+               const SizedBox(height: 50),
+               const  Text(
+                  'Welcome to FitApp',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-             const  SizedBox(height: 20),
-             const  Text(
-                'Create an account',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+               const  SizedBox(height: 20),
+               const  Text(
+                  'Create an account',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-             const SizedBox(height: 20),
-              SizedBox(
-                width: 300,
-                child: TextFormField(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: emailController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email address';
-                    }
+               const SizedBox(height: 20),
+                SizedBox(
+                  width: 300,
+                  child: TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: emailController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email address';
+                      }
 
-                    // Email validation using a regular expression
-                    final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
-                    if (!emailRegex.hasMatch(value)) {
-                      return 'Please enter a valid email address';
-                    }
+                      // Email validation using a regular expression
+                      final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+                      if (!emailRegex.hasMatch(value)) {
+                        return 'Please enter a valid email address';
+                      }
 
-                    return null; // Return null if the email is valid
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                    prefixIcon: const Icon(Icons.email),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      return null; // Return null if the email is valid
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                      prefixIcon: const Icon(Icons.email),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                   ),
                 ),
-              ),
-             const SizedBox(height: 20),
-              SizedBox(
-                width: 300,
-                child: TextFormField(
-                  autovalidateMode:AutovalidateMode.onUserInteraction,
-                  controller: passwordController,
-                  validator: (value){
-                    if(value==null || value.isEmpty){
-                      return 'Please enter your password';
-                    }
-                    if(value.length<8){
-                      return 'Password must be at least 8 characters long';
-                    }
-                    return null;
-                  },
+               const SizedBox(height: 20),
+                SizedBox(
+                  width: 300,
+                  child: TextFormField(
+                    autovalidateMode:AutovalidateMode.onUserInteraction,
+                    controller: passwordController,
+                    validator: (value){
+                      if(value==null || value.isEmpty){
+                        return 'Please enter your password';
+                      }
+                      if(value.length<8){
+                        return 'Password must be at least 8 characters long';
+                      }
+                      return null;
+                    },
 
 
 
-                  obscureText: true,
-                  decoration: InputDecoration(
+                    obscureText: true,
+                    decoration: InputDecoration(
 
-                    hintText: 'Password',
-                    prefixIcon:const Icon(Icons.lock),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      hintText: 'Password',
+                      prefixIcon:const Icon(Icons.lock),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                ),const SizedBox(height: 20),
+                SizedBox(
+                  width: 300,
+                  child: TextFormField(
+                    autovalidateMode:AutovalidateMode.onUserInteraction,
+                    controller: confirmpasswordController,
+                    validator: (value){
+                      if(value==null || value.isEmpty){
+                        return 'Please enter your password';
+                      }
+                      if(value.length<8){
+                        return 'Password must be at least 8 characters long';
+                      }
+                      return null;
+                    },
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: 'Confirm password',
+                      prefixIcon: const Icon(Icons.lock),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                   ),
                 ),
-              ),const SizedBox(height: 20),
-              SizedBox(
-                width: 300,
-                child: TextFormField(
-                  autovalidateMode:AutovalidateMode.onUserInteraction,
-                  controller: confirmpasswordController,
-                  validator: (value){
-                    if(value==null || value.isEmpty){
-                      return 'Please enter your password';
-                    }
-                    if(value.length<8){
-                      return 'Password must be at least 8 characters long';
-                    }
-                    return null;
-                  },
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'Confirm password',
-                    prefixIcon: const Icon(Icons.lock),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: 300,
+                  height: 50,
+                  child: ElevatedButton(
+
+                    onPressed: () async {
+                      await sendFormData();
+
+
+                    },
+
+                    child: const Text(
+                      'Sign up',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: 300,
-                height: 50,
-                child: ElevatedButton(
-
-                  onPressed: () async {
-                    await sendFormData();
 
 
-                  },
 
-                  child: const Text(
-                    'Sign up',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
+                const SizedBox(height: 20),
+                const Text(
+                  'Or',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Container(
+
+                  height: 50,
+                  foregroundDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1,
                     ),
                   ),
-                ),
-              ),
 
 
-
-              const SizedBox(height: 20),
-              const Text(
-                'Or',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-
-                height: 50,
-                foregroundDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1,
-                  ),
+                  child: Image.asset('assets/img/google_logo.png'),
                 ),
 
 
-                child: Image.asset('assets/img/google_logo.png'),
-              ),
-
-
-            ],
+              ],
+            ),
           ),
         ),
       ),

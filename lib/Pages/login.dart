@@ -20,10 +20,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> sendFormData() async {
     try {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
       await UserController().loginUser({
         "email": _email2.text,
         "password": _password2.text,
       });
+      Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Login successfully'),
@@ -32,9 +41,18 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 
-      Get.offAllNamed('/home');
+      Get.until((route) => route.isFirst);
+      Get.offAllNamed('/profile');
     } catch (e) {
-      print('Error in sendFormData: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Invalid email or password'),
+          backgroundColor: Colors.redAccent,
+          duration: Duration(seconds: 3),
+        ),
+      );
+      Navigator.pop(context);
+
       // Handle the error as needed.
     }
   }
@@ -109,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
 
                     final emailRegex =
-                        RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+                    RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
                     if (!emailRegex.hasMatch(value)) {
                       return 'Please enter a valid email address';
                     }

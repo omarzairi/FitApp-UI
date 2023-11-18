@@ -14,6 +14,7 @@ class User{
   User({this.id,required this.nom, required this.prenom,required this.email,required this.password,
   required this.sex,required this.age,required this.taille,required this.poids, this.date});
 
+
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['_id'] ?? '',

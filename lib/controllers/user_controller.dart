@@ -9,7 +9,7 @@ import '../Pages/aliment_list.dart';
 class UserController extends GetxController {
   User? user;
   final storage = const FlutterSecureStorage();
-  
+
 
   @override
   Future<void> onInit() async {
@@ -22,11 +22,14 @@ class UserController extends GetxController {
 
   Future<User?> addUser(Map<String, dynamic> userData) async {
     try {
+      UserController userController = Get.find<UserController>();
       var response = await UserService().createUser(userData);
       if (response.statusCode == 200) {
         // Check if 'data' field is present in the response
         if (response.data != null && response.data is Map<String, dynamic>) {
+          userController.user = (User.fromJson(response.data));
           user = User.fromJson(response.data!);
+          await storage.delete(key: 'userToken');
 
           storage.write(key: "userToken", value: response.data['token']);
 
@@ -47,9 +50,13 @@ class UserController extends GetxController {
 
   Future<void> updateUser(String id, Map<String, dynamic> userData) async {
     try {
+      UserController userController = Get.find<UserController>();
       var response = await UserService().updateUser(id, userData);
       if (response.statusCode == 200) {
-        user = response.data;
+        userController.user = (User.fromJson(response.data));
+        print(response.data);
+        print("new logged user"+ userController.user!.nom);
+
       } else {
         Get.snackbar("Error", response.data['message']);
       }
@@ -59,21 +66,21 @@ class UserController extends GetxController {
   }
 
   Future<void> loginUser(Map<String, dynamic> userData) async {
-  try {
-    UserController userController = Get.find<UserController>();
-    var response = await UserService().loginUser(userData);
-    if (response.statusCode == 200) {
-      userController.user = (User.fromJson(response.data['user']));
-      storage.write(key: "userToken", value: response.data['token']);
-      print("new logged user"+ userController.user!.nom);
-      Get.offAll(HomeView());
-    } else {
-      Get.snackbar("Error", "Wrong email or password");
+    try {
+      UserController userController = Get.find<UserController>();
+      var response = await UserService().loginUser(userData);
+      if (response.statusCode == 200) {
+        userController.user = (User.fromJson(response.data['user']));
+        storage.write(key: "userToken", value: response.data['token']);
+        print("new logged user"+ userController.user!.nom);
+        Get.offAll(HomeView());
+      } else {
+        Get.snackbar("Error", "Wrong email or password");
+      }
+    } catch (e) {
+      throw Exception(e.toString());
     }
-  } catch (e) {
-    throw Exception(e.toString());
   }
-}
 
   Future<User?> getUserById(String id) async {
     try {
@@ -94,6 +101,27 @@ class UserController extends GetxController {
       user = User.fromJson(response.data);
       print(user);
       return user;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<void> deleteUser(String id) async {
+    try {
+      var response = await UserService().deleteUser(id);
+      if (response.statusCode == 200) {
+        user = null;
+      } else {
+        Get.snackbar("Error", response.data['message']);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<void> changePassword(String id, Map<String, dynamic> userData) async {
+    try {
+      var response = await UserService().changePassword(id, userData);
     } catch (e) {
       throw Exception(e.toString());
     }
