@@ -13,6 +13,7 @@ class ChangeMail extends StatefulWidget {
 
 class _ChangeMailState extends State<ChangeMail> {
   TextEditingController email = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,48 +21,62 @@ class _ChangeMailState extends State<ChangeMail> {
     User? user = userController.user;
 
     Future<void> updateUser() async {
-      try {
-        // Show loading indicator
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Center(
-              child: CircularProgressIndicator(),
+      if(_formKey.currentState!.validate())
+        {
+          try {
+            // Show loading indicator
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             );
-          },
-        );
 
-        await UserController().updateUser(
-          user?.id as String,
-          {"email": email.text} as Map<String, dynamic>,
-        );
+            await UserController().updateUser(
+              user?.id as String,
+              {"email": email.text} as Map<String, dynamic>,
+            );
 
-        // Dismiss loading indicator
-        Navigator.pop(context);
+            // Dismiss loading indicator
+            Navigator.pop(context);
 
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Email changed successfully'),
+                backgroundColor: Colors.lightGreen,
+                duration: Duration(seconds: 3),
+              ),
+            );
+
+            Get.offAllNamed('/profile');
+          } catch (e) {
+            // Dismiss loading indicator in case of an error
+            Navigator.pop(context);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('An error has occurred'),
+                backgroundColor: Colors.redAccent,
+                duration: Duration(seconds: 3),
+              ),
+            );
+            print('Error in sendFormData: $e');
+            // Handle the error as needed.
+          }
+        }
+      else{
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Email changed successfully'),
-            backgroundColor: Colors.lightGreen,
-            duration: Duration(seconds: 3),
-          ),
-        );
-
-        Get.offAllNamed('/profile');
-      } catch (e) {
-        // Dismiss loading indicator in case of an error
-        Navigator.pop(context);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('An error has occurred'),
+            content: Text('Please enter a valid email'),
             backgroundColor: Colors.redAccent,
             duration: Duration(seconds: 3),
           ),
         );
-        print('Error in sendFormData: $e');
-        // Handle the error as needed.
+
       }
+
     }
 
     email.text = user?.email ?? '';
@@ -104,28 +119,46 @@ class _ChangeMailState extends State<ChangeMail> {
       body: Container(
         width: double.maxFinite,
         margin: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 20,),
-            Text("Email", textAlign: TextAlign.end,),
-            SizedBox(height: 20,),
-            TextFormField(
-              controller: email,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 20,),
+              Text("Email", textAlign: TextAlign.end,),
+              SizedBox(height: 20,),
+              TextFormField(
+
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email address';
+                  }
+
+                  final emailRegex =
+                  RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+                  if (!emailRegex.hasMatch(value)) {
+                    return 'Please enter a valid email address';
+                  }
+
+                  return null;
+                },
+                controller: email,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 40,),
-            ElevatedButton(
-              onPressed: () {
-                updateUser();
-              },
-              child: Text("Confirm", style: TextStyle(color: Colors.white)),
-            ),
-          ],
+              SizedBox(height: 40,),
+              ElevatedButton(
+                onPressed: () {
+                  updateUser();
+                },
+                child: Text("Confirm", style: TextStyle(color: Colors.white)),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -22,11 +22,14 @@ class UserController extends GetxController {
 
   Future<User?> addUser(Map<String, dynamic> userData) async {
     try {
+      UserController userController = Get.find<UserController>();
       var response = await UserService().createUser(userData);
       if (response.statusCode == 200) {
         // Check if 'data' field is present in the response
         if (response.data != null && response.data is Map<String, dynamic>) {
+          userController.user = (User.fromJson(response.data));
           user = User.fromJson(response.data!);
+          await storage.delete(key: 'userToken');
 
           storage.write(key: "userToken", value: response.data['token']);
 

@@ -1,4 +1,5 @@
 
+import 'package:fitapp/Pages/SignUp.dart';
 import 'package:fitapp/Pages/firstPage.dart';
 import 'package:fitapp/Pages/login.dart';
 import 'package:fitapp/controllers/user_controller.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
             return CircularProgressIndicator(); // Show a loading spinner while waiting
           } else {
             if (snapshot.data != null) {
-              return LoginScreen();
+              return SignUpScreen();
             } else {
               return ProfileUser(); // Replace with your login view
             }

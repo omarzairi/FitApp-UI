@@ -25,6 +25,56 @@ class _ProfileUserState extends State<ProfileUser> {
   Widget build(BuildContext context) {
     UserController userController = Get.find<UserController>();
     User? user = userController.user;
+    Future<void> _showConfirmationDialog(BuildContext context) async {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Confirmation'),
+            content: Text('Are you sure you want to delete your account?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+
+                  Navigator.of(context).pop();
+                },
+                child: Text('No'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  try {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    );
+
+                    await userController.deleteUser(user?.id as String);
+                    Navigator.pop(context);
+                    Get.offAllNamed('/');
+                  }catch(e){
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('An error has occurred'),
+                        backgroundColor: Colors.redAccent,
+                        duration: Duration(seconds: 3),
+                      ),
+                    );
+                  }
+
+                },
+                child: Text('Yes'),
+              ),
+
+            ],
+          );
+        },
+      );
+    }
 
 
     return  Scaffold(
@@ -175,6 +225,7 @@ class _ProfileUserState extends State<ProfileUser> {
                 ),
                 onPressed: () async {
 
+                  _showConfirmationDialog(context);
 
                 },
                 child:Text("Delete account",textAlign: TextAlign.center,style: TextStyle(

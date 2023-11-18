@@ -17,49 +17,61 @@ class ChangePassword extends StatefulWidget {
 class _ChangePasswordState extends State<ChangePassword> {
   TextEditingController oldpassword = TextEditingController();
   TextEditingController newpassword = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find<UserController>();
     User? user = userController.user;
     Future<void> updatePassword() async {
-      try {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        );
+      if(_formKey.currentState!.validate()) {
+        try {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          );
 
-        await UserController().changePassword(
-          user?.id as String,
-          {
-            "oldPassword": oldpassword.text,
-            "newPassword": newpassword.text,
+          await UserController().changePassword(
+              user?.id as String,
+              {
+                "oldPassword": oldpassword.text,
+                "newPassword": newpassword.text,
 
-          }
-        );
-        Navigator.pop(context);
+              }
+          );
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Password changed successfully'),
+              backgroundColor: Colors.lightGreen,
+              duration: Duration(seconds: 3),
+            ),
+          );
+
+          Get.offAllNamed('/profile');
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Wrong password'),
+              backgroundColor: Colors.redAccent,
+              duration: Duration(seconds: 3),
+            ),
+          );
+          print('Error in sendFormData: $e');
+          // Handle the error as needed.
+        }
+      }
+      else{
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Password changed successfully'),
-            backgroundColor: Colors.lightGreen,
-            duration: Duration(seconds: 3),
-          ),
-        );
-
-        Get.offAllNamed('/profile');
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Wrong password'),
+            content: Text('Please enter a valid password'),
             backgroundColor: Colors.redAccent,
             duration: Duration(seconds: 3),
           ),
         );
-        print('Error in sendFormData: $e');
-        // Handle the error as needed.
       }
     }
 
@@ -104,44 +116,57 @@ class _ChangePasswordState extends State<ChangePassword> {
           margin: EdgeInsets.all(20),
           width: double.maxFinite,
 
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 20,),
-              Text("Old password",textAlign: TextAlign.end,),
-              SizedBox(height: 20,),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20,),
+                Text("Old password",textAlign: TextAlign.end,),
+                SizedBox(height: 20,),
 
-              TextFormField(
-                controller: oldpassword,
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                TextFormField(
+                  controller: oldpassword,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  )
+
+
+                ),SizedBox(height: 20,),
+                Text("New password",textAlign: TextAlign.end,),
+                SizedBox(height: 20,),
+
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    if (value.length < 8) {
+                      return 'Password must be at least 8 characters long';
+                    }
+                    return null;
+                  },
+                  controller: newpassword,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                )
+
+                  obscureText: true,
 
 
-              ),SizedBox(height: 20,),
-              Text("New password",textAlign: TextAlign.end,),
-              SizedBox(height: 20,),
-
-              TextFormField(
-                controller: newpassword,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
                 ),
-
-                obscureText: true,
-
-
-              ),
-              SizedBox(height: 40,),
-              ElevatedButton(onPressed: (){
-                updatePassword();
-              }, child: Text("Confirm",style: TextStyle(color: Colors.white)),)
-            ],
+                SizedBox(height: 40,),
+                ElevatedButton(onPressed: (){
+                  updatePassword();
+                }, child: Text("Confirm",style: TextStyle(color: Colors.white)),)
+              ],
+            ),
           ),
         ),
       )
