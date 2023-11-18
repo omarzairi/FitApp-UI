@@ -1,81 +1,115 @@
 import 'package:flutter/material.dart';
 import 'package:fitapp/Pages/login.dart';
 import 'package:fitapp/Pages/SignUp.dart';
+import 'package:fitapp/utils/theme_colors.dart';
 
-class FirstPage extends StatelessWidget {
-  const FirstPage({super.key});
+
+
+
+class FirstPage extends StatefulWidget {
+  FirstPage({Key? key}) : super(key: key);
+
+  @override
+  State<FirstPage> createState() => _FirstPageState();
+}
+
+class _FirstPageState extends State<FirstPage> {
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration:const BoxDecoration(
-          image: DecorationImage(
-            image: NetworkImage("https://previews.123rf.com/images/lightwise/lightwise1808/lightwise180800018/106354793-lifestyle-background-and-healthy-active-fitness-living-with-exercise-and-nutritios-diet-with-3d.jpg"),
-            fit: BoxFit.cover,
-          )
+      body: Container
+
+
+        (
+
+        decoration:
+        BoxDecoration(
+          image:DecorationImage(
+            image: AssetImage("assets/img/background.png")
+                ,
+
+            fit: BoxFit.contain,
+          ),
+
         ),
+
         child: Column(
           children: [
+
+
+
             // Top Column
-            const Expanded(
-              flex: 2,
+            Expanded(
+              flex: 3,
               child: Column(
                 children: [
-                  SizedBox(height: 100),
+                  SizedBox(height: 70),
                   Text(
                     'Welcome to FitApp',
-                    style: TextStyle(color: Colors.white, fontSize: 40.0,
-                    fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color:
+                        Color.fromRGBO(208, 162, 247,1),
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+
+                    ),
                     textAlign: TextAlign.center,
                   ),
-
 
                 ],
               ),
             ),
 
+
             // Bottom Column
+            SizedBox(height: 30),
             Expanded(
               child: Center(
                 child: Column(
                   children: [
-
-
                     SizedBox(
                       width: 300,
                       height: 50,
                       child: ElevatedButton(
-                        style:ButtonStyle(
-                          backgroundColor:MaterialStateProperty.all(
-                            Colors.green[500]
-
-                          ) ,
-                          shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ))
-                        ) ,
-
+                        style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all(Color.fromRGBO(208, 162, 247,1)),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                          ),
+                        ),
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => SignUpScreen()),
-
+                            MaterialPageRoute(
+                              builder: (context) => SignUpScreen(),
+                            ),
                           );
                         },
                         child: const Text(
                           'I am new',
-                          style: TextStyle(color: Colors.white, fontSize: 20.0,
-                          fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-
                       ),
                     ),
                     const SizedBox(height: 20),
                     const Text(
                       'Already Have an account?',
-                      style: TextStyle(color: Colors.white, fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
+                      style: TextStyle(
+                        color:  Color.fromRGBO(208, 162, 247,1),
+                        fontSize: 15.0,
+
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -83,27 +117,30 @@ class FirstPage extends StatelessWidget {
                       width: 300,
                       height: 50,
                       child: ElevatedButton(
-                        style:ButtonStyle(
-                            backgroundColor:MaterialStateProperty.all(
-                                Colors.white
-
-                            ) ,
-                            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.white),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                            ))
-                        ) ,
+                            ),
+                          ),
+                        ),
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LoginScreen()),
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ),
                           );
                         },
                         child: const Text(
                           'Sign In',
-                          style: TextStyle(color: Colors.black, fontSize: 20.0,
-                          fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-
                       ),
                     ),
                   ],
@@ -114,7 +151,5 @@ class FirstPage extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
-

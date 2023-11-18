@@ -1,4 +1,5 @@
 
+import 'package:fitapp/Pages/firstPage.dart';
 import 'package:fitapp/Pages/login.dart';
 import 'package:fitapp/controllers/user_controller.dart';
 import 'package:fitapp/routes/route.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           bodyText2: TextStyle(fontFamily: 'Poppins', fontSize: 18),
         ),
+
       ),
       home: FutureBuilder<String?>(
         future: storage.read(key: 'userToken'),
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.data != null) {
               return HomeView();
             } else {
-              return LoginScreen(); // Replace with your login view
+              return FirstPage(); // Replace with your login view
             }
           }
         },

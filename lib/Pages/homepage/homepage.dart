@@ -26,7 +26,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
 
 
-  
+
 
   int selectTab = 0;
   final PageStorageBucket pageBucket = PageStorageBucket();
@@ -54,7 +54,7 @@ class _HomeViewState extends State<HomeView> {
     }
     print("in the init data ${userController.user!.id!}");
     await objectifController.getObjectiveByUserId(userController.user!.id!);
-  //   user=userController.user;
+    //   user=userController.user;
     objective = objectifController.objectif;
   }
 
@@ -62,8 +62,8 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
   }
-  
-  
+
+
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find<UserController>();
