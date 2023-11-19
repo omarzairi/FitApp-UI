@@ -18,15 +18,15 @@ import '../Pages/user_Profile/change_password.dart';
 class AppRoutes {
   static final routes = [
     GetPage(name: '/', page: () => FirstPage()),
-    GetPage(name: '/login', page: () => LoginScreen()),
+    GetPage(name: '/login', page: () => const LoginScreen()),
     GetPage(name: '/signup', page: () => SignUpScreen()),
-    GetPage(name: '/chat', page: ()=>ConversationList()),
-    // GetPage(name: '/home', page: ()=>HomeView()),
+    GetPage(name: '/chat', page: ()=>const ConversationList()),
+    GetPage(name: '/home', page: ()=>const HomeView()),
     GetPage(name: '/alimentlist', page: () => AlimentListPage()),
-    GetPage(name: '/profile', page: () => ProfileUser()),
-    GetPage(name:'/changeusername', page: ()=>ChangeName()),
-    GetPage(name:'/changemail', page: ()=>ChangeMail()),
-    GetPage(name:'/changepassword', page: ()=>ChangePassword()),
+    GetPage(name: '/profile', page: () => const ProfileUser()),
+    GetPage(name:'/changeusername', page: ()=>const ChangeName()),
+    GetPage(name:'/changemail', page: ()=>const ChangeMail()),
+    GetPage(name:'/changepassword', page: ()=>const ChangePassword()),
 
   ];
 

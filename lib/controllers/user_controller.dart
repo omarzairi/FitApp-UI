@@ -29,7 +29,6 @@ class UserController extends GetxController {
         if (response.data != null && response.data is Map<String, dynamic>) {
           userController.user = (User.fromJson(response.data));
           user = User.fromJson(response.data!);
-          await storage.delete(key: 'userToken');
 
           storage.write(key: "userToken", value: response.data['token']);
 
@@ -73,7 +72,7 @@ class UserController extends GetxController {
         userController.user = (User.fromJson(response.data['user']));
         storage.write(key: "userToken", value: response.data['token']);
         print("new logged user"+ userController.user!.nom);
-        Get.offAll(HomeView());
+
       } else {
         Get.snackbar("Error", "Wrong email or password");
       }
@@ -111,6 +110,8 @@ class UserController extends GetxController {
       var response = await UserService().deleteUser(id);
       if (response.statusCode == 200) {
         user = null;
+        await storage.delete(key: 'userToken');
+
       } else {
         Get.snackbar("Error", response.data['message']);
       }

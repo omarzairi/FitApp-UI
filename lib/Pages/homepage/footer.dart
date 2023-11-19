@@ -1,6 +1,7 @@
 import 'package:fitapp/Pages/homepage/tabButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../utils/theme_colors.dart';
 
@@ -36,7 +37,7 @@ class _MainTabViewState extends State<Footer> {
                       setState(() {
                         widget.selectTab = 0;
                       });
-                      Navigator.pushNamed(context, '/home');
+                     Get.toNamed('/home');
                     }),
                 TabButton(
                     icon: "assets/img/activity_tab.png",
@@ -67,7 +68,7 @@ class _MainTabViewState extends State<Footer> {
                       setState(() {
                         widget.selectTab = 3;
                       });
-                      Navigator.pushNamed(context, '/login');
+                     Get.toNamed('/profile');
                     })
               ],
             ),

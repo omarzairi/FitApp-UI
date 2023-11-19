@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.data != null) {
               return HomeView();
             } else {
-              return ProfileUser(); // Replace with your login view
+              return FirstPage(); // Replace with your login view
             }
           }
         },
