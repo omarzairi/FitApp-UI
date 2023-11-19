@@ -68,9 +68,9 @@ class ConsumptionService {
     }
   }
 
-  Future<Response> getNutritionFactsToday(String user,Map<String,dynamic> date) async {
+  Future<Response> getNutritionFactsToday(String user,Map<String,dynamic> datastuff) async {
     try {
-      Response response = await dio.post('/nutritionFactsToday/$user',data:{'date':date});
+      Response response = await dio.post('/nutritionFactsToday/$user',data:datastuff);
       return response;
     } catch (e) {
       throw Exception(e.toString());

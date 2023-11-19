@@ -1,22 +1,34 @@
 import 'package:fitapp/services/consumption_service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
 import '../models/ConsumptionFacts.dart';
 
 class ConsumptionController extends GetxController{
-  late ConsumptionFact consumptionFacts;
+  final storage=const FlutterSecureStorage() ;
 
-  Future<ConsumptionFact> getFacts(String user,Map<String,dynamic> date)
+  ConsumptionFact? consumptionFact;
+
+  @override
+  Future<void> onInit() async {
+
+    super.onInit();
+    print("onInit Consumption");
+  }
+
+  Future<ConsumptionFact?> getFacts(String user,Map<String,dynamic> datastuff)
   async {
     try
         {
-          var response = await ConsumptionService().getNutritionFactsToday(user, date);
+          var response = await ConsumptionService().getNutritionFactsToday(user,datastuff);
+          print(datastuff);
           if(response.statusCode == 200)
             {
               if(response.data != null)
                 {
-                  consumptionFacts = ConsumptionFact.fromJson(response.data!);
-                  return consumptionFacts;
+                  consumptionFact = ConsumptionFact.fromJson(response.data!);
+                  print(response);
+                  return consumptionFact;
                 }
               else
                 {

@@ -2,6 +2,7 @@
 import 'package:fitapp/Pages/SignUp.dart';
 import 'package:fitapp/Pages/firstPage.dart';
 import 'package:fitapp/Pages/login.dart';
+import 'package:fitapp/controllers/consumption_controller.dart';
 import 'package:fitapp/controllers/objectif_controller.dart';
 import 'package:fitapp/controllers/user_controller.dart';
 import 'package:fitapp/routes/route.dart';
@@ -19,15 +20,22 @@ import 'package:fitapp/Pages/user_Profile/change_password.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   Get.put(UserController());
+
   Get.put(ObjectifController());
+
+  Get.put(ConsumptionController());
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   final storage = const FlutterSecureStorage();
   final userController = Get.put(UserController());
   final objectifController = Get.put(ObjectifController());
+  final consumptionController = Get.put(ConsumptionController());
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +48,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: secondaryColor1Swatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         scaffoldBackgroundColor: Colors.white,
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           bodyText2: TextStyle(fontFamily: 'Poppins', fontSize: 18),
         ),
 
@@ -54,7 +62,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.data != null) {
               return HomeView();
             } else {
-              return ProfileUser(); // Replace with your login view
+              return LoginScreen(); // Replace with your login view
             }
           }
         },

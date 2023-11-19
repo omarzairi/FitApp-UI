@@ -4,7 +4,6 @@ import 'package:fitapp/services/objectif_service.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../Pages/aliment_list.dart';
 class ObjectifController extends GetxController{
 
   final storage=const FlutterSecureStorage() ;
