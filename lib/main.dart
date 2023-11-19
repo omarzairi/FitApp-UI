@@ -16,15 +16,29 @@ import 'package:fitapp/Pages/user_Profile/user_profile.dart';
 import 'package:fitapp/controllers/user_controller.dart';
 import 'package:fitapp/Pages/user_Profile/change_name.dart';
 import 'package:fitapp/Pages/user_Profile/change_password.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
-void main() {
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  final fcmToken= await FirebaseMessaging.instance.getToken();
+  print("fcmToken: $fcmToken");
+
   Get.put(UserController());
   Get.put(ObjectifController());
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   final storage = const FlutterSecureStorage();
   final userController = Get.put(UserController());
   final objectifController = Get.put(ObjectifController());
@@ -52,7 +66,7 @@ class MyApp extends StatelessWidget {
             return CircularProgressIndicator(); // Show a loading spinner while waiting
           } else {
             if (snapshot.data != null) {
-              return HomeView();
+              return FirstPage();
             } else {
               return FirstPage(); // Replace with your login view
             }
