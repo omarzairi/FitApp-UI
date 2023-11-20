@@ -1,4 +1,6 @@
 //routes file
+import 'package:fitapp/Pages/LoginCoach.dart';
+import 'package:fitapp/Pages/SignUpCoach.dart';
 import 'package:fitapp/Pages/conversation_list.dart';
 import 'package:fitapp/Pages/homepage/homepage.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,8 @@ class AppRoutes {
     GetPage(name: '/chat', page: ()=>ConversationList()),
     GetPage(name: '/home', page: ()=>HomeView()),
     GetPage(name: '/alimentlist', page: () => AlimentListPage()),
+    GetPage(name: '/signupCoach', page: () => CoachSignUpScreen()),
+    GetPage(name: '/loginCoach', page: () =>LoginCoachScreen()),
   ];
 
 

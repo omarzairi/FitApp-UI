@@ -1,5 +1,6 @@
 
 import 'package:fitapp/Pages/login.dart';
+import 'package:fitapp/Pages/signUpStepsCoach.dart';
 import 'package:fitapp/routes/route.dart';
 
 import 'package:fitapp/Pages/homepage/homepage.dart';
@@ -8,6 +9,10 @@ import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fitapp/Pages/SignUpCoach.dart';
+
+import 'Pages/LoginCoach.dart';
+import 'Pages/SignUp.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +45,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.data != null) {
               return HomeView();
             } else {
-              return LoginScreen(); // Replace with your login view
+              return LoginCoachScreen(); // Replace with your login view
             }
           }
         },
@@ -52,7 +57,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MyHomePage();
+    return LoginCoachScreen();
     // return Scaffold(
     //
     //
