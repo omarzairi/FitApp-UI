@@ -42,6 +42,7 @@ class _StepsState extends State<UserStepperForm> {
   final TextEditingController heightController = TextEditingController();
   final TextEditingController weightObjController = TextEditingController();
   final TextEditingController weightPerWeekController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 
   int index = 0;
@@ -50,41 +51,64 @@ class _StepsState extends State<UserStepperForm> {
   String _sex='Male';
 
   Future<void> sendFormData() async {
-    try {
-      final responseUser = await UserController().addUser({
-        "nom": lastNameController.text,
-        "prenom": nameController.text,
-        "email": _email,
-        "password": _password,
-        "age": int.parse(ageController.text),
-        "taille": double.parse(heightController.text),
-        "poids": double.parse(weightController.text),
-        "sex": _sex,
-      });
-
+    if(_formKey.currentState!.validate()) {
+      try {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        );
+        final responseUser = await UserController().addUser({
+          "nom": lastNameController.text,
+          "prenom": nameController.text,
+          "email": _email,
+          "password": _password,
+          "age": int.parse(ageController.text),
+          "taille": double.parse(heightController.text),
+          "poids": double.parse(weightController.text),
+          "sex": _sex,
+        });
 
 
         final responseObj = await ObjectifController().addObjectif({
           "poidsObj": double.parse(weightObjController.text),
           "poidsParSemaine": double.parse(_selectedItem),
           "actPhysique": _selectItem1,
-          "user": responseUser.id,
+          "user": responseUser?.id,
         });
+        Navigator.pop(context);
 
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Account created successfully'),
+            backgroundColor: Colors.lightGreen,
+            duration: Duration(seconds: 3),),
+        );
+
+        Get.offAllNamed('/profile');
+      } catch (e) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('An error has occurred'),
+            backgroundColor: Colors.redAccent,
+            duration: Duration(seconds: 3),
+          ),
+        );
+        print('Error in sendFormData: $e');
+        // Handle the error as needed.
+      }
+    }
+    else{
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Account created successfully'),
-        backgroundColor: Colors.lightGreen,
-        duration: Duration(seconds: 3),),
+        const SnackBar(
+          content: Text('Please enter valid informations'),
+          backgroundColor: Colors.redAccent,
+          duration: Duration(seconds: 3),
+        ),
       );
-
-      Get.offAllNamed('/alimentlist');
-
-
-
-
-    } catch (e) {
-      print('Error in sendFormData: $e');
-      // Handle the error as needed.
     }
   }
 
@@ -126,203 +150,242 @@ class _StepsState extends State<UserStepperForm> {
             )),
 
       ),
-      body: Stepper(
-        currentStep: index,
-        onStepCancel: () {
-          if (index > 0) {
+      body: Form(
+        key: _formKey,
+        child: Stepper(
+          currentStep: index,
+          onStepCancel: () {
+            if (index > 0) {
+              setState(() {
+                index--;
+              });
+            }
+          },
+          onStepContinue: () async {
+            if(index == 4){
+              await sendFormData();
+            }
+            else {
+              setState(() {
+                index++;
+              });
+            }
+          },
+          onStepTapped: (int indexStep) {
             setState(() {
-              index--;
+              index = indexStep;
             });
-          }
-        },
-        onStepContinue: () async {
-          if(index == 4){
-            await sendFormData();
-          }
-          else {
-            setState(() {
-              index++;
-            });
-          }
-        },
-        onStepTapped: (int indexStep) {
-          setState(() {
-            index = indexStep;
-          });
-        },
+          },
 
-        steps: <Step>[
-          Step(
-            title: const Text("Name and Last Name"),
-            content: Column(
-              children: [
+          steps: <Step>[
+            Step(
+              title: const Text("Name and Last Name"),
+              content: Column(
+                children: [
+                  TextFormField(
+                    controller: nameController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: const InputDecoration(labelText: 'Name'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your name';
+                      }
+
+                      final name = RegExp(r'^[a-zA-Z]+$');
+                      if (!name.hasMatch(value)) {
+                        return 'Your name should not contain numbers';
+                      }
+
+                      return null;
+                    },
+
+                  ),
+                  TextFormField(
+                    controller: lastNameController,
+                    decoration: const InputDecoration(labelText: 'Last name'),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your name';
+                      }
+
+                      final name = RegExp(r'^[a-zA-Z]+$');
+                      if (!name.hasMatch(value)) {
+                        return 'Your name should not contain numbers';
+                      }
+
+                      return null;
+                    },
+
+                  )
+                ],
+              ),
+              isActive: index > 0,
+            ),
+
+            Step(
+              title: const Text("Sex and Age"),
+              isActive: index >1,
+              content: Column(
+                children: [
+                  SizedBox(
+                    width: double.maxFinite,
+                    child: DropdownMenu(
+                      width: 300,
+                      initialSelection: _sex,
+                      onSelected: (String? value) {
+                        setState(() {
+                          _sex = value!;
+
+                        });
+                      },
+                      dropdownMenuEntries: const [
+                        DropdownMenuEntry(
+                            value: 'Male', label: 'Male'),
+                        DropdownMenuEntry(value: 'Female', label: 'Female'),
+
+
+                      ],
+                    ),
+                  ),
+                  TextFormField(
+                    controller: ageController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: const InputDecoration(labelText: 'Age'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your age';
+                      }
+
+                      final name = RegExp(r'^\d+$');
+                      if (!name.hasMatch(value)) {
+                        return 'Your age should not contain letters';
+                      }
+
+                      return null;
+                    },
+
+                  ),
+
+
+]
+            ),
+            ),
+            Step(
+              title: const Text("Weight and Height"),
+              content: Column(
+                children: [
+                  TextFormField(
+
+                    decoration: const InputDecoration(labelText: 'Weight (kg)'),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller:weightController ,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your weight';
+                      }
+
+                      final name = RegExp(r'^\d+$');
+                      if (!name.hasMatch(value)) {
+                        return 'Your weight should not contain letters';
+                      }
+
+                      return null;
+                    },
+
+                  ),
+                  TextFormField(
+                    controller: heightController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: const InputDecoration(labelText: 'Height (cm)'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your height';
+                      }
+
+                      final name = RegExp(r'^\d+$');
+                      if (!name.hasMatch(value)) {
+                        return 'Your height should not contain letters';
+                      }
+
+                      return null;
+                    },
+
+                  )
+                ],
+              ),
+              isActive: index > 2,
+            ),
+            Step(
+              title: const Text("Weight objectif and weight per week"),
+              isActive: index > 3,
+              content: Column(children: [
                 TextFormField(
-                  controller: nameController,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(labelText: 'Name'),
+                  controller: weightObjController,
+                  decoration: const InputDecoration(labelText: 'Ojectif (kg)'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
+                      return 'Please enter your objectif weight';
                     }
+
+                    final name = RegExp(r'^\d+$');
+                    if (!name.hasMatch(value)) {
+                      return 'Your objectif weight should not contain letters';
+                    }
+
                     return null;
                   },
 
                 ),
-                TextFormField(
-                  controller: lastNameController,
-                  decoration: const InputDecoration(labelText: 'Last name'),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your last name';
-                    }
-                    return null;
-                  },
-
-                )
-              ],
-            ),
-            isActive: index > 0,
-          ),
-
-          Step(
-            title: const Text("Sex and Age"),
-            isActive: index >1,
-            content: Column(
-              children: [
+                const SizedBox(height: 16),
                 SizedBox(
                   width: double.maxFinite,
                   child: DropdownMenu(
+                    initialSelection: _selectedItem,
                     width: 300,
-                    initialSelection: _sex,
                     onSelected: (String? value) {
                       setState(() {
-                        _sex = value!;
+                        _selectedItem = value!;
 
                       });
                     },
                     dropdownMenuEntries: const [
-                      DropdownMenuEntry(
-                          value: 'Male', label: 'Male'),
-                      DropdownMenuEntry(value: 'Female', label: 'Female'),
-
-
+                      DropdownMenuEntry(value: '0', label: '0 Kg'),
+                      DropdownMenuEntry(value: '0,125', label: '1/8 Kg'),
+                      DropdownMenuEntry(value: '0.25', label: '1/4 Kg'),
+                      DropdownMenuEntry(value: '0.5', label: '1/2 Kg'),
+                      DropdownMenuEntry(value: '1', label: '1 Kg'),
                     ],
                   ),
                 ),
-                TextFormField(
-                  controller: ageController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(labelText: 'Age'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your weight';
-                    }
-                    return null;
-                  },
-
-                ),
-
-
-]
-          ),
-          ),
-          Step(
-            title: const Text("Weight and Height"),
-            content: Column(
-              children: [
-                TextFormField(
-
-                  decoration: const InputDecoration(labelText: 'Weight (kg)'),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller:weightController ,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your weight';
-                    }
-                    return null;
-                  },
-
-                ),
-                TextFormField(
-                  controller: heightController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(labelText: 'Height (cm)'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your height';
-                    }
-                    return null;
-                  },
-
-                )
-              ],
+              ]),
             ),
-            isActive: index > 2,
-          ),
-          Step(
-            title: const Text("Weight objectif and weight per week"),
-            isActive: index > 3,
-            content: Column(children: [
-              TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: weightObjController,
-                decoration: const InputDecoration(labelText: 'Ojectif (kg)'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your objectif';
-                  }
-                  return null;
+            Step(
+              title: const Text("Physical activity"),
+              isActive: index > 4,
+              content: DropdownMenu(
+                 initialSelection: _selectItem1,
+
+
+                width: 300,
+                onSelected: (String? value) {
+                  setState(() {
+                    _selectItem1 = value!;
+
+                  });
                 },
-
+                dropdownMenuEntries: const [
+                  DropdownMenuEntry(value: 'Sedentary', label: 'Sedentary'),
+                  DropdownMenuEntry(
+                      value: 'Moderately active', label: 'Moderately active'),
+                  DropdownMenuEntry(value: 'Active', label: 'Active'),
+                  DropdownMenuEntry(value: 'Very active', label: 'Very active'),
+                ],
               ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.maxFinite,
-                child: DropdownMenu(
-                  initialSelection: _selectedItem,
-                  width: 300,
-                  onSelected: (String? value) {
-                    setState(() {
-                      _selectedItem = value!;
-
-                    });
-                  },
-                  dropdownMenuEntries: const [
-                    DropdownMenuEntry(value: '0', label: '0 Kg'),
-                    DropdownMenuEntry(value: '0,125', label: '1/8 Kg'),
-                    DropdownMenuEntry(value: '0.25', label: '1/4 Kg'),
-                    DropdownMenuEntry(value: '0.5', label: '1/2 Kg'),
-                    DropdownMenuEntry(value: '1', label: '1 Kg'),
-                  ],
-                ),
-              ),
-            ]),
-          ),
-          Step(
-            title: const Text("Physical activity"),
-            isActive: index > 4,
-            content: DropdownMenu(
-               initialSelection: _selectItem1,
-
-
-              width: 300,
-              onSelected: (String? value) {
-                setState(() {
-                  _selectItem1 = value!;
-
-                });
-              },
-              dropdownMenuEntries: const [
-                DropdownMenuEntry(value: 'Sedentary', label: 'Sedentary'),
-                DropdownMenuEntry(
-                    value: 'Moderately active', label: 'Moderately active'),
-                DropdownMenuEntry(value: 'Active', label: 'Active'),
-                DropdownMenuEntry(value: 'Very active', label: 'Very active'),
-              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

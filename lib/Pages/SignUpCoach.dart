@@ -1,59 +1,37 @@
+import 'dart:collection';
 import 'dart:convert';
-
-import 'package:fitapp/Pages/homepage/homepage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get/get.dart';
-import '../controllers/user_controller.dart';
+import 'package:fitapp/Pages/signUpStepsCoach.dart'; // Assuming you have a similar page for coach signup steps
 import '../utils/theme_colors.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class CoachSignUpScreen extends StatefulWidget {
+  CoachSignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<CoachSignUpScreen> createState() => _CoachSignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _email2 = TextEditingController();
-  final TextEditingController _password2 = TextEditingController();
+class _CoachSignUpScreenState extends State<CoachSignUpScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmpasswordController = TextEditingController();
 
   Future<void> sendFormData() async {
-    try {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      );
-      await UserController().loginUser({
-        "email": _email2.text,
-        "password": _password2.text,
-      });
-      Navigator.pop(context);
+    if (passwordController.text != confirmpasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Login successfully'),
-          backgroundColor: Colors.lightGreen,
-          duration: Duration(seconds: 3),
+        const SnackBar(content: Text('Passwords do not match')),
+      );
+      return;
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SignUpStepsCoach(
+            email: emailController.text,
+            password: passwordController.text,
+          ),
         ),
       );
-
-      Get.until((route) => route.isFirst);
-      Get.offAllNamed('/home');
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Invalid email or password'),
-          backgroundColor: Colors.redAccent,
-          duration: Duration(seconds: 3),
-        ),
-      );
-      Navigator.pop(context);
-
-      // Handle the error as needed.
     }
   }
 
@@ -85,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         title: Text(
-          "Sign in",
+          "Coach Sign up",
           style: TextStyle(
             color: TColor.black,
             fontSize: 20,
@@ -109,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 20),
               const Text(
-                'Please login to your account',
+                'Create a Coach account',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -120,19 +98,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 300,
                 child: TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _email2,
+                  controller: emailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email address';
                     }
 
-                    final emailRegex =
-                    RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+                    // Email validation using a regular expression
+                    final emailRegex = RegExp(
+                        r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
                     if (!emailRegex.hasMatch(value)) {
                       return 'Please enter a valid email address';
                     }
 
-                    return null;
+                    return null; // Return null if the email is valid
                   },
                   decoration: InputDecoration(
                     hintText: 'Email',
@@ -148,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 300,
                 child: TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _password2,
+                  controller: passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
@@ -171,26 +150,43 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
               SizedBox(
                 width: 300,
+                child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: confirmpasswordController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    if (value.length < 8) {
+                      return 'Password must be at least 8 characters long';
+                    }
+                    return null;
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Confirm password',
+                    prefixIcon: const Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 300,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
                     await sendFormData();
                   },
                   child: const Text(
-                    'Login',
+                    'Sign up',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.white,
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Forgot Password?',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 20),

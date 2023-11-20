@@ -1,58 +1,40 @@
 import 'dart:convert';
 
-import 'package:fitapp/Pages/homepage/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import '../controllers/user_controller.dart';
-import '../utils/theme_colors.dart';
+import 'package:fitapp/controllers/coach_controller.dart';
+import 'package:fitapp/utils/theme_colors.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginCoachScreen extends StatefulWidget {
+  const LoginCoachScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginCoachScreen> createState() => _LoginCoachScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _email2 = TextEditingController();
-  final TextEditingController _password2 = TextEditingController();
+class _LoginCoachScreenState extends State<LoginCoachScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   Future<void> sendFormData() async {
     try {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      );
-      await UserController().loginUser({
-        "email": _email2.text,
-        "password": _password2.text,
+      await CoachController().loginCoach({
+        "email": _emailController.text,
+        "password": _passwordController.text,
       });
-      Navigator.pop(context);
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Login successfully'),
+          content: Text('Login successful'),
           backgroundColor: Colors.lightGreen,
           duration: Duration(seconds: 3),
         ),
       );
 
-      Get.until((route) => route.isFirst);
-      Get.offAllNamed('/home');
+      Get.offAllNamed('/home'); // Navigate to the coach's home page after successful login
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Invalid email or password'),
-          backgroundColor: Colors.redAccent,
-          duration: Duration(seconds: 3),
-        ),
-      );
-      Navigator.pop(context);
-
+      print('Error in sendFormData: $e');
       // Handle the error as needed.
     }
   }
@@ -85,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         title: Text(
-          "Sign in",
+          "Coach Sign In",
           style: TextStyle(
             color: TColor.black,
             fontSize: 20,
@@ -109,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 20),
               const Text(
-                'Please login to your account',
+                'Please login to your coach account',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -120,17 +102,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 300,
                 child: TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _email2,
+                  controller: _emailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email address';
                     }
 
-                    final emailRegex =
-                    RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
-                    if (!emailRegex.hasMatch(value)) {
-                      return 'Please enter a valid email address';
-                    }
+                    // Add any additional email validation logic if needed
 
                     return null;
                   },
@@ -148,14 +126,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 300,
                 child: TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _password2,
+                  controller: _passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
-                    if (value.length < 8) {
-                      return 'Password must be at least 8 characters long';
-                    }
+                    // You can add additional password validation logic if needed
+
                     return null;
                   },
                   obscureText: true,

@@ -4,11 +4,14 @@ import 'package:fitapp/services/objectif_service.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../Pages/aliment_list.dart';
 class ObjectifController extends GetxController{
 
   final storage=const FlutterSecureStorage() ;
-  late Objectif objectif;
+  Objectif? objectif;
+
+  Future<void>onInit() async{
+    super.onInit();
+  }
 
   Future<void> addObjectif(Map<String, dynamic> objectifData) async {
     try {
@@ -31,7 +34,7 @@ class ObjectifController extends GetxController{
     }
   }
 
-  Future<Objectif> getObjectiveByUserId(String id) async {
+  Future<Objectif?> getObjectiveByUserId(String id) async {
     try {
       var response = await ObjectifService().getObjectiveByUserId(id);
       objectif = Objectif.fromJson(response.data!);

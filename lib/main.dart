@@ -1,6 +1,11 @@
 
+import 'package:fitapp/Pages/SignUp.dart';
 import 'package:fitapp/Pages/firstPage.dart';
 import 'package:fitapp/Pages/login.dart';
+import 'package:fitapp/controllers/consumption_controller.dart';
+import 'package:fitapp/controllers/objectif_controller.dart';
+import 'package:fitapp/controllers/user_controller.dart';
+import 'package:fitapp/Pages/signUpStepsCoach.dart';
 import 'package:fitapp/routes/route.dart';
 
 import 'package:fitapp/Pages/homepage/homepage.dart';
@@ -10,13 +15,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import 'Pages/LoginCoach.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  Get.put(UserController());
+
+  Get.put(ObjectifController());
+
+  Get.put(ConsumptionController());
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   final storage = const FlutterSecureStorage();
+  final userController = Get.put(UserController());
+  final objectifController = Get.put(ObjectifController());
+  final consumptionController = Get.put(ConsumptionController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +46,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: secondaryColor1Swatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: TextTheme(
+        scaffoldBackgroundColor: Colors.white,
+        textTheme: const TextTheme(
           bodyText2: TextStyle(fontFamily: 'Poppins', fontSize: 18),
         ),
 
@@ -42,7 +61,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.data != null) {
               return HomeView();
             } else {
-              return FirstPage(); // Replace with your login view
+              return LoginCoachScreen(); // Replace with your login view
             }
           }
         },
@@ -54,7 +73,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MyHomePage();
+    return LoginCoachScreen();
     // return Scaffold(
     //
     //
