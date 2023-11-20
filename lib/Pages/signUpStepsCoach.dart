@@ -1,223 +1,200 @@
 import 'dart:collection';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:fitapp/utils/theme_colors.dart';
+import 'package:fitapp/models/Coach.dart';
+import 'package:fitapp/controllers/coach_controller.dart';
+import 'package:get/get.dart';
 
-class CoachStepperForm extends StatefulWidget {
-  final HashMap<String, String> usermap;
-  CoachStepperForm({super.key, required this.usermap});
+class SignUpStepsCoach extends StatefulWidget {
+  final String email;
+  final String password;
 
+  SignUpStepsCoach({required this.email, required this.password});
 
   @override
-  State<CoachStepperForm> createState() => _StepsState();
+  State<SignUpStepsCoach> createState() => _SignUpStepsCoachState();
 }
 
-class _StepsState extends State<CoachStepperForm> {
-  late final HashMap<String, String> _usermap;
+class _SignUpStepsCoachState extends State<SignUpStepsCoach> {
+  late String _email;
+  late String _password;
+
   @override
   void initState() {
     super.initState();
-    _usermap = widget.usermap;
+    _email = widget.email;
+    _password = widget.password;
   }
 
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController sexController = TextEditingController();
+
   int index = 0;
-  String _selectedItem = '1/2';
-  String _selectItem1 = 'Sedentary';
   String _sex='Male';
 
-  final HashMap<String, String> _map = HashMap<String, String>();
+  Future<void> sendFormData() async {
+    try {
+      await CoachController().addCoach({
+        "nom": nameController.text,
+        "prenom": lastNameController.text,
+        "email": _email,
+        "password": _password,
+        "sex": _sex,
+        "age": int.parse(ageController.text),
+      });
 
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Account created successfully'),
+          backgroundColor: Colors.lightGreen,
+          duration: Duration(seconds: 3),
+        ),
+      );
 
-
-
-
-  Future<void> sendFormData() async{
-
-    _map["email"] = _usermap["email"]!;
-    _map["password"] = _usermap["password"]!;
-    _map["actPhysique"] = _selectItem1;
-    _map["poidsSemaine"] = _selectedItem;
-    _map["sex"]=_sex;
-
-
-    final body=jsonEncode(_map);
-    final urlUser = Uri.parse('https://fit-app-api.azurewebsites.net/api/users/addUser');
-    final urlObj=Uri.parse('https://fit-app-api.azurewebsites.net/api/objectifs/addObjectif');
-    final responseUser= await http.post(urlUser,body:{_map["email"]!,_map["password"]!});
-    final responseObj= await http.post(urlObj,body:{_map["poidsObj"]!,_map["poidsSemaine"]!,_map["actPhysique"]!});
-    print(responseUser.body);
-    print(responseObj.body);
+      // Navigate to the desired screen after successful signup
+      Get.offAllNamed('/loginCoach');
+    } catch (e) {
+      print('Error in sendFormData: $e');
+      // Handle the error as needed.
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: TColor.white,
+        centerTitle: true,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            height: 40,
+            width: 40,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: TColor.lightGray,
+                borderRadius: BorderRadius.circular(10)),
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: TColor.black,
+              size: 20,
+            ),
+          ),
+        ),
+        title: Text(
+          "Informations",
+          style: TextStyle(
+            color: TColor.black,
+            fontSize: 20,
+            letterSpacing: 1,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
       body: Stepper(
         currentStep: index,
-        onStepCancel: () {
-          if (index > 0) {
-            setState(() {
-              index--;
-            });
-          }
-        },
-        onStepContinue: () async {
-          if(index == 3){
-            await sendFormData();
-          }
-          else {
-            setState(() {
-              index++;
-            });
-          }
-        },
+       onStepCancel: () {
+  if (index > 0) {
+    setState(() {
+      index--;
+    });
+  }
+},
+onStepContinue: () async {
+  if (index < 1) {
+    setState(() {
+      index++;
+    });
+  } else if (index == 1) {
+    // Add any additional validation if needed
+    await sendFormData();
+  }
+},
         onStepTapped: (int indexStep) {
           setState(() {
             index = indexStep;
           });
         },
-
         steps: <Step>[
-
           Step(
-            title: const Text("Sex and Age"),
-            isActive: index >0,
-            content: Column(
-                children: [
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: DropdownMenu(
-                      width: 300,
-                      initialSelection: _sex,
-                      onSelected: (String? value) {
-                        setState(() {
-                          _sex = value!;
-                          _map["sex"] = value;
-                        });
-                      },
-                      dropdownMenuEntries: const [
-                        DropdownMenuEntry(
-                            value: 'Male', label: 'Male'),
-                        DropdownMenuEntry(value: 'Female', label: 'Female'),
-
-
-                      ],
-                    ),
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Age'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your weight';
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      _map["age"] = value;
-                    },
-                  ),
-
-
-                ]
-            ),
-          ),
-          Step(
-            title: const Text("Weight and Height"),
+            title: const Text("Name and Last Name"),
             content: Column(
               children: [
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Weight (kg)'),
+                  controller: nameController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: const InputDecoration(labelText: 'Name'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your weight';
+                      return 'Please enter your name';
                     }
                     return null;
-                  },
-                  onChanged: (value) {
-                    _map["poids"] = value;
                   },
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Height (cm)'),
+                  controller: lastNameController,
+                  decoration: const InputDecoration(labelText: 'Last name'),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your height';
+                      return 'Please enter your last name';
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _map["taille"] = value;
-                  },
-                )
-              ],
-            ),
-            isActive: index > 1,
-          ),
-          Step(
-            title: const Text("Weight objectif and weight per week"),
-            isActive: index > 2,
-            content: Column(children: [
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Ojectif (kg)'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your objectif';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  _map["poidsObj"] = value;
-                },
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.maxFinite,
-                child: DropdownMenu(
-                  initialSelection: _selectedItem,
-                  width: 300,
-                  onSelected: (String? value) {
-                    setState(() {
-                      _selectedItem = value!;
-                      _map["poidsSemaine"] = value;
-                    });
-                  },
-                  dropdownMenuEntries: const [
-                    DropdownMenuEntry(value: '0', label: '0 Kg'),
-                    DropdownMenuEntry(value: '1/8', label: '1/8 Kg'),
-                    DropdownMenuEntry(value: '1/4', label: '1/4 Kg'),
-                    DropdownMenuEntry(value: '1/2', label: '1/2 Kg'),
-                    DropdownMenuEntry(value: '1', label: '1 Kg'),
-                  ],
                 ),
-              ),
-            ]),
-          ),
-          Step(
-            title: const Text("Physical activity"),
-            isActive: index > 3,
-            content: DropdownMenu(
-              initialSelection: _selectItem1,
-
-
-              width: 300,
-              onSelected: (String? value) {
-                setState(() {
-                  _selectItem1 = value!;
-                  _map["actPhysique"] = value;
-                });
-              },
-              dropdownMenuEntries: const [
-                DropdownMenuEntry(value: 'Sedentary', label: 'Sedentary'),
-                DropdownMenuEntry(
-                    value: 'Moderately active', label: 'Moderately active'),
-                DropdownMenuEntry(value: 'Active', label: 'Active'),
-                DropdownMenuEntry(value: 'Very active', label: 'Very active'),
               ],
             ),
+            isActive: index > 0,
+          ),
+            Step(
+            title: const Text("Sex and Age"),
+            isActive: index >1,
+            content: Column(
+              children: [
+                SizedBox(
+                  width: double.maxFinite,
+                  child: DropdownMenu(
+                    width: 300,
+                    initialSelection: _sex,
+                    onSelected: (String? value) {
+                      setState(() {
+                        _sex = value!;
+
+                      });
+                    },
+                    dropdownMenuEntries: const [
+                      DropdownMenuEntry(
+                          value: 'Male', label: 'Male'),
+                      DropdownMenuEntry(value: 'Female', label: 'Female'),
+
+
+                    ],
+                  ),
+                ),
+                TextFormField(
+                  controller: ageController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: const InputDecoration(labelText: 'Age'),
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your Age';
+                    }
+                    return null;
+                  },
+
+                ),
+]
+          ),
           ),
         ],
       ),
     );
   }
 }
-
