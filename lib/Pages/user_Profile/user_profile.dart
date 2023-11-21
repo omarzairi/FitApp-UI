@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 import 'package:fitapp/controllers/user_controller.dart';
 import 'package:fitapp/models/User.dart';
 import 'package:fitapp/utils/theme_colors.dart';
+import 'package:fitapp/controllers/objectif_controller.dart';
+
+import '../../models/Objectif.dart';
 
 
 class ProfileUser extends StatefulWidget {
@@ -25,6 +28,10 @@ class _ProfileUserState extends State<ProfileUser> {
   Widget build(BuildContext context) {
     UserController userController = Get.find<UserController>();
     User? user = userController.user;
+    ObjectifController objectifController = Get.find<ObjectifController>();
+    Objectif? objectif = objectifController.objectif;
+
+
     Future<void> _showConfirmationDialog(BuildContext context) async {
       return showDialog<void>(
         context: context,
@@ -182,6 +189,78 @@ class _ProfileUserState extends State<ProfileUser> {
                 ],
               )
               ,
+            ),SizedBox(height: 30,),
+            ElevatedButton(
+
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+
+              ),
+              onPressed: () {  Get.toNamed('/changemail');},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                children: [
+                  Text("Current weight",style: TextStyle(
+                      fontSize: 15
+                  )),
+                  Text('${user?.poids} kg',style: TextStyle(
+                      fontSize: 15
+                  ),
+                  ),
+                  Icon(Icons.arrow_forward_ios)
+                ],
+              )
+              ,
+            ),SizedBox(height: 30,),
+            ElevatedButton(
+
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+
+              ),
+              onPressed: () {  Get.toNamed('/changemail');},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                children: [
+                  Text("Target weight",style: TextStyle(
+                      fontSize: 15
+                  )),
+                  Text('${objectif?.poidsObj}',style: TextStyle(
+                      fontSize: 15
+                  ),
+                  ),
+                  Icon(Icons.arrow_forward_ios)
+                ],
+              )
+              ,
+            ),SizedBox(height: 30,),
+            ElevatedButton(
+
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+
+              ),
+              onPressed: () {  Get.toNamed('/changemail');},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                children: [
+                  Text("Weight per week",style: TextStyle(
+                      fontSize: 15
+                  )),
+                  Text('${objectif?.poidsParSemaine} kg',style: TextStyle(
+                      fontSize: 15
+                  ),
+                  ),
+                  Icon(Icons.arrow_forward_ios)
+                ],
+              )
+              ,
             ),
             SizedBox(height: 30,),
             ElevatedButton(
@@ -202,10 +281,10 @@ class _ProfileUserState extends State<ProfileUser> {
 
                   Icon(Icons.arrow_forward_ios)
                 ],
-              )
-              ,
+              ),
+
             ),
-            SizedBox(height: 100,),
+            SizedBox(height: 50,),
             ElevatedButton(
               style: ButtonStyle(
                 padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),

@@ -6,18 +6,21 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../Pages/aliment_list.dart';
 
-class UserController extends GetxController {
+class UserController extends GetxController  {
+
   User? user;
+
   final storage = const FlutterSecureStorage();
 
 
   @override
   Future<void> onInit() async {
 
-    super.onInit();
+
     print("onInit");
-    await getLoggedUser();
+    // await getLoggedUser();
     print("done");
+    super.onInit();
   }
 
   Future<User?> addUser(Map<String, dynamic> userData) async {
