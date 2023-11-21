@@ -88,27 +88,38 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
       ),
       body: Stack(
         children: <Widget>[
-          ListView.builder(
-            itemCount: messages.length,
-            shrinkWrap: true,
-            padding: EdgeInsets.only(top: 10, bottom: 10),
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Container(
-                padding: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
-                child: Align(
-                  alignment: (messages[index].fromSelf == false ? Alignment.topLeft : Alignment.topRight),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: (messages[index].fromSelf == false ? Colors.grey.shade200 : TColor.primaryColor2),
+          SingleChildScrollView(
+            child: Obx(
+                  () => ListView.builder(
+                itemCount: _chatController.userMessages.length,
+                shrinkWrap: true,
+                padding: EdgeInsets.only(top: 10, bottom: 60),
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Container(
+                    padding: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                    child: Align(
+                      alignment: (_chatController.userMessages[index].fromSelf == false
+                          ? Alignment.topLeft
+                          : Alignment.topRight),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: (_chatController.userMessages[index].fromSelf == false
+                              ? Colors.grey.shade200
+                              : TColor.primaryColor2),
+                        ),
+                        padding: EdgeInsets.all(16),
+                        child: Text(
+                          _chatController.userMessages[index].message,
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ),
                     ),
-                    padding: EdgeInsets.all(16),
-                    child: Text(messages[index].message, style: TextStyle(fontSize: 15)),
-                  ),
-                ),
-              );
-            },
+                  );
+                },
+              ),
+            ),
           ),
           Align(
             alignment: Alignment.bottomLeft,
@@ -117,44 +128,46 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
               height: 60,
               width: double.infinity,
               color: Colors.white,
-              child: Row(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        color: TColor.primaryColor2,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Icon(Icons.add, color: Colors.white, size: 20),
-                    ),
-                  ),
-                  SizedBox(width: 15,),
-                  Expanded(
-                    child: TextField(
-                      controller: _chatController.messageController,
-                      decoration: InputDecoration(
-                        hintText: "Write message...",
-                        hintStyle: TextStyle(color: Colors.black54),
-                        border: InputBorder.none,
+              child: Container(
+                child: Row(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: TColor.primaryColor2,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Icon(Icons.add, color: Colors.white, size: 20),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 15,),
-                  FloatingActionButton(
-                    onPressed: () {
-                      _chatController.userSend({
-                        'recipientId': widget.id,
-                        'message': _chatController.messageController.text,
-                      });
-                    },
-                    child: Icon(Icons.send, color: Colors.white, size: 18),
-                    backgroundColor: TColor.primaryColor2,
-                    elevation: 0,
-                  ),
-                ],
+                    SizedBox(width: 15,),
+                    Expanded(
+                      child: TextField(
+                        controller: _chatController.messageController,
+                        decoration: InputDecoration(
+                          hintText: "Write message...",
+                          hintStyle: TextStyle(color: Colors.black54),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 15,),
+                    FloatingActionButton(
+                      onPressed: () {
+                        _chatController.userSend({
+                          'to': widget.id,
+                          'message': _chatController.messageController.text,
+                        });
+                      },
+                      child: Icon(Icons.send, color: Colors.white, size: 18),
+                      backgroundColor: TColor.primaryColor2,
+                      elevation: 0,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -10,7 +10,7 @@ class ChatSocketService {
   }
 
   void connect(String userId) {
-    socket = IO.io('https://fit-app-api.azurewebsites.net', <String, dynamic>{
+    socket = IO.io('http://fit-app-api.azurewebsites.net', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
     });

@@ -9,6 +9,7 @@ import 'package:fitapp/Pages/signUpStepsCoach.dart';
 import 'package:fitapp/routes/route.dart';
 
 import 'package:fitapp/Pages/homepage/homepage.dart';
+import 'package:fitapp/services/messageSocket_service.dart';
 
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ void main() {
   Get.put(ObjectifController());
 
   Get.put(ConsumptionController());
+  Get.put(ChatSocketService());
 
   runApp(MyApp());
 }
@@ -61,7 +63,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.data != null) {
               return HomeView();
             } else {
-              return LoginCoachScreen(); // Replace with your login view
+              return LoginScreen(); // Replace with your login view
             }
           }
         },

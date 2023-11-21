@@ -23,7 +23,7 @@ class AppRoutes {
     GetPage(name: '/login', page: () => LoginScreen()),
     GetPage(name: '/signup', page: () => SignUpScreen()),
     GetPage(name: '/chat', page: ()=>ConversationList()),
-    // GetPage(name: '/home', page: ()=>HomeView()),
+    GetPage(name: '/home', page: ()=>HomeView()),
     GetPage(name: '/alimentlist', page: () => AlimentListPage()),
     GetPage(name: '/signupCoach', page: () => CoachSignUpScreen()),
     GetPage(name: '/loginCoach', page: () =>LoginCoachScreen()),
