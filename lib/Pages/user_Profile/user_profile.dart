@@ -6,6 +6,10 @@ import 'package:get/get.dart';
 import 'package:fitapp/controllers/user_controller.dart';
 import 'package:fitapp/models/User.dart';
 import 'package:fitapp/utils/theme_colors.dart';
+import 'package:fitapp/controllers/objectif_controller.dart';
+
+import '../../models/Objectif.dart';
+import '../homepage/footer.dart';
 
 
 class ProfileUser extends StatefulWidget {
@@ -23,8 +27,13 @@ class _ProfileUserState extends State<ProfileUser> {
 
   @override
   Widget build(BuildContext context) {
+
     UserController userController = Get.find<UserController>();
     User? user = userController.user;
+    ObjectifController objectifController = Get.find<ObjectifController>();
+    Objectif? objectif = objectifController.objectif;
+
+
     Future<void> _showConfirmationDialog(BuildContext context) async {
       return showDialog<void>(
         context: context,
@@ -113,131 +122,191 @@ class _ProfileUserState extends State<ProfileUser> {
         ),
       ),
       body:
-      WillPopScope(
-        onWillPop: () async {
-          // Return false to prevent the page from being popped.
-          return false;
-        },
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 10,),
-              Container(
-                width: double.maxFinite,
-                child: Text("Account informations",style: TextStyle(
-                  fontSize: 20,
+      SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 10,),
+            Container(
+              width: double.maxFinite,
+              child: Text("Account informations",style: TextStyle(
+                fontSize: 20,
 
 
+              ),
+              textAlign: TextAlign.center,),
+            )
+            ,
+            SizedBox(height: 30,),
+
+        GetBuilder<UserController>(
+          builder: (controller) {
+            User? user = controller.user;
+
+            return TextButton(
+
+              style: ButtonStyle(
+                side: MaterialStateProperty.all<BorderSide>(
+                  BorderSide.none, // Ensure that the border is explicitly set to none
                 ),
-                textAlign: TextAlign.center,),
+
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              ),
+              onPressed: () {
+                Get.toNamed('/changeusername');
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Name",
+                    style: TextStyle(fontSize: 15,
+                      color: Colors.black,),
+                  ),
+                  Text(
+                    '${user?.prenom} ${user?.nom}',
+                    style: TextStyle(fontSize: 15,color: Colors.black,),
+                  ),
+                  Icon(Icons.arrow_forward_ios,color: Colors.black,),
+                ],
+              ),
+            );
+          },
+        ),
+            SizedBox(height: 20,),
+            TextButton(
+
+              style: ButtonStyle(
+
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+
+              ),
+              onPressed: () {  Get.toNamed('/changemail');},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                children: [
+                  Text("Email",style: TextStyle(
+                      fontSize: 15,
+                    color: Colors.black,
+                  )),
+                  Text('${user?.email}',style: TextStyle(
+                      fontSize: 15,
+                    color: Colors.black,
+                  ),
+                  ),
+                  Icon(Icons.arrow_forward_ios,color: Colors.black,)
+                ],
               )
               ,
-              SizedBox(height: 30,),
+            ),SizedBox(height: 20,),
+            TextButton(
 
-          GetBuilder<UserController>(
-            builder: (controller) {
-              User? user = controller.user;
+              style: ButtonStyle(
 
-              return ElevatedButton(
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                ),
-                onPressed: () {
-                  Get.toNamed('/changeusername');
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Name",
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Text(
-                      '${user?.prenom} ${user?.nom}',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Icon(Icons.arrow_forward_ios),
-                  ],
-                ),
-              );
-            },
-          ),
-              SizedBox(height: 30,),
-              ElevatedButton(
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
 
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-
-                ),
-                onPressed: () {  Get.toNamed('/changemail');},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                  children: [
-                    Text("Email",style: TextStyle(
-                        fontSize: 15
-                    )),
-                    Text('${user?.email}',style: TextStyle(
-                        fontSize: 15
-                    ),
-                    ),
-                    Icon(Icons.arrow_forward_ios)
-                  ],
-                )
-                ,
               ),
-              SizedBox(height: 30,),
-              ElevatedButton(
+              onPressed: () {  Get.toNamed('/currentweight');},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                children: [
+                  Text("Current weight",style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15
+                  )),
+                  Text('${user?.poids} kg',style: TextStyle(
+                    color: Colors.black,
+                      fontSize: 15
+                  ),
+                  ),
+                  Icon(Icons.arrow_forward_ios,color: Colors.black,)
+                ],
+              )
+              ,
+            ),SizedBox(height: 20,),
+            TextButton(
 
-                ),
-                onPressed: () { Get.toNamed('/changepassword'); },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
 
-                  children: [
-                    Text("Password",style: TextStyle(
-                        fontSize: 15
-                    )),
-
-                    Icon(Icons.arrow_forward_ios)
-                  ],
-                )
-                ,
               ),
-              SizedBox(height: 100,),
-              ElevatedButton(
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.red),
+              onPressed: () {  Get.toNamed('/targetweight');},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                    ),
+                children: [
+                  Text("Target weight",style: TextStyle(
+                      fontSize: 15,
+                    color: Colors.black,
+                  )),
+                  Text('${objectif?.poidsObj} kg',style: TextStyle(color: Colors.black,
+                      fontSize: 15
+                  ),
+                  ),
+                  Icon(Icons.arrow_forward_ios,color: Colors.black,)
+                ],
+              )
+              ,
+            ),SizedBox(height: 20,),
+
+
+            TextButton(
+
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+
+              ),
+              onPressed: () { Get.toNamed('/changepassword'); },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                children: [
+                  Text("Password",style: TextStyle(
+                      fontSize: 15,
+                    color: Colors.black,
+                  )),
+
+                  Icon(Icons.arrow_forward_ios,color: Colors.black,)
+                ],
+              ),
+
+            ),
+            SizedBox(height: 50,),
+            TextButton(
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    side: BorderSide(color: Colors.red),
+
                   ),
                 ),
-                onPressed: () async {
-
-                  _showConfirmationDialog(context);
-
-                },
-                child:Text("Delete account",textAlign: TextAlign.center,style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.red
-                ),)
               ),
+              onPressed: () async {
 
-            ],
-          ),
+                _showConfirmationDialog(context);
+
+              },
+              child:Text("Delete account",textAlign: TextAlign.center,style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white
+              ),)
+            ),
+
+          ],
         ),
-      )
+      ),
+        bottomNavigationBar: Footer(
+          selectTab: 3,
+        )
 
 
     );
