@@ -281,7 +281,7 @@ class _ProfileUserState extends State<ProfileUser> {
             TextButton(
               style: ButtonStyle(
                 padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
@@ -297,7 +297,7 @@ class _ProfileUserState extends State<ProfileUser> {
               },
               child:Text("Delete account",textAlign: TextAlign.center,style: TextStyle(
                   fontSize: 15,
-                  color: Colors.red
+                  color: Colors.white
               ),)
             ),
 
