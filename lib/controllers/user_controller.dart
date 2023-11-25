@@ -6,18 +6,21 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../Pages/aliment_list.dart';
 
-class UserController extends GetxController {
+class UserController extends GetxController  {
+
   User? user;
+
   final storage = const FlutterSecureStorage();
 
 
   @override
   Future<void> onInit() async {
 
-    super.onInit();
+
     print("onInit");
-    await getLoggedUser();
+    // await getLoggedUser();
     print("done");
+    super.onInit();
   }
 
   Future<User?> addUser(Map<String, dynamic> userData) async {
@@ -29,7 +32,6 @@ class UserController extends GetxController {
         if (response.data != null && response.data is Map<String, dynamic>) {
           userController.user = (User.fromJson(response.data));
           user = User.fromJson(response.data!);
-          await storage.delete(key: 'userToken');
 
           storage.write(key: "userToken", value: response.data['token']);
 
@@ -73,7 +75,7 @@ class UserController extends GetxController {
         userController.user = (User.fromJson(response.data['user']));
         storage.write(key: "userToken", value: response.data['token']);
         print("new logged user"+ userController.user!.nom);
-        Get.offAll(HomeView());
+
       } else {
         Get.snackbar("Error", "Wrong email or password");
       }
@@ -111,6 +113,8 @@ class UserController extends GetxController {
       var response = await UserService().deleteUser(id);
       if (response.statusCode == 200) {
         user = null;
+        await storage.delete(key: 'userToken');
+
       } else {
         Get.snackbar("Error", response.data['message']);
       }

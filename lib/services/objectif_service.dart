@@ -11,7 +11,9 @@ class ObjectifService {
       ),
     );
   }
-  final storage=const FlutterSecureStorage() ;
+
+  final storage = const FlutterSecureStorage();
+
   Future<Response> getData(String endpoint) async {
     try {
       Response response = await dio.get(endpoint);
@@ -24,12 +26,14 @@ class ObjectifService {
   Future<Response> addObjectif(Map<String, dynamic>objectifData) async {
     try {
       Response response = await dio.post('/addObjectif', data: objectifData,
-    options: Options(
-      headers: {
-        'Content-Type': 'application/json', // Add any headers you need
-        'Authorization': 'Bearer ${await storage.read(key: 'userToken')}', // Example of an Authorization header
-      },
-    )
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+              // Add any headers you need
+              'Authorization': 'Bearer ${await storage.read(key: 'userToken')}',
+              // Example of an Authorization header
+            },
+          )
 
       );
       return response;
@@ -37,20 +41,43 @@ class ObjectifService {
       throw Exception(e.toString());
     }
   }
-  
-  Future<Response> getObjectiveByUserId(String id) async{
-    try
-        {
-          Response response = await dio.get("/getObjectifByUserId/$id",options: Options(
-            headers: {
-              'Content-Type': 'application/json', // Add any headers you need
-              'Authorization': 'Bearer ${await storage.read(key: 'userToken')}', // Example of an Authorization header
-            },));
-          return response;
-        }
-        catch(e)
-    {
+
+  Future<Response> getObjectiveByUserId(String id) async {
+    try {
+      Response response = await dio.get(
+          "/getObjectifByUserId/$id", options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any headers you need
+          'Authorization': 'Bearer ${await storage.read(key: 'userToken')}',
+          // Example of an Authorization header
+        },));
+      return response;
+    }
+    catch (e) {
       throw Exception(e.toString());
     }
-}
+  }
+
+  Future<Response> updateObjectif(String id,
+      Map<String, dynamic> objectifData) async {
+    try {
+      Response response = await dio.put(
+          '/updateObjectif/$id', data: objectifData,
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+              // Add any headers you need
+              'Authorization': 'Bearer ${await storage.read(key: 'userToken')}',
+              // Example of an Authorization header
+            },
+          )
+
+      );
+      return response;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
 }
