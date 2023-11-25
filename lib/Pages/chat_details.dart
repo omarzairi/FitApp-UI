@@ -25,6 +25,10 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   List<MessageModel> messages = [];
   late TextEditingController _messageController;
   late ChatController _chatController;
+  ScrollController _scrollController = ScrollController();
+
+
+
 
   @override
   void initState() {
@@ -32,18 +36,18 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
     _chatController = Get.put(ChatController());
     _loadMessages();
   }
+
   Future<void> _loadMessages() async {
     try {
-      // Use the getUserMessages method from ChatController
       await _chatController.getUserMessages({'to': widget.id});
       setState(() {
-        // Update messages using the userMessages list from the controller
         messages = List.from(_chatController.userMessages);
       });
     } catch (e) {
       print('Error loading messages: $e');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,39 +90,38 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
           ),
         ),
       ),
-      body: Stack(
+      body: Column(
         children: <Widget>[
-          SingleChildScrollView(
-            child: Obx(
-                  () => ListView.builder(
-                itemCount: _chatController.userMessages.length,
-                shrinkWrap: true,
-                padding: EdgeInsets.only(top: 10, bottom: 60),
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
-                    child: Align(
-                      alignment: (_chatController.userMessages[index].fromSelf == false
-                          ? Alignment.topLeft
-                          : Alignment.topRight),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: (_chatController.userMessages[index].fromSelf == false
-                              ? Colors.grey.shade200
-                              : TColor.primaryColor2),
-                        ),
-                        padding: EdgeInsets.all(16),
-                        child: Text(
-                          _chatController.userMessages[index].message,
-                          style: TextStyle(fontSize: 15),
-                        ),
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: messages.length,
+              reverse: true, // Set reverse to true
+              padding: EdgeInsets.only(top: 10, bottom: 60),
+              itemBuilder: (context, index) {
+                final reversedIndex = _chatController.userMessages.length - index - 1;
+                return Container(
+                  padding: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                  child: Align(
+                    alignment: (_chatController.userMessages[reversedIndex].fromSelf == false
+                        ? Alignment.topLeft
+                        : Alignment.topRight),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: (_chatController.userMessages[reversedIndex].fromSelf == false
+                            ? Colors.grey.shade200
+                            : TColor.primaryColor2),
+                      ),
+                      padding: EdgeInsets.all(16),
+                      child: Text(
+                        _chatController.userMessages[reversedIndex].message,
+                        style: TextStyle(fontSize: 15),
                       ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ),
           Align(
@@ -157,11 +160,18 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     SizedBox(width: 15,),
                     FloatingActionButton(
                       onPressed: () {
-                        _chatController.userSend({
-                          'to': widget.id,
-                          'message': _chatController.messageController.text,
-                        });
-                      },
+    _chatController.userSend({
+    'to': widget.id,
+    'message': _chatController.messageController.text,
+    });
+    _chatController.messageController.clear();
+
+// Update the state to include the new message
+    setState(() {
+    messages.add(_chatController.userMessages.last);
+    });
+    _loadMessages();
+    },
                       child: Icon(Icons.send, color: Colors.white, size: 18),
                       backgroundColor: TColor.primaryColor2,
                       elevation: 0,
@@ -179,6 +189,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   void dispose() {
     _messageController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 }
