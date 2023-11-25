@@ -29,7 +29,7 @@ class User{
       date: json['date'] != null ? DateTime.parse(json['date']) : null,
 
 
-
+      
     );
 
 

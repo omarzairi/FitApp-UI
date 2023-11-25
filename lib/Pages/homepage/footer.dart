@@ -1,6 +1,8 @@
 import 'package:fitapp/Pages/homepage/tabButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../utils/theme_colors.dart';
 
@@ -67,7 +69,7 @@ class _MainTabViewState extends State<Footer> {
                       setState(() {
                         widget.selectTab = 3;
                       });
-                      Navigator.pushNamed(context, '/profile');
+                     Get.toNamed('/profile');
                     })
               ],
             ),

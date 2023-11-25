@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       Get.until((route) => route.isFirst);
-      Get.offAllNamed('/profile');
+      Get.offAllNamed('/home');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
