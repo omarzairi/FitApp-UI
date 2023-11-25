@@ -1,5 +1,7 @@
+import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeDrawer extends StatelessWidget{
   @override
@@ -9,27 +11,25 @@ class HomeDrawer extends StatelessWidget{
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration: const BoxDecoration(
+            decoration:  BoxDecoration(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(0)),
-              color: Color(0xffFB7AFF),
+              color: TColor.primaryColor2,
             ),
             child: Image.asset(
                 "assets/img/bg_dots.png"),
           ),
           ListTile(
             title:  Text('Dashboard'),
-            onTap: () {},
+            onTap: () {Get.toNamed("/home");},
           ),
           ListTile(
             title: const Text('Consumption'),
-            onTap: () {},
+            onTap: () {Get.toNamed("/alimentlist");},
           ),
           ListTile(
             title: const Text('Chat Room'),
-            onTap: () {
-
-            },
+            onTap: () {Get.toNamed("/chat");},
           )
         ],
       ),

@@ -13,10 +13,10 @@ class ChatDetailPage extends StatefulWidget{
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
   List<MessageModel> messages = [
-    MessageModel(message:"Ahla 3asisos", fromSelf: true),
-    MessageModel(message:"Oui Cht7eb", fromSelf: false),
-    MessageModel(message:"GAWKGAWKGAWKGAWK", fromSelf: true),
-    MessageModel(message:"on my way!!! 👄", fromSelf: false),
+    MessageModel(message:"Hello", fromSelf: true),
+    MessageModel(message:"Yo How can i help u", fromSelf: false),
+    MessageModel(message:"Im looking to get some advice", fromSelf: true),
+    MessageModel(message:"sure thing!!!", fromSelf: false),
 
 
   ];
