@@ -8,6 +8,7 @@ import 'package:fitapp/Pages/signUpStepsCoach.dart';
 import 'package:fitapp/routes/route.dart';
 
 import 'package:fitapp/Pages/homepage/homepage.dart';
+import 'package:fitapp/services/messageSocket_service.dart';
 
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,8 @@ Future<void> main() async {
   Get.put(ObjectifController());
 
   Get.put(ConsumptionController());
+
+  Get.put(ChatSocketService());
 
   runApp(MyApp());
 }
