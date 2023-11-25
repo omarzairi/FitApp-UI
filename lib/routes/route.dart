@@ -21,7 +21,7 @@ class AppRoutes {
     GetPage(name: '/login', page: () => LoginScreen()),
     GetPage(name: '/signup', page: () => SignUpScreen()),
     GetPage(name: '/chat', page: ()=>ConversationList()),
-    // GetPage(name: '/home', page: ()=>HomeView()),
+    GetPage(name: '/home', page: ()=>HomeView()),
     GetPage(name: '/alimentlist', page: () => AlimentListPage()),
     GetPage(name: '/profile', page: () => ProfileUser()),
     GetPage(name:'/changeusername', page: ()=>ChangeName()),

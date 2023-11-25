@@ -67,7 +67,7 @@ class _MainTabViewState extends State<Footer> {
                       setState(() {
                         widget.selectTab = 3;
                       });
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushNamed(context, '/profile');
                     })
               ],
             ),
