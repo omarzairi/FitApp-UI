@@ -9,6 +9,7 @@ import 'package:fitapp/utils/theme_colors.dart';
 import 'package:fitapp/controllers/objectif_controller.dart';
 
 import '../../models/Objectif.dart';
+import '../homepage/footer.dart';
 
 
 class ProfileUser extends StatefulWidget {
@@ -26,6 +27,7 @@ class _ProfileUserState extends State<ProfileUser> {
 
   @override
   Widget build(BuildContext context) {
+
     UserController userController = Get.find<UserController>();
     User? user = userController.user;
     ObjectifController objectifController = Get.find<ObjectifController>();
@@ -140,8 +142,13 @@ class _ProfileUserState extends State<ProfileUser> {
           builder: (controller) {
             User? user = controller.user;
 
-            return ElevatedButton(
+            return TextButton(
+
               style: ButtonStyle(
+                side: MaterialStateProperty.all<BorderSide>(
+                  BorderSide.none, // Ensure that the border is explicitly set to none
+                ),
+
                 padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
@@ -153,22 +160,24 @@ class _ProfileUserState extends State<ProfileUser> {
                 children: [
                   Text(
                     "Name",
-                    style: TextStyle(fontSize: 15),
+                    style: TextStyle(fontSize: 15,
+                      color: Colors.black,),
                   ),
                   Text(
                     '${user?.prenom} ${user?.nom}',
-                    style: TextStyle(fontSize: 15),
+                    style: TextStyle(fontSize: 15,color: Colors.black,),
                   ),
-                  Icon(Icons.arrow_forward_ios),
+                  Icon(Icons.arrow_forward_ios,color: Colors.black,),
                 ],
               ),
             );
           },
         ),
-            SizedBox(height: 30,),
-            ElevatedButton(
+            SizedBox(height: 20,),
+            TextButton(
 
               style: ButtonStyle(
+
                 padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
 
@@ -179,91 +188,74 @@ class _ProfileUserState extends State<ProfileUser> {
 
                 children: [
                   Text("Email",style: TextStyle(
-                      fontSize: 15
+                      fontSize: 15,
+                    color: Colors.black,
                   )),
                   Text('${user?.email}',style: TextStyle(
-                      fontSize: 15
+                      fontSize: 15,
+                    color: Colors.black,
                   ),
                   ),
-                  Icon(Icons.arrow_forward_ios)
+                  Icon(Icons.arrow_forward_ios,color: Colors.black,)
                 ],
               )
               ,
-            ),SizedBox(height: 30,),
-            ElevatedButton(
+            ),SizedBox(height: 20,),
+            TextButton(
 
               style: ButtonStyle(
+
                 padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
 
               ),
-              onPressed: () {  Get.toNamed('/changemail');},
+              onPressed: () {  Get.toNamed('/currentweight');},
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                 children: [
                   Text("Current weight",style: TextStyle(
+                      color: Colors.black,
                       fontSize: 15
                   )),
                   Text('${user?.poids} kg',style: TextStyle(
+                    color: Colors.black,
                       fontSize: 15
                   ),
                   ),
-                  Icon(Icons.arrow_forward_ios)
+                  Icon(Icons.arrow_forward_ios,color: Colors.black,)
                 ],
               )
               ,
-            ),SizedBox(height: 30,),
-            ElevatedButton(
+            ),SizedBox(height: 20,),
+            TextButton(
 
               style: ButtonStyle(
                 padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
 
               ),
-              onPressed: () {  Get.toNamed('/changemail');},
+              onPressed: () {  Get.toNamed('/targetweight');},
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                 children: [
                   Text("Target weight",style: TextStyle(
-                      fontSize: 15
+                      fontSize: 15,
+                    color: Colors.black,
                   )),
-                  Text('${objectif?.poidsObj}',style: TextStyle(
+                  Text('${objectif?.poidsObj} kg',style: TextStyle(color: Colors.black,
                       fontSize: 15
                   ),
                   ),
-                  Icon(Icons.arrow_forward_ios)
+                  Icon(Icons.arrow_forward_ios,color: Colors.black,)
                 ],
               )
               ,
-            ),SizedBox(height: 30,),
-            ElevatedButton(
+            ),SizedBox(height: 20,),
 
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
 
-              ),
-              onPressed: () {  Get.toNamed('/changemail');},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                children: [
-                  Text("Weight per week",style: TextStyle(
-                      fontSize: 15
-                  )),
-                  Text('${objectif?.poidsParSemaine} kg',style: TextStyle(
-                      fontSize: 15
-                  ),
-                  ),
-                  Icon(Icons.arrow_forward_ios)
-                ],
-              )
-              ,
-            ),
-            SizedBox(height: 30,),
-            ElevatedButton(
+            TextButton(
 
               style: ButtonStyle(
                 padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
@@ -276,16 +268,17 @@ class _ProfileUserState extends State<ProfileUser> {
 
                 children: [
                   Text("Password",style: TextStyle(
-                      fontSize: 15
+                      fontSize: 15,
+                    color: Colors.black,
                   )),
 
-                  Icon(Icons.arrow_forward_ios)
+                  Icon(Icons.arrow_forward_ios,color: Colors.black,)
                 ],
               ),
 
             ),
             SizedBox(height: 50,),
-            ElevatedButton(
+            TextButton(
               style: ButtonStyle(
                 padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
@@ -310,7 +303,10 @@ class _ProfileUserState extends State<ProfileUser> {
 
           ],
         ),
-      )
+      ),
+        bottomNavigationBar: Footer(
+          selectTab: 3,
+        )
 
 
     );

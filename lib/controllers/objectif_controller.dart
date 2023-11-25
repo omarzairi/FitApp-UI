@@ -16,11 +16,12 @@ class ObjectifController extends GetxController{
 
   Future<void> addObjectif(Map<String, dynamic> objectifData) async {
     try {
+      ObjectifController objectifController = Get.find<ObjectifController>();
       var response = await ObjectifService().addObjectif(objectifData);
 
       if (response.statusCode == 200) {
         if (response.data != null && response.data is Map<String, dynamic>) {
-          objectif = Objectif.fromJson(response.data!);
+          objectifController.objectif = Objectif.fromJson(response.data!);
 
         } else {
           Get.snackbar("Error", "Invalid response structure");
@@ -37,6 +38,7 @@ class ObjectifController extends GetxController{
 
   Future<Objectif?> getObjectiveByUserId(String id) async {
     try {
+
       var response = await ObjectifService().getObjectiveByUserId(id);
       objectif = Objectif.fromJson(response.data!);
       return objectif;
@@ -47,6 +49,26 @@ class ObjectifController extends GetxController{
         print('DioError details: ${e.response?.data}');
       }
       throw Exception('Error fetching objective');
+    }
+  }
+
+  Future<void> updateObjectif(String id, Map<String, dynamic> objectifData) async {
+    try {
+      ObjectifController objectifController = Get.find<ObjectifController>();
+      var response = await ObjectifService().updateObjectif(id, objectifData);
+      if (response.statusCode == 200) {
+        if (response.data != null && response.data is Map<String, dynamic>) {
+          objectifController.objectif = Objectif.fromJson(response.data!);
+        } else {
+          Get.snackbar("Error", "Invalid response structure");
+          throw Exception("Invalid response structure");
+        }
+      } else {
+        Get.snackbar("Error", response.data['message']);
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception(e.toString());
     }
   }
 

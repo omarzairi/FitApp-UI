@@ -13,6 +13,8 @@ import '../Pages/user_Profile/user_profile.dart';
 import '../Pages/user_Profile/change_name.dart';
 import '../Pages/user_Profile/change_mail.dart';
 import '../Pages/user_Profile/change_password.dart';
+import '../Pages/user_Profile/target_weight.dart';
+import '../Pages/user_Profile/current_weight.dart';
 
 
 class AppRoutes {
@@ -27,6 +29,9 @@ class AppRoutes {
     GetPage(name:'/changeusername', page: ()=>const ChangeName()),
     GetPage(name:'/changemail', page: ()=>const ChangeMail()),
     GetPage(name:'/changepassword', page: ()=>const ChangePassword()),
+    GetPage(name:'/targetweight', page: ()=>const TargetWeight()),
+    GetPage(name:'/currentweight', page: ()=>const CurrentWeight()),
+
 
   ];
 
