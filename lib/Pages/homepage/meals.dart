@@ -25,15 +25,15 @@ class _HomeMealsViewState extends State<HomeMealsView> {
     await readToken().then((userToken) {
       print('User Token: $userToken');
     });
-    ConsumptionController consumptionController = Get.find<ConsumptionController>();
 
 
     if(consumptionController.consumption == null)
       {
-        await consumptionController.getConsumptionsByDate({'consumptionDate': "11-25-2023"});
+        await consumptionController.getConsumptionsByDate({'date': "11-25-2023"});
         print("yes ahi wow");
 
       }
+    print(consumptionController.consumption);
     print('here');
   }
 
@@ -89,7 +89,9 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          consumptionController.consumption![0].mealType!.toString(),
+                          //mealType,
+                         ( consumptionController.consumption![0]['mealType']??
+                             'Default Value' ).toString(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -107,14 +109,14 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  consumptionController.consumption![0].aliments.toString(),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 10,
-                                    letterSpacing: 0.2,
-                                    color: TColor.white,
-                                  ),
-                                ),
+  ((consumptionController.consumption![0]['aliments'] !=[]? '' : consumptionController.consumption![0]['aliments']) ?? 'Default Value').toString(),
+  style: TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 10,
+    letterSpacing: 0.2,
+    color: TColor.white,
+  ),
+),
                               ],
                             ),
                           ),
