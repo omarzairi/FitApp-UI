@@ -12,7 +12,7 @@ import 'package:fitapp/controllers/user_controller.dart';
 import 'package:fitapp/controllers/objectif_controller.dart';
 import 'package:fitapp/controllers/progressController.dart';
 import 'package:get/get.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
+
 
 
 
