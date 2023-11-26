@@ -16,7 +16,7 @@ class Objectif{
       user: json['user'] ?? '',
       poidsObj: json['poidsObj'].toDouble(),
       date: json['date'] != null ? DateTime.parse(json['date']) : null,
-      duree: json['duree']?.toInt(),
+      duree: json['duree'],
       actPhysique: json['actPhysique'] ?? '',
       poidsParSemaine: json['poidsParSemaine'].toDouble(),
       calories: json['calories']?.toDouble(),
@@ -36,5 +36,5 @@ class Objectif{
     };
   }
 
-  
+
 }

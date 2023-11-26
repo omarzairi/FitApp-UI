@@ -9,7 +9,7 @@ class UserService {
     dio = Dio(
       BaseOptions(
         baseUrl: 'https://fit-app-api.azurewebsites.net/api/users',
-        receiveTimeout: 3000,
+
       ),
     );
   }
