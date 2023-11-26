@@ -12,6 +12,8 @@ class ChatController extends GetxController {
   var chatList = <MessageModel>[].obs;
   var isLoading = true.obs;
   var userLatestConvo = <ConversationUser>[].obs;
+  var coachLatestConvo=<ConversationUser>[].obs;
+  var coachMessages=<MessageModel>[].obs;
   var userMessages = <MessageModel>[].obs;
   late MessageModel message;
   late MessageService msgService;
@@ -90,14 +92,19 @@ class ChatController extends GetxController {
 
   Future<void> coachSend(Map<String, dynamic> messageData) async {
     try {
+      chatSocketService.sendMessage(messageData);
+
       var response = await msgService.coachSend(messageData);
 
       if (response.statusCode == 200) {
-        if (response.data != null && response.data is Map<String, dynamic>) {
-          message = MessageModel.fromJson(response.data!);
-        } else {
-          _showErrorSnackbar("Invalid response structure");
-        }
+        var listcoachMsgs=new MessageModel(fromSelf: true, message: messageData["message"]);
+        print(listcoachMsgs.message);
+        this.coachMessages.add(listcoachMsgs);
+        print(coachMessages.toJson());
+        update();
+
+        print(response.data);
+
       } else {
         _showErrorSnackbar(response.data['message']);
       }
@@ -139,6 +146,47 @@ class ChatController extends GetxController {
       isLoading(false); // Set loading to false after updating userLatestConvo
     }
   }
+
+  //coach
+  Future<void> getCoachMessages(Map<String, dynamic> messageData) async {
+    try {
+      var response = await msgService.getCoachMessages(messageData);
+
+      if (response.statusCode == 200) {
+        var coachMess = MessageModel.fromJsonList(response.data);
+        if (coachMess != null) {
+          coachMessages.assignAll(coachMess);
+          print(coachLatestConvo);
+        }
+      }
+    } finally {
+      isLoading(false); // Set loading to false after updating userMessages
+    }
+  }
+
+  Future<void> getCoachLatestConvos() async {
+    try {
+      var response = await msgService.getCoachLatestConvos();
+
+      if (response.statusCode == 200) {
+        var coachConvo = ConversationUser.fromJsonList(response.data);
+        if (coachConvo != null) {
+          coachLatestConvo.assignAll(coachConvo);
+          print(coachLatestConvo);
+        }
+
+      }
+    } finally {
+      isLoading(false); // Set loading to false after updating coachLatestConvo
+    }
+  }
+
+
+
+
+
+
+
 
 
 
