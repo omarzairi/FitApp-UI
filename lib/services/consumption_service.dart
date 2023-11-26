@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:fitapp/models/Aliment.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ConsumptionService {
   late Dio dio;
-
+  final storage = const FlutterSecureStorage();
   ConsumptionService() {
     dio = Dio(
       BaseOptions(
         baseUrl: 'https://fit-app-api.azurewebsites.net/api/consumptions',
-        connectTimeout: 5000,
         receiveTimeout: 3000,
       ),
     );
@@ -25,7 +25,7 @@ class ConsumptionService {
 
   Future<Response> getConsumptionById(String id) async {
     try {
-      Response response = await dio.get('/$id');
+      Response response = await dio.get('/getbyid/$id');
       return response;
     } catch (e) {
       throw Exception(e.toString());
@@ -48,6 +48,25 @@ class ConsumptionService {
     } catch (e) {
       throw Exception(e.toString());
     }
+  }
+
+  Future<Response> getConsumptionsForUserByDate(Map<String,dynamic> consumptionData) async {
+    try
+        {
+          print("Request URL: ${dio.options.baseUrl}/getTodayConsumptions");
+          print("Headers: ${dio.options.headers}");
+          print(consumptionData);
+          Response response = await dio.post('/getTodayConsumptions',data:consumptionData,options:Options(
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ${await storage.read(key:'userToken')}',
+            },));
+          return response;
+        }
+        catch(error)
+          {
+            throw Exception(error.toString());
+          }
   }
 
   Future<Response> updateConsumption(String id, Map<String, dynamic> updatedData) async {

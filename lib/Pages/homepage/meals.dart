@@ -1,17 +1,56 @@
+import 'package:fitapp/controllers/consumption_controller.dart';
+import 'package:fitapp/controllers/user_controller.dart';
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-class HomeMealsView extends StatelessWidget{
+class HomeMealsView extends StatefulWidget{
+  @override
+  State<HomeMealsView> createState() => _HomeMealsViewState();
+}
+
+class _HomeMealsViewState extends State<HomeMealsView> {
+  final storage = FlutterSecureStorage();
+
+  Future<String?> readToken() async {
+    return await storage.read(key: 'userToken');
+  }
+
+  ConsumptionController consumptionController = Get.put(ConsumptionController());
+  DateTime now = DateTime.now();
+  Future<void> initData() async {
+    await readToken().then((userToken) {
+      print('User Token: $userToken');
+    });
+    ConsumptionController consumptionController = Get.find<ConsumptionController>();
+
+
+    if(consumptionController.consumption == null)
+      {
+        await consumptionController.getConsumptionsByDate({'consumptionDate': "11-25-2023"});
+        print("yes ahi wow");
+
+      }
+    print('here');
+  }
+
+  @override
+  void initState()
+  {
+    super.initState();
+    initData();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final ConsumptionController consumptionController = Get.put(ConsumptionController());
     return SizedBox(
       height: 300,
       child: ListView(
         scrollDirection: Axis.horizontal,
-
         children:<Widget> [
           Stack(
             children: <Widget>[
@@ -50,7 +89,7 @@ class HomeMealsView extends StatelessWidget{
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'Breakfast',
+                          consumptionController.consumption![0].mealType!.toString(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -68,7 +107,7 @@ class HomeMealsView extends StatelessWidget{
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  'Bread\nPeanutButter\nApple',
+                                  consumptionController.consumption![0].aliments.toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 10,
@@ -618,5 +657,4 @@ class HomeMealsView extends StatelessWidget{
 ),
     );
   }
-
 }

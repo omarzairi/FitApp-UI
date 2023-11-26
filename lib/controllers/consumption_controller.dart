@@ -1,3 +1,4 @@
+import 'package:fitapp/models/Consumption.dart';
 import 'package:fitapp/services/consumption_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -9,11 +10,36 @@ class ConsumptionController extends GetxController{
 
   ConsumptionFact? consumptionFact;
 
+  List<dynamic>? consumption;
   @override
   Future<void> onInit() async {
 
     super.onInit();
     print("onInit Consumption");
+  }
+
+  Future<void> getConsumptionsByDate(Map<String,dynamic> consumptionData) async
+  {
+    try
+        {
+          var response = await ConsumptionService().getConsumptionsForUserByDate(consumptionData);
+          if(response.statusCode == 200)
+            {
+              if(response.data != null)
+                {
+                  consumption = response.data;
+                  print(response);
+                }
+              else
+                {
+                  throw Exception("Error : not found!");
+                }
+            }
+        }
+        catch(error)
+    {
+      throw Exception(error.toString());
+    }
   }
 
   Future<ConsumptionFact?> getFacts(String user,Map<String,dynamic> datastuff)
