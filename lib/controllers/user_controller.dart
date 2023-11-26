@@ -30,12 +30,12 @@ class UserController extends GetxController  {
       if (response.statusCode == 200) {
         // Check if 'data' field is present in the response
         if (response.data != null && response.data is Map<String, dynamic>) {
-          userController.user = (User.fromJson(response.data));
-          user = User.fromJson(response.data!);
+          userController.user = (User.fromJson(response.data['user']));
 
-          storage.write(key: "userToken", value: response.data['token']);
+          print("token is ${response.data}");
+          await storage.write(key: "userToken", value: response.data['token']);
 
-          return user;
+          return User.fromJson(response.data['user']);
         } else {
           Get.snackbar("Error", "Invalid response structure");
           throw Exception("Invalid response structure");

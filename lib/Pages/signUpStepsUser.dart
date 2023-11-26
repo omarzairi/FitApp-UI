@@ -10,7 +10,9 @@ import'package:fitapp/Pages/aliment_list.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fitapp/controllers/user_controller.dart';
 import 'package:fitapp/controllers/objectif_controller.dart';
+import 'package:fitapp/controllers/progressController.dart';
 import 'package:get/get.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 
 
@@ -18,6 +20,7 @@ import 'package:get/get.dart';
 class UserStepperForm extends StatefulWidget {
   final String email;
   final String password;
+
    UserStepperForm({super.key, required String this.email, required String this.password});
 
 
@@ -43,7 +46,7 @@ class _StepsState extends State<UserStepperForm> {
   final TextEditingController weightObjController = TextEditingController();
   final TextEditingController weightPerWeekController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final storage = const FlutterSecureStorage();
 
   int index = 0;
   String _selectedItem = '0.5';
@@ -68,11 +71,33 @@ class _StepsState extends State<UserStepperForm> {
           "password": _password,
           "age": int.parse(ageController.text),
           "taille": double.parse(heightController.text),
-          "poids": double.parse(weightController.text),
+          "poids": double.parse(weightController.text) ,
           "sex": _sex,
         });
 
 
+print("user :: ${responseUser?.id}");
+
+
+
+
+        final responseProgress = await ProgressController().addProgress(
+            {
+              "user": responseUser?.id,
+              "listePoids":[
+                {
+                  "poids":double.parse(weightController.text) ?? 0.0,
+
+                }
+
+              ]
+            }
+
+        );
+
+
+
+    print("user id ${responseUser?.id}");
         final responseObj = await ObjectifController().addObjectif({
           "poidsObj": double.parse(weightObjController.text),
           "poidsParSemaine": double.parse(_selectedItem),

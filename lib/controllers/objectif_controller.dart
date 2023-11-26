@@ -20,6 +20,7 @@ class ObjectifController extends GetxController{
 
       if (response.statusCode == 200) {
         if (response.data != null && response.data is Map<String, dynamic>) {
+          print("response addObjectif : ${response.data}");
           objectifController.objectif = Objectif.fromJson(response.data!);
 
         } else {
