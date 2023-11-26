@@ -1,4 +1,5 @@
 import 'package:fitapp/services/consumption_service.dart';
+import 'package:fitapp/services/user_service.dart';
 import 'package:get/get.dart';
 import 'package:fitapp/models/Aliment.dart';
 import 'package:fitapp/services/network_service.dart';
@@ -12,7 +13,6 @@ class AlimentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchAliments();
   }
 
   void fetchAliments() async {
@@ -42,6 +42,33 @@ void toggleSelection(int index) {
   selectedAliments[index] = !selectedAliments[index];
 }
 
+ void searchAlimentwithQuery(Map<String, dynamic> query) async
+  {
+    try{
+      isLoading(true);
+      var networkservice = NetworkService();
+      var response = await networkservice.searchAlimentByCategory(query);
+      if(response.statusCode ==200)
+        {
+          var aliments = Aliment.fromJsonList(response.data);
+          if (aliments != null) {
+            alimentList.assignAll(aliments);
+            selectedAliments.assignAll(List<bool>.filled(aliments.length, false));
+            print("from query");
+            print(alimentList[0].name);
+          }
+        }
+    }
+    catch(error)
+    {
+      throw Exception(error.toString());
+    }
+    finally {
+      print("is lading false");
+      isLoading(false);
+    }
+  }
+
   Future<void> addAlimentToConsumption(
       String consumptionId, String alimentId, int quantity) async {
     try {
@@ -49,7 +76,7 @@ void toggleSelection(int index) {
       var response = await consumptionService.addAlimentToAConsumption(
           consumptionId, alimentId, quantity);
       if (response.statusCode == 200) {
-        // Handle the response here
+
       }
     } catch (e) {
       throw Exception(e.toString());

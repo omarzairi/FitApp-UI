@@ -1,4 +1,5 @@
 
+import 'package:fitapp/Pages/homepage/drawer.dart';
 import 'package:fitapp/Pages/homepage/meals.dart';
 import 'package:fitapp/controllers/consumption_controller.dart';
 import 'package:fitapp/controllers/objectif_controller.dart';
@@ -90,7 +91,7 @@ class _HomeViewState extends State<HomeView> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return  Scaffold(
-                drawer: const Drawer(),
+                drawer: HomeDrawer(),
                 backgroundColor: TColor.white,
                 appBar: AppBar(
                   backgroundColor: TColor.white,

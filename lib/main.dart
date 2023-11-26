@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
             return CircularProgressIndicator(); // Show a loading spinner while waiting
           } else {
             if (snapshot.data != null) {
-              return FirstPage();
+              return HomeView();
             } else {
 
               return FirstPage(); // Replace with your login view

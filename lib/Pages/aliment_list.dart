@@ -21,7 +21,7 @@ class AlimentListPage extends StatefulWidget {
 }
 
 class _AlimentListPageState extends State<AlimentListPage> {
-  AlimentController alimentController = AlimentController();
+  AlimentController alimentController = Get.put(AlimentController());
   TextEditingController txtSearch = TextEditingController();
   final storage = FlutterSecureStorage();
   List categoryArr = [
@@ -74,7 +74,11 @@ class _AlimentListPageState extends State<AlimentListPage> {
     });
 
     // Fetch data using controller
-    alimentController.fetchAliments();
+    //alimentController.fetchAliments();
+    alimentController.searchAlimentwithQuery({
+      "category":widget.mealType,
+    });
+    print('aliment'+alimentController.alimentList.toString());
   }
 
   @override
@@ -90,6 +94,7 @@ class _AlimentListPageState extends State<AlimentListPage> {
   @override
   Widget build(BuildContext context) {
     final AlimentController alimentController = Get.put(AlimentController());
+    //print(alimentController.alimentList);
     var media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
