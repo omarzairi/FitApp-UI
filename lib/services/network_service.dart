@@ -29,4 +29,13 @@ class NetworkService {
       throw Exception(e.toString());
     }
   }
+
+
+  Future<Response> searchAlimentByCategory(Map<String,dynamic> query)
+  async {
+    Response response = await dio.post('/aliments/search',data:query);
+    return response;
+  }
+
+
 }
