@@ -33,7 +33,7 @@ class UserController extends GetxController  {
           userController.user = (User.fromJson(response.data['user']));
 
           print("token is ${response.data}");
-          await storage.write(key: "userToken", value: response.data['token']);
+           storage.write(key: "userToken", value: response.data['token']);
 
           return User.fromJson(response.data['user']);
         } else {

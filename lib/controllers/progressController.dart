@@ -9,7 +9,10 @@ import '../models/Progress.dart';
 
 class ProgressController extends GetxController {
 
-  late ProgressWeight progress;
+   ProgressWeight? progress;
+   Future<void>onInit() async{
+     super.onInit();
+   }
 
   Future<void> addProgress(Map<String, dynamic> progressData) async {
     try {
