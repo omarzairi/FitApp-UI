@@ -37,5 +37,10 @@ class NetworkService {
     return response;
   }
 
+  Future<Response> searchCoaches(Map<String,dynamic> query)
+  async {
+    Response response = await dio.post('/coaches/searchCoach',data:query);
+    return response;
+  }
 
 }

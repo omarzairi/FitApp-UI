@@ -130,7 +130,7 @@ class _FirstPageState extends State<FirstPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LoginCoachScreen(),
+                              builder: (context) => LoginScreen(),
                             ),
                           );
                         },

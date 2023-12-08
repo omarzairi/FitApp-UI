@@ -3,17 +3,19 @@ import 'package:get/get.dart';
 import 'package:fitapp/models/Coach.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../services/network_service.dart';
+
 class CoachController extends GetxController {
   late Coach coach;
   final storage = const FlutterSecureStorage();
+  var isLoading = true.obs;
+  var coachesList = <Coach>[].obs;
 
   @override
   Future<void> onInit() async {
 
-
     print("onInit");
-    // await getLoggedUser();
-    print("done");
+    await getAllCoaches(); // Move the initialization here
     super.onInit();
   }
   Future<Coach> addCoach(Map<String, dynamic> coachData) async {
@@ -40,6 +42,31 @@ class CoachController extends GetxController {
       throw Exception(e.toString());
     }
   }
+  void searchACoachwithQuery(Map<String, dynamic> query) async
+  {
+    try{
+      isLoading(true);
+      var networkservice = NetworkService();
+      var response = await networkservice.searchCoaches(query);
+      if(response.statusCode ==200)
+      {
+        var coaches = Coach.fromJsonList(response.data);
+        if (coaches != null) {
+          coachesList.assignAll(coaches);
+          print("from query");
+          print(coaches[0].nom);
+        }
+      }
+    }
+    catch(error)
+    {
+      throw Exception(error.toString());
+    }
+    finally {
+      print("is lading false");
+      isLoading(false);
+    }
+  }
 
   Future<void> updateCoach(String id, Map<String, dynamic> coachData) async {
     try {
@@ -54,6 +81,31 @@ class CoachController extends GetxController {
     }
   }
 
+  Coach getCoach(int index) {
+    return coachesList[index];
+  }
+
+  Future<void> getAllCoaches() async {
+    try {
+      isLoading(true);
+
+      var response = await CoachService().getCoaches();
+      if (response.statusCode == 200) {
+        var coaches = Coach.fromJsonList(response.data);
+        if (coaches != null) {
+          coachesList.assignAll(coaches);
+          print(coachesList);
+        }
+      } else {
+        Get.snackbar("Error", response.data['message']);
+      }
+    } catch (e) {
+      Get.snackbar("Error", "An error occurred: $e");
+      throw Exception(e.toString());
+    } finally {
+      isLoading(false);
+    }
+  }
   Future<void> loginCoach(Map<String, dynamic> coachData) async {
     try {
       var response = await CoachService().loginCoach(coachData);

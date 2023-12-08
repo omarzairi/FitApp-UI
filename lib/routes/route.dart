@@ -1,5 +1,6 @@
 import 'package:fitapp/Pages/LoginCoach.dart';
 import 'package:fitapp/Pages/SignUpCoach.dart';
+import 'package:fitapp/Pages/coachesList.dart';
 import 'package:fitapp/Pages/conversation_list.dart';
 import 'package:fitapp/Pages/homepage/homepage.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ GetPage(name: '/chat', page: ()=>const ConversationList()),
 GetPage(name:'/chatCoach', page: ()=>const CoachConversationList()),
 GetPage(name: '/home', page: ()=>const HomeView()),
 GetPage(name: '/alimentlist', page: () => AlimentListPage()),
-
+GetPage(name: '/coachlist', page: () => CoachesListPage()),
 GetPage(name: '/signupCoach', page: () => CoachSignUpScreen()),
 GetPage(name: '/loginCoach', page: () =>LoginCoachScreen()),
 GetPage(name: '/profile', page: () => ProfileUser()),

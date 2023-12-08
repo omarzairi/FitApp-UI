@@ -34,6 +34,13 @@ class HomeDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: Icon(Icons.people),
+            title: const Text('Coaches'),
+            onTap: () {
+              Get.toNamed("/coachlist");
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.fastfood),
             title: const Text('Personalized Meal'),
             onTap: () {
