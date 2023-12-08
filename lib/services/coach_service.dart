@@ -36,6 +36,15 @@ class CoachService {
       throw Exception(error.toString());
     }
   }
+  Future<Response> getCoaches() async {
+    try {
+      Response response = await dio.get('/getAllCoaches');
+      return response;
+    } catch (error) {
+      throw Exception(error.toString());
+    }
+  }
+
 
   Future<Response> updateCoach(String id, coachData) async {
     try {

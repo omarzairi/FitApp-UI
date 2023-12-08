@@ -32,6 +32,13 @@ class Coach {
     );
   }
 
+  static List<Coach> fromJsonList(List<dynamic> json) {
+    List<Coach> coaches = [];
+    json.forEach((element) {
+      coaches.add(Coach.fromJson(element));
+    });
+    return coaches;
+  }
   Map<String, dynamic> toJson() {
     return {
       "_id": id,
