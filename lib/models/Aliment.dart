@@ -60,4 +60,18 @@ class Aliment {
       'servingUnit': servingUnit,
     };
   }
+
+  static List<dynamic> toJsonList(List<Aliment> aliments) {
+    return aliments.map((aliment) => aliment.toJson()).toList();
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Aliment && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
 }

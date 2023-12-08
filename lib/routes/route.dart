@@ -9,6 +9,7 @@ import '../Pages/aliment_list.dart';
 import '../Pages/firstPage.dart';
 import '../Pages/login.dart';
 import '../Pages/SignUp.dart';
+import '../Pages/personalized_meals/personalized_meal.dart';
 import '../Pages/signUpStepsUser.dart';
 import '../Pages/user_Profile/user_profile.dart';
 import '../Pages/user_Profile/change_name.dart';
@@ -37,6 +38,9 @@ GetPage(name:'/changepassword', page: ()=>ChangePassword()),
 GetPage(name:'/targetweight', page: ()=>const TargetWeight()),
 GetPage(name:'/currentweight', page: ()=>const CurrentWeight()),
 
+
+
+  GetPage(name: '/personalizedmeal', page: () => PersonalizedMealScreen()),
 
 ];
 

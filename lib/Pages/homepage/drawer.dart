@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeDrawer extends StatelessWidget{
+class HomeDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -11,29 +11,51 @@ class HomeDrawer extends StatelessWidget{
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration:  BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(0)),
-              color: TColor.primaryColor2,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/img/logo.png"),
+                fit: BoxFit.cover,
+              ),
             ),
-            child: Image.asset(
-                "assets/img/bg_dots.png"),
+            child: null,
           ),
           ListTile(
-            title:  Text('Dashboard'),
-            onTap: () {Get.toNamed("/home");},
+            leading: Icon(Icons.home),
+            title: Text('Dashboard'),
+            onTap: () {
+              Get.toNamed("/home");
+            },
           ),
           ListTile(
+            leading: Icon(Icons.person),
+            title: const Text('Profile'),
+            onTap: () {
+              Get.toNamed("/profile");
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.fastfood),
+            title: const Text('Personalized Meal'),
+            onTap: () {
+              Get.toNamed("/personalizedmeal");
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.event_repeat),
             title: const Text('Consumption'),
-            onTap: () {Get.toNamed("/alimentlist");},
+            onTap: () {
+              Get.toNamed("/alimentlist");
+            },
           ),
           ListTile(
+            leading: Icon(Icons.chat),
             title: const Text('Chat Room'),
-            onTap: () {Get.toNamed("/chat");},
+            onTap: () {
+              Get.toNamed("/chat");
+            },
           )
         ],
       ),
     );
   }
-
 }

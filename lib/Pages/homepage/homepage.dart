@@ -28,8 +28,6 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
 
 
-
-
   int selectTab = 0;
   final PageStorageBucket pageBucket = PageStorageBucket();
 
