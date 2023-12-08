@@ -54,4 +54,15 @@ class CoachService {
       throw Exception(error.toString());
     }
   }
+
+  Future<Response> getLoggedCoach() async {
+    Response response = await dio.get('/loggedCoach',options: Options(
+      headers: {
+        'Content-Type': 'application/json', // Add any headers you need
+        'Authorization': 'Bearer ${await storage.read(key: 'coachToken')}', // Example of an Authorization header
+      },));
+    return response;
+
+  }
+
 }

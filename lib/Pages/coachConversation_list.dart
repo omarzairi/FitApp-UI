@@ -1,19 +1,20 @@
-import 'package:fitapp/common_widgets/conversation_user.dart';
+import 'package:fitapp/controllers/coach-messageController.dart';
+import 'package:fitapp/models/ConversationUser.dart';
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controllers/ChatController.dart';
-import '../../controllers/coach-messageController.dart';
+import '../common_widgets/conversation_coach.dart';
+import '../controllers/ChatController.dart';
 
-class ConversationCoachList extends StatefulWidget {
-  const ConversationCoachList({Key? key}) : super(key: key);
+class CoachConversationList extends StatefulWidget {
+  const CoachConversationList({Key? key}) : super(key: key);
 
   @override
-  State<ConversationCoachList> createState() => _ConversationListState();
+  State<CoachConversationList> createState() => _ConversationListState();
 }
 
-class _ConversationListState extends State<ConversationCoachList> {
-  TextEditingController coachSearch = TextEditingController();
+class _ConversationListState extends State<CoachConversationList> {
+  TextEditingController userSearch = TextEditingController();
   CoachChatController chatController = Get.put(CoachChatController()); // Initialize ChatController
 
   @override
@@ -100,7 +101,7 @@ class _ConversationListState extends State<ConversationCoachList> {
               children: [
                 Expanded(
                   child: TextField(
-                    controller: coachSearch,
+                    controller: userSearch,
                     decoration: InputDecoration(
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
@@ -151,7 +152,7 @@ class _ConversationListState extends State<ConversationCoachList> {
                   padding: EdgeInsets.only(top: 16),
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return ConversationListItem(
+                    return CoachConversationListItem(
                       id: chatController.coachLatestConvo[index].id,
                       fullName: chatController.coachLatestConvo[index].fullName,
                       message: chatController.coachLatestConvo[index].fromSelf

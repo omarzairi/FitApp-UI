@@ -7,6 +7,15 @@ class CoachController extends GetxController {
   late Coach coach;
   final storage = const FlutterSecureStorage();
 
+  @override
+  Future<void> onInit() async {
+
+
+    print("onInit");
+    // await getLoggedUser();
+    print("done");
+    super.onInit();
+  }
   Future<Coach> addCoach(Map<String, dynamic> coachData) async {
     try {
       var response = await CoachService().createCoach(coachData);
@@ -67,6 +76,20 @@ class CoachController extends GetxController {
     try {
       var response = await CoachService().getCoachById(id);
       coach = Coach.fromJson(response.data);
+      return coach;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+
+  Future<Coach?> getLoggedCoach() async {
+    try {
+      print("getLoggedUser");
+      var response = await CoachService().getLoggedCoach();
+      print(response.data);
+      coach = Coach.fromJson(response.data);
+      print(coach);
       return coach;
     } catch (e) {
       throw Exception(e.toString());

@@ -1,3 +1,4 @@
+import 'package:fitapp/Pages/LoginCoach.dart';
 import 'package:flutter/material.dart';
 import 'package:fitapp/Pages/login.dart';
 import 'package:fitapp/Pages/SignUp.dart';
@@ -129,7 +130,7 @@ class _FirstPageState extends State<FirstPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LoginScreen(),
+                              builder: (context) => LoginCoachScreen(),
                             ),
                           );
                         },
