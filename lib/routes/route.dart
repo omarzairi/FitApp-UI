@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../Pages/aliment_list.dart';
+import '../Pages/coach/coachListMessages.dart';
+import '../Pages/coachConversation_list.dart';
 import '../Pages/firstPage.dart';
 import '../Pages/login.dart';
 import '../Pages/SignUp.dart';
@@ -25,6 +27,7 @@ GetPage(name: '/', page: () => FirstPage()),
 GetPage(name: '/login', page: () => const LoginScreen()),
 GetPage(name: '/signup', page: () => SignUpScreen()),
 GetPage(name: '/chat', page: ()=>const ConversationList()),
+GetPage(name:'/chatCoach', page: ()=>const CoachConversationList()),
 GetPage(name: '/home', page: ()=>const HomeView()),
 GetPage(name: '/alimentlist', page: () => AlimentListPage()),
 
