@@ -2,6 +2,7 @@ import 'package:fitapp/Pages/LoginCoach.dart';
 import 'package:fitapp/Pages/SignUpCoach.dart';
 import 'package:fitapp/Pages/conversation_list.dart';
 import 'package:fitapp/Pages/homepage/homepage.dart';
+import 'package:fitapp/Pages/progressPage/progress_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,6 +37,7 @@ GetPage(name:'/changepassword', page: ()=>ChangePassword()),
 
 GetPage(name:'/targetweight', page: ()=>const TargetWeight()),
 GetPage(name:'/currentweight', page: ()=>const CurrentWeight()),
+  GetPage(name: '/progress', page: () => const ProgressChart(),)
 
 
 ];

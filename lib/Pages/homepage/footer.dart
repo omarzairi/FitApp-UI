@@ -52,13 +52,14 @@ class _MainTabViewState extends State<Footer> {
 
             const  SizedBox(width: 40,),
             TabButton(
-                icon: "assets/img/camera_tab.png",
-                selectIcon: "assets/img/camera_tab_select.png",
+                icon: "assets/img/weight.png",
+                selectIcon: "assets/img/weight.png",
                 isActive: widget.selectTab == 2,
                 onTap: () {
                   setState(() {
                     widget.selectTab = 2;
                   });
+                  Get.toNamed('/progress');
                 }),
             TabButton(
                 icon: "assets/img/profile_tab.png",
