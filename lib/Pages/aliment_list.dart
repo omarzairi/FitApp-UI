@@ -4,16 +4,19 @@ import 'package:fitapp/controllers/aliment_controller.dart';
 import 'package:fitapp/models/Aliment.dart';
 import 'package:fitapp/common_widgets/meal_category_cell.dart';
 import 'package:fitapp/common_widgets/meal_row.dart';
+import 'package:fitapp/models/Consumption.dart';
 import 'package:fitapp/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../controllers/consumption_controller.dart';
 import 'alimentDetails.dart';
 
 class AlimentListPage extends StatefulWidget {
   String? mealType = Get.arguments;
+
   AlimentListPage({super.key});
 
   @override
@@ -62,10 +65,16 @@ class _AlimentListPageState extends State<AlimentListPage> {
   Future<String?> readToken() async {
     return await storage.read(key: 'userToken');
   }
+
   void _onAlimentAdded(int index) {
+    ConsumptionController consumptionController = Get.put(ConsumptionController());
+    Consumption? consu = consumptionController.getConsumptionByMealType(widget.mealType ?? "");
     var aliment = alimentController.getAliment(index);
+    print("the consu :"+consu!.id);
     alimentController.addAlimentToConsumption(
-        '6551066650ca084d25a703fa', aliment.id, 1);
+      consu!.id,
+      aliment.id,
+      1);
   }
 
   Future<void> initData() async {
@@ -76,9 +85,9 @@ class _AlimentListPageState extends State<AlimentListPage> {
     // Fetch data using controller
     //alimentController.fetchAliments();
     alimentController.searchAlimentwithQuery({
-      "category":widget.mealType,
+      "category": widget.mealType,
     });
-    print('aliment'+alimentController.alimentList.toString());
+    print('aliment' + alimentController.alimentList.toString());
   }
 
   @override
@@ -120,7 +129,7 @@ class _AlimentListPageState extends State<AlimentListPage> {
             ),
           ),
         ),
-        title: Text(widget.mealType??"",
+        title: Text(widget.mealType ?? "",
             style: TextStyle(
               color: TColor.black,
               fontSize: 20,
@@ -258,44 +267,48 @@ class _AlimentListPageState extends State<AlimentListPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Expanded(
-                        child: Obx(
-                          () {
-                            if (alimentController.isLoading.value) {
-                              return Center(child: CircularProgressIndicator());
-                            } else {
-                              return ListView.builder(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: alimentController.alimentList.length,
-                                itemBuilder: (context, index) {
-                                  return InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                AlimentDetails(index: index),
+                      Container(
+                        height: MediaQuery.of(context).size.height *0.57,// Adjust the height as needed
+                        child: Expanded(
+                          child: Obx(
+                            () {
+                              if (alimentController.isLoading.value) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              } else {
+                                return ListView.builder(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15.0),
+                                  itemCount:
+                                      alimentController.alimentList.length,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AlimentDetails(index: index),
+                                            ),
+                                          );
+                                        },
+                                        child: Obx(
+                                          () => MealRow(
+                                            aliment: alimentController
+                                                .getAliment(index),
+                                            selected: alimentController
+                                                .selectedAliments[index],
+                                            onTap: () {
+                                              alimentController
+                                                  .toggleSelection(index);
+                                            },
                                           ),
-                                        );
-                                      },
-                                      child: Obx(
-                                        () => MealRow(
-                                          aliment: alimentController
-                                              .getAliment(index),
-                                          selected: alimentController
-                                              .selectedAliments[index],
-                                          onTap: () {
-                                            alimentController
-                                                .toggleSelection(index);
-                                          },
-                                        ),
-                                      ));
-                                },
-                              );
-                            }
-                          },
+                                        ));
+                                  },
+                                );
+                              }
+                            },
+                          ),
                         ),
                       )
                     ]))
@@ -317,7 +330,6 @@ class _AlimentListPageState extends State<AlimentListPage> {
                     }
                   }
                   alimentController.clearSelection();
-
                 },
                 label: Text(
                     'Add (${alimentController.selectedAliments.where((b) => b).length})',

@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 import 'package:fitapp/models/Aliment.dart';
 import 'package:fitapp/services/network_service.dart';
 
+import '../models/Consumption.dart';
+import 'consumption_controller.dart';
+
 class AlimentController extends GetxController {
   var alimentList = <Aliment>[].obs;
   var isLoading = true.obs;
@@ -69,19 +72,28 @@ void toggleSelection(int index) {
     }
   }
 
-  Future<void> addAlimentToConsumption(
-      String consumptionId, String alimentId, int quantity) async {
-    try {
-      var consumptionService = ConsumptionService();
-      var response = await consumptionService.addAlimentToAConsumption(
-          consumptionId, alimentId, quantity);
-      if (response.statusCode == 200) {
-
+ Future<void> addAlimentToConsumption(
+    String consumptionId, String alimentId, int quantity) async {
+  try {
+    var consumptionService = ConsumptionService();
+    var response = await consumptionService.addAlimentToAConsumption(
+        consumptionId, alimentId, quantity);
+    if (response.statusCode == 200) {
+      if (response.data != null) {
+       //update the consumption
+        ConsumptionController consumptionController = Get.put(ConsumptionController());
+        print(response.data);
+        var updatedConsumption = Consumption.fromJson(response.data);
+        consumptionController.updateConsumption(updatedConsumption);
+        print(updatedConsumption.total);
+      } else {
+        throw Exception("Error : not found!");
       }
-    } catch (e) {
-      throw Exception(e.toString());
     }
+  } catch (e) {
+    throw Exception(e.toString());
   }
+}
 
   void clearSelection() {
     selectedAliments.assignAll(List<bool>.filled(alimentList.length, false));
