@@ -1,9 +1,30 @@
 import 'package:fitapp/models/Aliment.dart';
+class AlimentQuantity {
+  Aliment aliment;
+  int quantity;
 
-class Consumption{
+  AlimentQuantity({
+    required this.aliment,
+    required this.quantity,
+  });
 
+  factory AlimentQuantity.fromJson(Map<String, dynamic> json) {
+    return AlimentQuantity(
+      aliment: Aliment.fromJson(json['aliment']),
+      quantity: json['quantity'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'aliment': aliment.toJson(),
+      'quantity': quantity,
+    };
+  }
+}
+class Consumption {
   String id;
-  List<Aliment> aliments;
+  List<AlimentQuantity> aliments;
   String user;
   String consumptionDate;
   String mealType;
@@ -15,31 +36,31 @@ class Consumption{
     required this.user,
     required this.consumptionDate,
     required this.mealType,
-    required this.total
-});
+    required this.total,
+  });
 
-  factory Consumption.fromJson(Map<String, dynamic> json)
-  {
+  factory Consumption.fromJson(Map<String, dynamic> json) {
+    var list = json['aliments'] as List;
+    List<AlimentQuantity> alimentList = list.map((i) => AlimentQuantity.fromJson(i)).toList();
+
     return Consumption(
-        id: json['_id'] ?? '',
-        aliments: json['aliments'],
-        user: json['user'],
-        consumptionDate: json['consumptionDate'],
-        mealType: json['mealType'],
-        total: json['total']
+      id: json['_id'] ?? '',
+      aliments: alimentList,
+      user: json['user'],
+      consumptionDate: json['consumptionDate'],
+      mealType: json['mealType'],
+      total: json['total'].toDouble(),
     );
   }
 
-  Map<String,dynamic> toJson()
-  {
+  Map<String, dynamic> toJson() {
     return {
-      "_id": id,
-      "aliments": aliments,
-      "user" :user,
-      "consumptionDate" : consumptionDate,
-      "mealType" : mealType,
-      "total" : total,
+      '_id': id,
+      'aliments': aliments.map((alimentQuantity) => alimentQuantity.toJson()).toList(),
+      'user': user,
+      'consumptionDate': consumptionDate,
+      'mealType': mealType,
+      'total': total,
     };
   }
-
 }
