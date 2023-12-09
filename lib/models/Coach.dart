@@ -7,6 +7,11 @@ class Coach {
   String sex;
   int age;
   String image;
+  String description;
+  int yearsOfExperience;
+  String speciality;
+  int price;
+  int phoneNumber;
 
   Coach({
     this.id,
@@ -17,6 +22,11 @@ class Coach {
     required this.sex,
     required this.age,
     required this.image,
+    required this.description,
+    required this.yearsOfExperience,
+    required this.speciality,
+    required this.price,
+    required this.phoneNumber,
   });
 
   factory Coach.fromJson(Map<String, dynamic> json) {
@@ -29,6 +39,11 @@ class Coach {
       sex: json['sex'],
       age: json['age']?.toInt() ?? 0,
       image: json['image'] ?? '',
+      description: json['description'] ?? '',
+      yearsOfExperience: json['yearsOfExperience']?.toInt() ?? 0,
+      speciality: json['speciality'] ?? '',
+      price: json['price']?.toInt() ?? 0,
+      phoneNumber: json['phoneNumber']?.toInt() ?? 0,
     );
   }
 
@@ -49,6 +64,11 @@ class Coach {
       "sex": sex,
       "age": age,
       "image": image,
+      "description": description,
+      "yearsOfExperience": yearsOfExperience,
+      "speciality": speciality,
+      "price": price,
+      "phoneNumber": phoneNumber,
     };
   }
 }

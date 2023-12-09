@@ -188,9 +188,8 @@ onStepContinue: () async {
                     }
                     return null;
                   },
-
                 ),
-]
+              ],
           ),
           ),
         ],
