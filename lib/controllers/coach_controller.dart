@@ -108,14 +108,14 @@ class CoachController extends GetxController {
   }
   Future<void> loginCoach(Map<String, dynamic> coachData) async {
     try {
+      CoachController userController = Get.find<CoachController>();
       var response = await CoachService().loginCoach(coachData);
+      print(response.data);
       if (response.statusCode == 200) {
-        coach = Coach.fromJson(response.data);
-
+        userController.coach= (Coach.fromJson(response.data));
+        this.coach = (Coach.fromJson(response.data));
         storage.write(key: "coachToken", value: response.data['token']);
-        // Assuming you have a route for the coach's page
-        // Adjust the route accordingly based on your app structure
-        // Get.offAll(CoachHomePage());
+        print(this.coach);
       } else {
         Get.snackbar("Error", "Wrong email or password");
       }
@@ -143,6 +143,27 @@ class CoachController extends GetxController {
       coach = Coach.fromJson(response.data);
       print(coach);
       return coach;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+ Future<void> deleteCoach(String id) async {
+    try {
+      var response = await CoachService().deleteCoach(id);
+      if (response.statusCode == 200) {
+        coach = null as Coach;
+        await storage.delete(key: 'coachToken');
+
+      } else {
+        Get.snackbar("Error", response.data['message']);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+  Future<void> changePassword(String id, Map<String, dynamic> coachData) async {
+    try {
+      var response = await CoachService().changePassword(id, coachData);
     } catch (e) {
       throw Exception(e.toString());
     }

@@ -52,11 +52,8 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
       Navigator.pop(context);
-
-      // Handle the error as needed.
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

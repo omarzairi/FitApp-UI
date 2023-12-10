@@ -32,7 +32,7 @@ class _LoginCoachScreenState extends State<LoginCoachScreen> {
         ),
       );
 
-      Get.offAllNamed('/chatCoach'); // Navigate to the coach's home page after successful login
+      Get.offAllNamed('/HomePageCoach'); // Navigate to the coach's home page after successful login
     } catch (e) {
       print('Error in sendFormData: $e');
       // Handle the error as needed.

@@ -73,5 +73,23 @@ class CoachService {
     return response;
 
   }
+  Future<Response> deleteCoach(String id) async {
+    Response response = await dio.delete('/deleteCoach/$id',options:
+    Options(
+      headers: {
+    'Content-Type': 'application/json', // Add any headers you need
+    'Authorization': 'Bearer ${await storage.read(key: 'userToken')}', // Example of an Authorization header
+    },));
+
+    return response;
+  }
+  Future<Response> changePassword(String id, Map<String, dynamic> coachData) async {
+    try {
+      Response response = await dio.put('/changePassword/$id', data: coachData);
+      return response;
+    } catch (error) {
+      throw Exception(error.toString());
+    }
+  }
 
 }

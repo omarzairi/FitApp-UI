@@ -23,6 +23,15 @@ import '../Pages/user_Profile/change_mail.dart';
 import '../Pages/user_Profile/change_password.dart';
 import '../Pages/user_Profile/target_weight.dart';
 import '../Pages/user_Profile/current_weight.dart';
+import '../Pages/Coach_Profile/description.dart';
+import '../Pages/Coach_Profile/change_mailCoach.dart';
+import '../Pages/Coach_Profile/change_passwordCoach.dart';
+import '../Pages/Coach_Profile/change_nameCoach.dart';
+import '../Pages/Coach_Profile/change_phoneNumberCoach.dart';
+import '../Pages/Coach_Profile/change_priceCoach.dart';
+import '../Pages/Coach_Profile/Coach_profile.dart';
+import '../Pages/Coach_HomePage/HomePageCoach.dart';
+
 
 
 class AppRoutes {
@@ -44,6 +53,16 @@ GetPage(name: '/profile', page: () => ProfileUser()),
 GetPage(name:'/changeusername', page: ()=>ChangeName()),
 GetPage(name:'/changemail', page: ()=>ChangeMail()),
 GetPage(name:'/changepassword', page: ()=>ChangePassword()),
+GetPage(name:'/ProfileCoach',page: ()=>ProfileCoach()),
+GetPage(name: "/changeEmailCoach", page: ()=>ChangeMailCoach())  ,
+GetPage(name: "/changePasswordCoach", page: ()=>ChangePasswordCoach())  ,
+GetPage(name: "/changeNameCoach", page: ()=>ChangeNameCoach())  ,
+GetPage(name: "/changePhoneNumberCoach", page: ()=>ChangePhoneNumber())  ,
+GetPage(name: "/changePriceCoach", page: ()=>ChangePriceCoach())  ,
+GetPage(name: "/descriptionCoach", page: ()=>ChangeDescription())  ,
+GetPage(name: "/HomePageCoach", page: ()=>HomePageCoach())  ,
+
+
 GetPage(name:'/targetweight', page: ()=>const TargetWeight()),
 GetPage(name:'/currentweight', page: ()=>const CurrentWeight()),
   GetPage(name: '/progress', page: () => const ProgressChart(),),

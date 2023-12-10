@@ -1,3 +1,4 @@
+import 'package:fitapp/Pages/LoginCoach.dart';
 import 'package:fitapp/Pages/SignUp.dart';
 import 'package:fitapp/Pages/firstPage.dart';
 import 'package:fitapp/Pages/login.dart';
@@ -5,6 +6,7 @@ import 'package:fitapp/Pages/user_Profile/user_profile.dart';
 import 'package:fitapp/controllers/consumption_controller.dart';
 import 'package:fitapp/controllers/objectif_controller.dart';
 import 'package:fitapp/controllers/user_controller.dart';
+import 'package:fitapp/controllers/coach_controller.dart';
 import 'package:fitapp/Pages/signUpStepsCoach.dart';
 import 'package:fitapp/routes/route.dart';
 
@@ -17,6 +19,8 @@ import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:http/http.dart';
+import 'Pages/Coach_Profile/Coach_profile.dart';
 import 'Pages/progressPage/progress_page.dart';
 import 'firebase_options.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -45,6 +49,8 @@ Future<void> main() async {
   Get.put(ChatSocketService());
 
   Get.put(ProgressController());
+
+  Get.put(CoachController());
 
   runApp(MyApp());
 }
@@ -83,7 +89,8 @@ class MyApp extends StatelessWidget {
           } else {
             if (snapshot.data != null) {
 
-              return HomeView();
+              return LoginCoachScreen();
+
 
             } else {
 
