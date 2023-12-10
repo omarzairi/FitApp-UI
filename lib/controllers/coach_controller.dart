@@ -147,4 +147,25 @@ class CoachController extends GetxController {
       throw Exception(e.toString());
     }
   }
+ Future<void> deleteCoach(String id) async {
+    try {
+      var response = await CoachService().deleteCoach(id);
+      if (response.statusCode == 200) {
+        coach = null as Coach;
+        await storage.delete(key: 'coachToken');
+
+      } else {
+        Get.snackbar("Error", response.data['message']);
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+  Future<void> changePassword(String id, Map<String, dynamic> coachData) async {
+    try {
+      var response = await CoachService().changePassword(id, coachData);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }

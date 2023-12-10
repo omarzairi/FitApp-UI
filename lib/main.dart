@@ -17,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'Pages/LoginCoach.dart';
 import 'Pages/progressPage/progress_page.dart';
 import 'firebase_options.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -81,7 +82,7 @@ class MyApp extends StatelessWidget {
           } else {
             if (snapshot.data != null) {
 
-              return HomeView();
+              return LoginCoachScreen();
 
             } else {
 
