@@ -108,14 +108,14 @@ class CoachController extends GetxController {
   }
   Future<void> loginCoach(Map<String, dynamic> coachData) async {
     try {
+      CoachController userController = Get.find<CoachController>();
       var response = await CoachService().loginCoach(coachData);
+      print(response.data);
       if (response.statusCode == 200) {
-        coach = Coach.fromJson(response.data);
-
+        userController.coach= (Coach.fromJson(response.data));
+        this.coach = (Coach.fromJson(response.data));
         storage.write(key: "coachToken", value: response.data['token']);
-        // Assuming you have a route for the coach's page
-        // Adjust the route accordingly based on your app structure
-        // Get.offAll(CoachHomePage());
+        print(this.coach);
       } else {
         Get.snackbar("Error", "Wrong email or password");
       }

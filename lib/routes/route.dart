@@ -28,6 +28,7 @@ import '../Pages/Coach_Profile/change_nameCoach.dart';
 import '../Pages/Coach_Profile/change_phoneNumberCoach.dart';
 import '../Pages/Coach_Profile/change_priceCoach.dart';
 import '../Pages/Coach_Profile/Coach_profile.dart';
+import '../Pages/Coach_HomePage/HomePageCoach.dart';
 
 
 
@@ -54,6 +55,8 @@ GetPage(name: "/changeNameCoach", page: ()=>ChangeNameCoach())  ,
 GetPage(name: "/changePhoneNumberCoach", page: ()=>ChangePhoneNumber())  ,
 GetPage(name: "/changePriceCoach", page: ()=>ChangePriceCoach())  ,
 GetPage(name: "/descriptionCoach", page: ()=>ChangeDescription())  ,
+GetPage(name: "/HomePageCoach", page: ()=>HomePageCoach())  ,
+
 
 GetPage(name:'/targetweight', page: ()=>const TargetWeight()),
 GetPage(name:'/currentweight', page: ()=>const CurrentWeight()),
