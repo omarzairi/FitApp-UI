@@ -65,12 +65,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'FitApp',
       theme: ThemeData(
+
         primarySwatch: secondaryColor1Swatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         scaffoldBackgroundColor: Colors.white,
         textTheme: const TextTheme(
           bodyText2: TextStyle(fontFamily: 'Poppins', fontSize: 18),
         ),
+
 
       ),
       home: FutureBuilder<String?>(

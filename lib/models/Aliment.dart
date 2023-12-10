@@ -39,11 +39,11 @@ class Aliment {
   }
 
   static List<Aliment> fromJsonList(List<dynamic> json) {
-    List<Aliment> aliments = [];
-    json.forEach((element) {
-      aliments.add(Aliment.fromJson(element));
-    });
-    return aliments;
+      List<Aliment> aliments = [];
+      json.forEach((element) {
+        aliments.add(Aliment.fromJson(element));
+      });
+      return aliments;
   }
 
   Map<String, dynamic> toJson() {

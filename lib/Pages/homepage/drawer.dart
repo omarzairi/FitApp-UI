@@ -60,6 +60,20 @@ class HomeDrawer extends StatelessWidget {
             onTap: () {
               Get.toNamed("/chat");
             },
+          ),
+          ListTile(
+            leading: Icon(Icons.fitness_center),
+            title: const Text('Workouts'),
+            onTap: () {
+              Get.toNamed("/workouts");
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.list),
+            title: const Text('User Workout List'),
+            onTap: () {
+              Get.toNamed("/userworkoutlist");
+            },
           )
         ],
       ),
