@@ -3,6 +3,8 @@ import 'package:fitapp/Pages/SignUpCoach.dart';
 import 'package:fitapp/Pages/conversation_list.dart';
 import 'package:fitapp/Pages/homepage/homepage.dart';
 import 'package:fitapp/Pages/progressPage/progress_page.dart';
+import 'package:fitapp/Pages/workouts/user_workout_list.dart';
+import 'package:fitapp/Pages/workouts/workout_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,14 +33,14 @@ GetPage(name: '/chat', page: ()=>const ConversationList()),
 GetPage(name:'/chatCoach', page: ()=>const CoachConversationList()),
 GetPage(name: '/home', page: ()=>const HomeView()),
 GetPage(name: '/alimentlist', page: () => AlimentListPage()),
-
+GetPage(name: '/workouts',page:()=>WorkoutListView()),
+GetPage(name:'/userworkoutlist',page: ()=> UserWorkoutListView()),
 GetPage(name: '/signupCoach', page: () => CoachSignUpScreen()),
 GetPage(name: '/loginCoach', page: () =>LoginCoachScreen()),
 GetPage(name: '/profile', page: () => ProfileUser()),
 GetPage(name:'/changeusername', page: ()=>ChangeName()),
 GetPage(name:'/changemail', page: ()=>ChangeMail()),
 GetPage(name:'/changepassword', page: ()=>ChangePassword()),
-
 GetPage(name:'/targetweight', page: ()=>const TargetWeight()),
 GetPage(name:'/currentweight', page: ()=>const CurrentWeight()),
   GetPage(name: '/progress', page: () => const ProgressChart(),),

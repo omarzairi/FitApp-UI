@@ -4,6 +4,7 @@ import 'package:fitapp/Pages/homepage/meals.dart';
 import 'package:fitapp/controllers/consumption_controller.dart';
 import 'package:fitapp/controllers/objectif_controller.dart';
 import 'package:fitapp/controllers/user_controller.dart';
+import 'package:fitapp/controllers/workout_controller.dart';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
@@ -28,6 +29,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
 
 
+
   int selectTab = 0;
   final PageStorageBucket pageBucket = PageStorageBucket();
 
@@ -46,11 +48,15 @@ class _HomeViewState extends State<HomeView> {
     ObjectifController objectifController = Get.find<ObjectifController>();
     ConsumptionController consumptionController = Get.find<ConsumptionController>();
 
+
+
     if(userController.user == null){
       await userController.getLoggedUser();
       print("in the init data ${userController.user!.id!}");
-
     }
+
+
+
     if(objectifController.objectif == null)
       {
         await objectifController.getObjectiveByUserId(userController.user!.id!);
@@ -63,7 +69,6 @@ class _HomeViewState extends State<HomeView> {
         print("yes ${consumptionController.consumptionFact!}");
 
       }
-
 
   }
 
@@ -79,7 +84,7 @@ class _HomeViewState extends State<HomeView> {
     UserController userController = Get.find<UserController>();
     ObjectifController objectifController = Get.find<ObjectifController>();
     ConsumptionController consumptionController = Get.find<ConsumptionController>();
-
+    //WorkoutController workoutController = Get.find<WorkoutController>();
     var media = MediaQuery.of(context).size;
 
     return Scaffold(
