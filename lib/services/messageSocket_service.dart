@@ -1,5 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:fitapp/controllers/coach-messageController.dart';
+import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+import '../models/Message.dart';
 
 class ChatSocketService {
   late IO.Socket socket;
@@ -18,11 +23,17 @@ class ChatSocketService {
     socket.emit('add-user', userId);
 
     socket.on('msg-recieve', (data) {
-      _messageController.add(data);
+      String jsonData = jsonEncode(data);
+      print("el chat yee" + jsonData);
+      Map<String, dynamic> messageData = jsonDecode(jsonData);
+      messageData['fromSelf'] = false;
+
+      if (!_messageController.isClosed) {
+        _messageController.add(messageData);
+      }
+      print("messageData" + messageData.toString());
     });
   }
-
-
 
   void sendMessage(Map<String, dynamic> data) {
     socket.emit('send-msg', data);

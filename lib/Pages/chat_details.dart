@@ -27,13 +27,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   late ChatController _chatController;
   ScrollController _scrollController = ScrollController();
 
-
-
-
   @override
   void initState() {
     super.initState();
     _chatController = Get.put(ChatController());
+    _messageController = TextEditingController();
     _loadMessages();
   }
 
@@ -47,7 +45,6 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
       print('Error loading messages: $e');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -67,20 +64,30 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                   },
                   icon: Icon(Icons.arrow_back, color: Colors.black),
                 ),
-                SizedBox(width: 2,),
+                SizedBox(
+                  width: 2,
+                ),
                 CircleAvatar(
                   backgroundImage: NetworkImage(widget.image),
                   maxRadius: 20,
                 ),
-                SizedBox(width: 12,),
+                SizedBox(
+                  width: 12,
+                ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(widget.fullName, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
-                      SizedBox(height: 3,),
-                      Text("Online", style: TextStyle(color: Colors.grey.shade600, fontSize: 12)),
+                      Text(widget.fullName,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w400)),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      Text("Online",
+                          style: TextStyle(
+                              color: Colors.grey.shade600, fontSize: 12)),
                     ],
                   ),
                 ),
@@ -93,37 +100,45 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: messages.length,
-              reverse: true, // Set reverse to true
-              padding: EdgeInsets.only(top: 10, bottom: 60),
-              itemBuilder: (context, index) {
-                final reversedIndex = _chatController.userMessages.length - index - 1;
-                return Container(
-                  padding: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
-                  child: Align(
-                    alignment: (_chatController.userMessages[reversedIndex].fromSelf == false
-                        ? Alignment.topLeft
-                        : Alignment.topRight),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: (_chatController.userMessages[reversedIndex].fromSelf == false
-                            ? Colors.grey.shade200
-                            : TColor.primaryColor2),
-                      ),
-                      padding: EdgeInsets.all(16),
-                      child: Text(
-                        _chatController.userMessages[reversedIndex].message,
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
+              child: Obx(() => ListView.builder(
+                    controller: _scrollController,
+                    itemCount: _chatController.userMessages.length,
+                    reverse: true,
+                    // Set reverse to true
+                    padding: EdgeInsets.only(top: 10, bottom: 60),
+                    itemBuilder: (context, index) {
+                      final reversedIndex =
+                          _chatController.userMessages.length - index - 1;
+                      return Container(
+                        padding: EdgeInsets.only(
+                            left: 14, right: 14, top: 10, bottom: 10),
+                        child: Align(
+                          alignment: (_chatController
+                                      .userMessages[reversedIndex].fromSelf ==
+                                  false
+                              ? Alignment.topLeft
+                              : Alignment.topRight),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: (_chatController
+                                          .userMessages[reversedIndex]
+                                          .fromSelf ==
+                                      false
+                                  ? Colors.grey.shade200
+                                  : TColor.primaryColor2),
+                            ),
+                            padding: EdgeInsets.all(16),
+                            child: Text(
+                              _chatController
+                                  .userMessages[reversedIndex].message,
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ))),
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
@@ -146,7 +161,9 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         child: Icon(Icons.add, color: Colors.white, size: 20),
                       ),
                     ),
-                    SizedBox(width: 15,),
+                    SizedBox(
+                      width: 15,
+                    ),
                     Expanded(
                       child: TextField(
                         controller: _chatController.messageController,
@@ -157,7 +174,9 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 15,),
+                    SizedBox(
+                      width: 15,
+                    ),
                     FloatingActionButton(
                       onPressed: () {
                         _chatController.userSend({

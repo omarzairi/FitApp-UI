@@ -49,7 +49,8 @@ class ChatController extends GetxController {
     chatSocketService.getMessages().listen((message) {
       // Handle incoming message
       // For example, update the chatList
-      chatList.add(MessageModel.fromJson(message));
+      print("el chat from chat" + message.toString());
+      userMessages.add(MessageModel.fromJson(message));
     });
     getUserLatestConvos();
   }

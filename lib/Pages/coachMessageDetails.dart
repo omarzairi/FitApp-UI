@@ -94,9 +94,9 @@ class _ChatDetailPageState extends State<CoachChatDetailPage> {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: ListView.builder(
+            child: Obx(() => ListView.builder(
               controller: _scrollController,
-              itemCount: messages.length,
+              itemCount: _chatController.coachMessages.length,
               reverse: true, // Set reverse to true
               padding: EdgeInsets.only(top: 10, bottom: 60),
               itemBuilder: (context, index) {
@@ -123,7 +123,7 @@ class _ChatDetailPageState extends State<CoachChatDetailPage> {
                   ),
                 );
               },
-            ),
+            )),
           ),
           Align(
             alignment: Alignment.bottomLeft,

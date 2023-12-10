@@ -50,7 +50,9 @@ class CoachChatController extends GetxController {
     chatSocketService.getMessages().listen((message) {
       // Handle incoming message
       // For example, update the chatList
-      chatList.add(MessageModel.fromJson(message));
+      print("message from socket");
+      print(message);
+      coachMessages.add(MessageModel.fromJson(message));
     });
     getCoachLatestConvos();
   }
@@ -65,6 +67,8 @@ class CoachChatController extends GetxController {
 
 
   Future<void> coachSend(Map<String, dynamic> messageData) async {
+    print("message dataa");
+    print(messageData);
     try {
       chatSocketService.sendMessage(messageData);
 
