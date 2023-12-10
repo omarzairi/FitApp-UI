@@ -28,7 +28,8 @@ class _HomeMealsViewState extends State<HomeMealsView> {
       print('User Token: $userToken');
     });
 
-    if (consumptionController.consumption == null) {
+    if (consumptionController.consumption == null ||
+        consumptionController.consumption!.isEmpty) {
       await consumptionController.getConsumptionsByDate({'date': "11-25-2023"});
       print("yes ahi wow");
     }
@@ -96,12 +97,12 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                               children: <Widget>[
                                 Text(
                                   //mealType,
-                                  (consumptionController.consumption![0]
-                                                      ['mealType']
+                                  (consumptionController
+                                                  .consumption![0].mealType
                                                   .substring(0, 1)
                                                   .toUpperCase() +
                                               consumptionController
-                                                  .consumption![0]['mealType']
+                                                  .consumption![0].mealType
                                                   .substring(1) ??
                                           'Default Value')
                                       .toString(),
@@ -124,11 +125,11 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          consumptionController.consumption![0]
-                                                  ['aliments']
-                                              .map((aliment) =>
-                                                  aliment['aliment']['name']
-                                                      .toString())
+                                          consumptionController
+                                              .consumption![0].aliments
+                                              .map((aliment) => aliment
+                                                  .aliment.name
+                                                  .toString())
                                               .join('\n'),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
@@ -146,8 +147,8 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
                                     Text(
-                                      consumptionController.consumption![0]
-                                              ['total']
+                                      consumptionController
+                                          .consumption![0].total
                                           .toString(),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -262,12 +263,12 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  (consumptionController.consumption![1]
-                                                      ['mealType']
+                                  (consumptionController
+                                                  .consumption![1].mealType
                                                   .substring(0, 1)
                                                   .toUpperCase() +
                                               consumptionController
-                                                  .consumption![1]['mealType']
+                                                  .consumption![1].mealType
                                                   .substring(1) ??
                                           'Default Value')
                                       .toString(),
@@ -290,11 +291,11 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          consumptionController.consumption![1]
-                                                  ['aliments']
-                                              .map((aliment) =>
-                                                  aliment['aliment']['name']
-                                                      .toString())
+                                          consumptionController
+                                              .consumption![1].aliments
+                                              .map((aliment) => aliment
+                                                  .aliment.name
+                                                  .toString())
                                               .join('\n'),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
@@ -312,8 +313,8 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
                                     Text(
-                                      consumptionController.consumption![1]
-                                              ['total']
+                                      consumptionController
+                                          .consumption![1].total
                                           .toString(),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -428,12 +429,12 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  (consumptionController.consumption![2]
-                                                      ['mealType']
+                                  (consumptionController
+                                                  .consumption![2].mealType
                                                   .substring(0, 1)
                                                   .toUpperCase() +
                                               consumptionController
-                                                  .consumption![2]['mealType']
+                                                  .consumption![2].mealType
                                                   .substring(1) ??
                                           'Default Value')
                                       .toString(),
@@ -456,15 +457,15 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          consumptionController.consumption![2]
-                                          ['aliments']
+                                          consumptionController
+                                              .consumption![2].aliments
                                               .map((aliment) {
                                             List<String> words =
-                                            aliment['aliment']['name'].split(' ');
+                                                aliment.aliment.name.split(' ');
                                             return words.length > 2
                                                 ? words.take(2).join(' ') +
-                                                '...'
-                                                : aliment['aliment']['name'];
+                                                    '...'
+                                                : aliment.aliment.name;
                                           }).join('\n'),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
@@ -482,8 +483,8 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
                                     Text(
-                                      consumptionController.consumption![2]
-                                              ['total']
+                                      consumptionController
+                                          .consumption![2].total
                                           .toString(),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -598,12 +599,12 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  (consumptionController.consumption![3]
-                                                      ['mealType']
+                                  (consumptionController
+                                                  .consumption![3].mealType
                                                   .substring(0, 1)
                                                   .toUpperCase() +
                                               consumptionController
-                                                  .consumption![3]['mealType']
+                                                  .consumption![3].mealType
                                                   .substring(1) ??
                                           'Default Value')
                                       .toString(),
@@ -617,43 +618,43 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                 ),
                                 Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 8, bottom: 8),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          consumptionController.consumption![3]
-                                                  ['aliments']
-                                              .map((aliment) {
-                                            List<String> words =
-                                                aliment['aliment']['name'].split(' ');
-                                            return words.length > 2
-                                                ? words.take(2).join(' ') +
-                                                    '...'
-                                                : aliment['aliment']['name'];
-                                          }).join('\n'),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 10,
-                                            letterSpacing: 0.2,
-                                            color: TColor.white,
+                                      padding: const EdgeInsets.only(
+                                          top: 8, bottom: 8),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            consumptionController
+                                                .consumption![3].aliments
+                                                .map((aliment) {
+                                              List<String> words = aliment
+                                                  .aliment.name
+                                                  .split(' ');
+                                              return words.length > 2
+                                                  ? words.take(2).join(' ') +
+                                                      '...'
+                                                  : aliment.aliment.name;
+                                            }).join('\n'),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 10,
+                                              letterSpacing: 0.2,
+                                              color: TColor.white,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                        ],
+                                      )),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
                                     Text(
-                                      consumptionController.consumption![3]
-                                              ['total']
+                                      consumptionController
+                                          .consumption![3].total
                                           .toString(),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(

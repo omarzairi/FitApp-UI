@@ -63,4 +63,13 @@ class Consumption {
       'total': total,
     };
   }
+
+    //fromJsonList
+  static List<Consumption> fromJsonList(List<dynamic> json) {
+    List<Consumption> consumptions = [];
+    json.forEach((element) {
+      consumptions.add(Consumption.fromJson(element));
+    });
+    return consumptions;
+  }
 }

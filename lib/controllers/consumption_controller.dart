@@ -10,7 +10,8 @@ class ConsumptionController extends GetxController {
 
   ConsumptionFact? consumptionFact;
 
-  List<dynamic>? consumption;
+  //List<dynamic>? consumption;
+  var consumption = <Consumption>[].obs;
 
   @override
   Future<void> onInit() async {
@@ -25,7 +26,7 @@ class ConsumptionController extends GetxController {
           consumptionData);
       if (response.statusCode == 200) {
         if (response.data != null) {
-          consumption = response.data;
+          consumption.assignAll(Consumption.fromJsonList(response.data));
           print(response);
         }
         else {
@@ -69,12 +70,12 @@ class ConsumptionController extends GetxController {
   Consumption? getConsumptionByMealType(String mealType) {
     if (consumption != null) {
       for (int i = 0; i < consumption!.length; i++) {
-        if (consumption![i]['mealType'].
+        if (consumption![i].mealType.
         toString().
         toLowerCase() == mealType
             .toString()
             .toLowerCase()) {
-          return Consumption.fromJson(consumption![i]);
+          return consumption![i];
         }
       }
     }
@@ -86,8 +87,8 @@ class ConsumptionController extends GetxController {
   void updateConsumption(Consumption consumption) {
     if (this.consumption != null) {
       for (int i = 0; i < this.consumption!.length; i++) {
-        if (this.consumption![i]['_id'].toString() == consumption.id) {
-          this.consumption![i] = consumption.toJson();
+        if (this.consumption![i].id.toString() == consumption.id) {
+          this.consumption![i] = consumption;
         }
       }
     }
