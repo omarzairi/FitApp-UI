@@ -29,8 +29,12 @@ class _HomeMealsViewState extends State<HomeMealsView> {
     });
 
     if (consumptionController.consumption == null ||
-        consumptionController.consumption!.isEmpty) {
-      await consumptionController.getConsumptionsByDate({'date': "11-25-2023"});
+        consumptionController.consumption!.isEmpty ||
+        consumptionController.consumption![0].consumptionDate
+                .substring(0, 10) !=
+            '${now.year}-${now.month}-${now.day}') {
+      await consumptionController.getConsumptionsByDate(
+          {'date': '${now.month}-${now.day}-${now.year}'});
       print("yes ahi wow");
     }
     print(consumptionController.consumption);
@@ -293,23 +297,23 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
-                                    SingleChildScrollView(
-                                    scrollDirection: Axis.vertical,
-                                      child: Text(
-                                          consumptionController
-                                              .consumption![1].aliments
-                                              .map((aliment) => aliment
-                                                  .aliment.name
-                                                  .toString())
-                                              .join('\n'),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 10,
-                                            letterSpacing: 0.2,
-                                            color: TColor.white,
+                                        SingleChildScrollView(
+                                          scrollDirection: Axis.vertical,
+                                          child: Text(
+                                            consumptionController
+                                                .consumption![1].aliments
+                                                .map((aliment) => aliment
+                                                    .aliment.name
+                                                    .toString())
+                                                .join('\n'),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 10,
+                                              letterSpacing: 0.2,
+                                              color: TColor.white,
+                                            ),
                                           ),
                                         ),
-                                    ),
                                       ],
                                     ),
                                   ),
@@ -462,27 +466,28 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
-                                    SingleChildScrollView(
-                                    scrollDirection: Axis.vertical,
-                                      child: Text(
-                                          consumptionController
-                                              .consumption![2].aliments
-                                              .map((aliment) {
-                                            List<String> words =
-                                                aliment.aliment.name.split(' ');
-                                            return words.length > 2
-                                                ? words.take(2).join(' ') +
-                                                    '...'
-                                                : aliment.aliment.name;
-                                          }).join('\n'),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 10,
-                                            letterSpacing: 0.2,
-                                            color: TColor.white,
+                                        SingleChildScrollView(
+                                          scrollDirection: Axis.vertical,
+                                          child: Text(
+                                            consumptionController
+                                                .consumption![2].aliments
+                                                .map((aliment) {
+                                              List<String> words = aliment
+                                                  .aliment.name
+                                                  .split(' ');
+                                              return words.length > 2
+                                                  ? words.take(2).join(' ') +
+                                                      '...'
+                                                  : aliment.aliment.name;
+                                            }).join('\n'),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 10,
+                                              letterSpacing: 0.2,
+                                              color: TColor.white,
+                                            ),
                                           ),
                                         ),
-                                    ),
                                       ],
                                     ),
                                   ),
@@ -635,30 +640,29 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
-                                      SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                        child: Text(
-                                            consumptionController
-                                                .consumption![3].aliments
-                                                .map((aliment) {
-                                              List<String> words = aliment
-                                                  .aliment.name
-                                                  .split(' ');
-                                              return words.length > 2
-                                                  ? words.take(2).join(' ') +
-                                                      '...'
-                                                  : aliment.aliment.name;
-                                            }).join('\n'),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10,
-                                              letterSpacing: 0.2,
-                                              color: TColor.white,
+                                          SingleChildScrollView(
+                                            scrollDirection: Axis.vertical,
+                                            child: Text(
+                                              consumptionController
+                                                  .consumption![3].aliments
+                                                  .map((aliment) {
+                                                List<String> words = aliment
+                                                    .aliment.name
+                                                    .split(' ');
+                                                return words.length > 2
+                                                    ? words.take(2).join(' ') +
+                                                        '...'
+                                                    : aliment.aliment.name;
+                                              }).join('\n'),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 10,
+                                                letterSpacing: 0.2,
+                                                color: TColor.white,
+                                              ),
                                             ),
                                           ),
-                                      ),
                                         ],
-
                                       )),
                                 ),
                                 Row(

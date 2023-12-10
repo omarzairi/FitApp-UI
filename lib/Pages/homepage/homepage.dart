@@ -39,7 +39,7 @@ class _HomeViewState extends State<HomeView> {
     ObjectifController objectifController = Get.find<ObjectifController>();
     ConsumptionController consumptionController =
         Get.find<ConsumptionController>();
-
+    DateTime now = DateTime.now();
     if (userController.user == null) {
       await userController.getLoggedUser();
       print("in the init data ${userController.user!.id!}");
@@ -48,9 +48,15 @@ class _HomeViewState extends State<HomeView> {
       await objectifController.getObjectiveByUserId(userController.user!.id!);
       print("yes ${objectifController.objectif?.calories!}");
     }
-    if (consumptionController.consumptionFact == null) {
-      await consumptionController
-          .getFacts(userController.user!.id!, {'date': '11-11-2023'});
+    if (consumptionController.consumptionFact == null ||
+        consumptionController.consumption![0].consumptionDate
+                .substring(0, 10) !=
+            '${now.year}-${now.month}-${now.day}') {
+      await consumptionController.getConsumptionsByDate(
+          {'date': '${now.month}-${now.day}-${now.year}'});
+      await consumptionController.getFacts(userController.user!.id!,
+          {'date': '${now.month}-${now.day}-${now.year}'});
+
       print("yes ${consumptionController.consumptionFact!}");
     }
   }
