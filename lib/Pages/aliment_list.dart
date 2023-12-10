@@ -75,6 +75,9 @@ class _AlimentListPageState extends State<AlimentListPage> {
       consu!.id,
       aliment.id,
       1);
+    //make it go back to the previous page
+
+
   }
 
   Future<void> initData() async {

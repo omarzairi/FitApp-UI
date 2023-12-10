@@ -124,20 +124,23 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text(
-                                          consumptionController
-                                              .consumption![0].aliments
-                                              .map((aliment) => aliment
-                                                  .aliment.name
-                                                  .toString())
-                                              .join('\n'),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 10,
-                                            letterSpacing: 0.2,
-                                            color: TColor.white,
+                                        SingleChildScrollView(
+                                          scrollDirection: Axis.vertical,
+                                          child: Text(
+                                            consumptionController
+                                                .consumption![0].aliments
+                                                .map((aliment) => aliment
+                                                    .aliment.name
+                                                    .toString())
+                                                .join('\n'),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 10,
+                                              letterSpacing: 0.2,
+                                              color: TColor.white,
+                                            ),
                                           ),
-                                        ),
+                                        )
                                       ],
                                     ),
                                   ),
@@ -290,7 +293,9 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text(
+                                    SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                      child: Text(
                                           consumptionController
                                               .consumption![1].aliments
                                               .map((aliment) => aliment
@@ -304,6 +309,7 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                             color: TColor.white,
                                           ),
                                         ),
+                                    ),
                                       ],
                                     ),
                                   ),
@@ -456,7 +462,9 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text(
+                                    SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                      child: Text(
                                           consumptionController
                                               .consumption![2].aliments
                                               .map((aliment) {
@@ -474,6 +482,7 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                             color: TColor.white,
                                           ),
                                         ),
+                                    ),
                                       ],
                                     ),
                                   ),
@@ -626,7 +635,9 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Text(
+                                      SingleChildScrollView(
+                                      scrollDirection: Axis.vertical,
+                                        child: Text(
                                             consumptionController
                                                 .consumption![3].aliments
                                                 .map((aliment) {
@@ -645,7 +656,9 @@ class _HomeMealsViewState extends State<HomeMealsView> {
                                               color: TColor.white,
                                             ),
                                           ),
+                                      ),
                                         ],
+
                                       )),
                                 ),
                                 Row(
