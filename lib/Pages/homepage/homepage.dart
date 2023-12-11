@@ -52,8 +52,6 @@ class _HomeViewState extends State<HomeView> {
         consumptionController.consumption![0].consumptionDate
             .substring(0, 10) !=
             '${now.year}-${now.month}-${now.day}') {
-      await consumptionController.getConsumptionsByDate(
-          {'date': '${now.month}-${now.day}-${now.year}'});
       await consumptionController.getFacts(userController.user!.id!,
           {'date': '${now.month}-${now.day}-${now.year}'});
 
