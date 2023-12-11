@@ -56,7 +56,6 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-
   final storage = const FlutterSecureStorage();
   final userController = Get.put(UserController());
   final objectifController = Get.put(ObjectifController());
@@ -71,15 +70,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'FitApp',
       theme: ThemeData(
-
         primarySwatch: secondaryColor1Swatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         scaffoldBackgroundColor: Colors.white,
         textTheme: const TextTheme(
           bodyText2: TextStyle(fontFamily: 'Poppins', fontSize: 18),
         ),
-
-
       ),
       home: FutureBuilder<String?>(
         future: storage.read(key: 'userToken'),
@@ -88,14 +84,9 @@ class MyApp extends StatelessWidget {
             return CircularProgressIndicator(); // Show a loading spinner while waiting
           } else {
             if (snapshot.data != null) {
-
-              return LoginScreen();
-
-
+              return HomeView(); // If user is logged in, navigate to HomeView
             } else {
-
-              return FirstPage(); // Replace with your login view
-
+              return FirstPage(); // If user is not logged in, navigate to FirstPage (Login Page)
             }
           }
         },
